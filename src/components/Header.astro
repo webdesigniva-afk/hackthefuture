@@ -56,7 +56,7 @@ const pageLinks = [
 		<nav class="site-nav order-3 col-span-2 flex flex-wrap items-center gap-x-5 gap-y-3 text-[0.82rem] text-[var(--color-muted)] lg:order-none lg:col-span-1" aria-label={t.nav.primary}>
 			<div class="site-nav-page-links flex flex-wrap items-center gap-x-5 gap-y-3 text-[0.74rem] uppercase tracking-[0.12em] text-[var(--color-muted)]/78">
 				{pageLinks.map((link) => (
-					<a class="relative no-underline transition-colors duration-[170ms] after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-[linear-gradient(90deg,var(--color-ink),var(--color-accent))] after:shadow-[0_0_14px_rgba(124,255,107,0.22)] after:transition-all after:duration-[170ms] hover:text-[var(--color-ink)] hover:after:w-full" href={link.href}>{link.label}</a>
+					<a class="site-nav-link" href={link.href}>{link.label}</a>
 				))}
 			</div>
 		</nav>

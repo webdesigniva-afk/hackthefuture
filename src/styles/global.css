@@ -99,6 +99,57 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top {
 	z-index: 60;
 }
 
+.site-nav-link {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	min-height: 1.8rem;
+	padding: 0.18rem 0.28rem;
+	color: inherit;
+	text-decoration: none;
+	text-shadow: none;
+	transition: color 170ms var(--ease-premium), text-shadow 170ms var(--ease-premium), background-color 170ms var(--ease-premium);
+}
+
+.site-nav-link::before,
+.site-nav-link::after {
+	position: absolute;
+	color: var(--color-accent);
+	opacity: 0;
+	text-shadow: 0 0 0.65rem rgba(0, 255, 65, 0.42);
+	transition: opacity 170ms var(--ease-premium), transform 170ms var(--ease-premium);
+}
+
+.site-nav-link::before {
+	content: "[";
+	left: -0.42rem;
+	transform: translateX(0.28rem);
+}
+
+.site-nav-link::after {
+	content: "]";
+	right: -0.42rem;
+	transform: translateX(-0.28rem);
+}
+
+.site-nav-link:hover,
+.site-nav-link:focus-visible {
+	color: var(--color-ink);
+	background:
+		linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.08), transparent),
+		repeating-linear-gradient(180deg, transparent 0 4px, rgba(0, 255, 65, 0.08) 4px 5px);
+	text-shadow: 0 0 0.7rem rgba(0, 255, 65, 0.24);
+	outline: none;
+}
+
+.site-nav-link:hover::before,
+.site-nav-link:hover::after,
+.site-nav-link:focus-visible::before,
+.site-nav-link:focus-visible::after {
+	opacity: 1;
+	transform: translateX(0);
+}
+
 a {
 	color: inherit;
 	text-decoration-color: color-mix(in srgb, currentColor 30%, transparent);
