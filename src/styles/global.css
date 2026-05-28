@@ -337,6 +337,31 @@ a:hover {
 	opacity: 0.92;
 }
 
+.footer-accessibility-credit {
+	display: inline-flex;
+	max-width: 18rem;
+	align-items: center;
+	gap: 0.55rem;
+	color: color-mix(in srgb, var(--color-muted) 76%, transparent);
+	font-size: 0.68rem;
+	font-weight: 500;
+	line-height: 1.5;
+	opacity: 0.76;
+	transition: color 170ms var(--ease-premium), opacity 170ms var(--ease-premium);
+}
+
+.footer-accessibility-credit:hover {
+	color: var(--color-muted);
+	opacity: 0.96;
+}
+
+.footer-accessibility-credit img {
+	width: 1.35rem;
+	height: 1.35rem;
+	flex: 0 0 auto;
+	border-radius: 0.28rem;
+}
+
 .quiet-card {
 	--hover-y: 0px;
 	background: rgba(255, 252, 247, 0.72);
