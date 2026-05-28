@@ -1,0 +1,181 @@
+---
+const themes = [
+	"Future of Work",
+	"Environment & Crisis Response",
+	"Mental Health & Youth Wellbeing",
+	"Local Products, Food & Future Business",
+];
+
+const applicationTypes = ["Applying alone", "Applying with a team"];
+---
+
+<form class="application-form grid gap-3.5" data-application-form>
+	<div class="grid gap-3.5 md:grid-cols-2">
+		<label class="application-field">
+			<span>Name</span>
+			<input name="name" type="text" required autocomplete="name" />
+		</label>
+
+		<label class="application-field">
+			<span>Email</span>
+			<input name="email" type="email" required autocomplete="email" />
+		</label>
+
+		<label class="application-field">
+			<span>Phone</span>
+			<input name="phone" type="tel" required autocomplete="tel" inputmode="tel" />
+		</label>
+
+		<label class="application-field">
+			<span>Age</span>
+			<input name="age" type="number" required min="15" max="19" inputmode="numeric" />
+		</label>
+
+		<label class="application-field">
+			<span>School</span>
+			<input name="school" type="text" required autocomplete="organization" />
+		</label>
+
+		<label class="application-field">
+			<span>Which theme interests you most?</span>
+			<select name="theme" required>
+				<option value="">Select a theme</option>
+				{themes.map((theme) => (
+					<option value={theme}>{theme}</option>
+				))}
+			</select>
+		</label>
+
+		<label class="application-field md:col-span-2">
+			<span>Why are you keen to join?</span>
+			<textarea name="motivation" required rows="4"></textarea>
+		</label>
+	</div>
+
+	<fieldset class="application-fieldset">
+		<legend>Application type</legend>
+		<div class="mt-2 grid gap-2.5 sm:grid-cols-2">
+			{applicationTypes.map((type) => (
+				<label class="application-radio">
+					<input name="application_type" type="radio" value={type} required />
+					<span>{type}</span>
+				</label>
+			))}
+		</div>
+	</fieldset>
+
+	<div class="pt-1">
+		<button type="submit" class="inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--color-purple)] px-6 text-sm font-semibold uppercase tracking-[0.12em] text-[var(--color-paper)] transition duration-200 hover:-translate-y-0.5 hover:bg-[var(--color-ink)]">
+			Register Interest
+		</button>
+	</div>
+
+	<p class="application-status text-sm leading-6 text-[var(--color-muted)]" data-application-status aria-live="polite"></p>
+</form>
+
+<script>
+	function handleHackTheFutureApplicationSubmit(event) {
+		event.preventDefault();
+
+		const form = event.currentTarget;
+		if (!(form instanceof HTMLFormElement)) {
+			return;
+		}
+
+		const formData = new FormData(form);
+		const payload = Object.fromEntries(formData.entries());
+
+		// Placeholder for future Google Sheets integration.
+		console.info("Hack The Future application interest:", payload);
+
+		const status = form.querySelector("[data-application-status]");
+		if (status instanceof HTMLElement) {
+			status.textContent = "Thanks. Your interest has been noted locally for now.";
+		}
+	}
+
+	document.querySelectorAll("[data-application-form]").forEach((form) => {
+		form.addEventListener("submit", handleHackTheFutureApplicationSubmit);
+	});
+</script>
+
+<style>
+	.application-field,
+	.application-fieldset {
+		display: grid;
+		gap: 0.45rem;
+	}
+
+	.application-field span,
+	.application-fieldset legend {
+		color: color-mix(in srgb, var(--color-purple) 78%, transparent);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		line-height: 1.4;
+		text-transform: uppercase;
+	}
+
+	.application-field input,
+	.application-field textarea,
+	.application-field select {
+		width: 100%;
+		border: 1px solid var(--color-line);
+		border-radius: 1rem;
+		background: rgba(255, 252, 247, 0.76);
+		color: var(--color-ink);
+		font: inherit;
+		line-height: 1.5;
+		padding: 0.75rem 0.9rem;
+		outline: none;
+		transition:
+			border-color 180ms ease,
+			box-shadow 180ms ease,
+			background-color 180ms ease;
+	}
+
+	.application-field textarea {
+		resize: vertical;
+		min-height: 7rem;
+	}
+
+	.application-field input:focus,
+	.application-field textarea:focus,
+	.application-field select:focus {
+		border-color: color-mix(in srgb, var(--color-purple) 48%, var(--color-line));
+		background: rgba(255, 252, 247, 0.96);
+		box-shadow: 0 0 0 4px rgba(45, 27, 78, 0.08);
+	}
+
+	.application-fieldset {
+		margin: 0;
+		border: 0;
+		padding: 0;
+	}
+
+	.application-radio {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		border: 1px solid var(--color-line);
+		border-radius: 1rem;
+		background: rgba(255, 252, 247, 0.64);
+		padding: 0.75rem 0.9rem;
+		color: var(--color-ink);
+		font-weight: 600;
+		transition:
+			border-color 180ms ease,
+			background-color 180ms ease,
+			transform 180ms ease;
+	}
+
+	.application-radio:hover {
+		border-color: color-mix(in srgb, var(--color-purple) 30%, var(--color-line));
+		background: rgba(255, 252, 247, 0.9);
+		transform: translateY(-1px);
+	}
+
+	.application-radio input {
+		accent-color: var(--color-purple);
+	}
+</style>

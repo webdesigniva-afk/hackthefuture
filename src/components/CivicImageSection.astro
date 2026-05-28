@@ -1,0 +1,50 @@
+---
+const benefits = [
+	"Two days working on something real",
+	"Your team and mentors from Bulgarian business, technology, and academia in the room with you the whole time",
+	"Workshops on how to build, pitch, and present an idea",
+	"Recognition in front of the city if your team's work stands out",
+	"A certificate of participation for your CV and university applications",
+	"A network of people you'll keep working with for the next ten years",
+	"The chance for your idea to actually go somewhere. The strongest work becomes the starting point for real conversations with institutions that can act on it",
+];
+---
+
+<section class="motion-section civic-grid px-4 py-10 sm:px-6 lg:px-8">
+	<div class="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[1.08fr_0.92fr]">
+		<div
+			class="media-placeholder cinematic-frame image-card plain-photo-frame min-h-[24rem] rounded-[1.25rem] lg:min-h-[36rem]"
+		>
+			<img
+				class="media-photo"
+				src="/hack-future-workshop-outcomes.png"
+				alt="Students collaborating around laptops, notes and whiteboards"
+				loading="lazy"
+				decoding="async"
+			/>
+		</div>
+		<div class="cinematic-dark flex min-h-[24rem] flex-col rounded-[1.25rem] border border-white/10 p-6 text-[var(--color-paper)] sm:p-8 lg:min-h-[36rem] lg:p-10">
+			<div>
+				<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/54">
+					OUTCOMES
+				</p>
+				<h2 class="mt-5 max-w-xl text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl">
+					What you get out of it
+				</h2>
+			</div>
+
+			<ul class="mt-8 grid gap-3">
+				{benefits.map((benefit) => (
+					<li class="benefit-row flex items-start gap-3 border-t border-white/10 pt-3 text-sm leading-6 text-[var(--color-paper)]/78 sm:text-base sm:leading-7">
+						<span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-white/15 bg-white/[0.07] text-[0.72rem] text-[var(--color-gold)]" aria-hidden="true">
+							<svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M20 6 9 17l-5-5" />
+							</svg>
+						</span>
+						<span>{benefit}</span>
+					</li>
+				))}
+			</ul>
+		</div>
+	</div>
+</section>

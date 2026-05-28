@@ -1,0 +1,130 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import PublicationCard from "../../../components/PublicationCard.astro";
+import { getPublication, getPublicationSlugs, getRelatedPublications } from "../../../data/publications";
+import { languages, langPath, siteCopy, type Lang } from "../../../i18n";
+
+export async function getStaticPaths() {
+	const publications = await getPublicationSlugs();
+
+	return languages.flatMap((lang) =>
+		publications.map((publication) => ({
+			params: { lang, slug: publication.slug },
+		}))
+	);
+}
+
+const lang = Astro.params.lang as Lang;
+const t = siteCopy[lang];
+const publication = await getPublication(Astro.params.slug as string, lang);
+
+if (!publication) {
+	return Astro.redirect(langPath(lang, "/publications"), 302);
+}
+
+const related = await getRelatedPublications(publication, lang);
+---
+
+<BaseLayout title={`${publication.title} | CATALIZATOR`} description={publication.excerpt} lang={lang}>
+	<Header lang={lang} />
+	<main>
+		<article>
+			<header class="gradient-rule px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
+				<div class="mx-auto max-w-5xl">
+					<a href={langPath(lang, "/publications")} class="mb-10 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-muted)] no-underline transition-colors duration-[170ms] hover:text-[var(--color-purple)]">
+						<span aria-hidden="true">&larr;</span>
+						{t.publication.back}
+					</a>
+					<div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+						<span class="text-[var(--color-purple)]">{publication.typeLabel}</span>
+						<span class="h-px w-5 bg-[linear-gradient(90deg,var(--color-purple),var(--color-gold))]" aria-hidden="true"></span>
+						<span>{publication.category}</span>
+						<span aria-hidden="true">/</span>
+						<span>{publication.edition}</span>
+					</div>
+					<h1 class="mt-7 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.045em] text-[var(--color-ink)] sm:text-5xl lg:text-6xl">
+						{publication.title}
+					</h1>
+					<div class="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-[var(--color-muted)]">
+						<a href={langPath(lang, `/authors/${publication.author}`)} class="no-underline hover:text-[var(--color-purple)]">{publication.authorName}</a>
+						<span aria-hidden="true">/</span>
+						<span>{publication.date}</span>
+					</div>
+				</div>
+			</header>
+
+			<section class="motion-section px-4 pb-12 sm:px-6 lg:px-8">
+				<div class="mx-auto max-w-6xl border-y border-[var(--color-line)] py-5">
+					<div class="media-placeholder cinematic-frame image-card aspect-[16/8] rounded-[1.1rem]" aria-label={publication.image}>
+						{publication.imageUrl && (
+							<img src={publication.imageUrl} alt={publication.imageAlt} class="media-photo" loading="eager" decoding="async" />
+						)}
+					</div>
+				</div>
+			</section>
+
+			{publication.type === "Video" && (
+				<section class="motion-section px-4 pb-12 sm:px-6 lg:px-8">
+					<div class="mx-auto max-w-4xl rounded-[1.1rem] border border-[var(--color-line)] bg-[var(--color-deep)] p-4">
+						<div class="aspect-video overflow-hidden rounded-[0.85rem] bg-black">
+							{publication.videoUrl ? (
+								<iframe
+									src={publication.videoUrl}
+									title={publication.title}
+									class="h-full w-full"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+									allowfullscreen
+									loading="lazy"
+								></iframe>
+							) : (
+								<div class="flex h-full items-center justify-center text-sm uppercase tracking-[0.18em] text-white/55">{t.publication.videoForthcoming}</div>
+							)}
+						</div>
+					</div>
+				</section>
+			)}
+
+			<section class="motion-section px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
+				<div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[10rem_minmax(0,1fr)]">
+					<aside class="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[var(--color-muted)]/70">
+						<div class="space-y-3 border-l border-[var(--color-line)] pl-4">
+							<p>{publication.typeLabel}</p>
+							<p>{publication.category}</p>
+							<p>{publication.edition}</p>
+						</div>
+					</aside>
+					<div class="publication-body max-w-[44rem] text-[1.08rem] leading-9 text-[var(--color-ink)]" set:html={publication.bodyHtml}>
+					</div>
+				</div>
+			</section>
+
+			{publication.type === "Image Essay" && publication.gallery && (
+				<section class="motion-section px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
+					<div class="mx-auto grid max-w-6xl gap-5 md:grid-cols-2">
+						{publication.gallery.map((image) => (
+							<div class="media-placeholder cinematic-frame aspect-[4/3] rounded-[1.1rem]" aria-label={image.alt}>
+								<img src={image.url} alt={image.alt} class="media-photo" loading="lazy" decoding="async" />
+							</div>
+						))}
+					</div>
+				</section>
+			)}
+		</article>
+
+		{related.length > 0 && (
+			<section class="motion-section border-t border-[var(--color-line)] px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+				<div class="mx-auto max-w-7xl">
+					<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]">{t.publication.related}</p>
+					<div class="mt-8 grid items-stretch gap-5 md:grid-cols-3">
+						{related.map((item) => (
+							<PublicationCard publication={item} lang={lang} />
+						))}
+					</div>
+				</div>
+			</section>
+		)}
+	</main>
+	<Footer lang={lang} />
+</BaseLayout>

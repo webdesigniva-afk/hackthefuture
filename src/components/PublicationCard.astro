@@ -1,0 +1,55 @@
+---
+import type { Publication } from "../data/publications";
+import { getLang, langPath, siteCopy, type Lang } from "../i18n";
+
+interface Props {
+	publication: Publication;
+	featured?: boolean;
+	lang?: Lang;
+}
+
+const { publication, featured = false } = Astro.props;
+const lang = getLang(Astro.props.lang);
+const t = siteCopy[lang].publicationsHome;
+---
+
+<article class={`publication-entry premium-hover group flex h-full flex-col overflow-hidden rounded-[1.1rem] border bg-[var(--color-surface)] shadow-[0_20px_68px_rgba(26,26,26,0.07)] ${featured ? "border-[rgba(45,27,78,0.24)] md:grid md:grid-cols-[1.08fr_0.92fr]" : "min-h-[33rem] border-[var(--color-line)]"}`}>
+	<a href={langPath(lang, `/publications/${publication.slug}`)} class={`media-placeholder cinematic-frame shrink-0 no-underline ${featured ? "min-h-[22rem] md:min-h-full" : "aspect-[16/10]"}`} aria-label={publication.title}>
+		{publication.imageUrl && (
+			<img
+				src={publication.imageUrl}
+				alt={publication.imageAlt}
+				class="media-photo"
+				loading={featured ? "eager" : "lazy"}
+				decoding="async"
+			/>
+		)}
+	</a>
+
+	<div class={`flex flex-1 flex-col ${featured ? "px-7 py-8 sm:px-9 lg:px-11 lg:py-12" : "px-5 py-6 sm:px-6 sm:py-7"}`}>
+		<div class="publication-meta mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.68rem] font-semibold uppercase text-[var(--color-muted)]">
+			{featured && <span class="text-[var(--color-gold)]">{t.featured}</span>}
+			{featured && <span class="h-px w-6 bg-[var(--color-line)]" aria-hidden="true"></span>}
+			<span class="text-[var(--color-purple)]">{publication.typeLabel}</span>
+			<span class="h-px w-6 bg-[var(--color-line)]" aria-hidden="true"></span>
+			<span>{publication.category}</span>
+		</div>
+
+		<h3 class={`publication-title max-w-[18ch] font-semibold leading-[1.08] text-[var(--color-ink)] ${featured ? "text-3xl sm:text-4xl lg:text-[2.72rem]" : "text-[1.55rem] sm:text-[1.7rem]"}`}>
+			<a href={langPath(lang, `/publications/${publication.slug}`)} class="no-underline">{publication.title}</a>
+		</h3>
+
+		<p class={`mt-6 text-[0.95rem] leading-7 text-[var(--color-muted)] ${featured ? "max-w-xl" : "line-clamp-4"}`}>
+			{publication.excerpt}
+		</p>
+
+		<div class="mt-auto pt-9">
+			<div class="mb-5 h-px w-16 bg-[var(--color-line)]" aria-hidden="true"></div>
+			<div class="publication-byline flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.68rem] font-medium uppercase text-[var(--color-muted)]">
+				<a href={langPath(lang, `/authors/${publication.author}`)} class="no-underline hover:text-[var(--color-purple)]">{publication.authorName}</a>
+				<span aria-hidden="true">/</span>
+				<span>{publication.date}</span>
+			</div>
+		</div>
+	</div>
+</article>

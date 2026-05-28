@@ -1,0 +1,46 @@
+---
+import Section from "./Section.astro";
+import { getLang, siteCopy, type Lang } from "../i18n";
+
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+const t = siteCopy[lang].about;
+const photoPlaceholder = siteCopy[lang].media.photoPlaceholder;
+---
+
+<Section
+	id="about"
+	eyebrow={t.eyebrow}
+	title={t.title}
+	intro={t.intro}
+>
+	<div class="grid gap-6 md:grid-cols-[minmax(0,1fr)_24rem]">
+		<div>
+			<div
+				class="media-placeholder cinematic-frame mb-6 aspect-[4/3] rounded-[1.25rem]"
+				aria-hidden="true"
+			>
+				<span class="photo-placeholder-note">{photoPlaceholder}</span>
+			</div>
+			<p class="max-w-2xl text-base leading-8 text-[var(--color-muted)]">
+				{t.body}
+			</p>
+		</div>
+
+		<ul class="grid gap-3">
+			{t.partners.map((partner) => (
+				<li class="quiet-card rounded-[1.25rem] p-5">
+					<h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-purple)]">
+						{partner.name}
+					</h3>
+					<p class="mt-2 text-sm leading-6 text-[var(--color-muted)]">
+						{partner.description}
+					</p>
+				</li>
+			))}
+		</ul>
+	</div>
+</Section>

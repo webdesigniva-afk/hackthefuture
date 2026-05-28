@@ -1,0 +1,283 @@
+---
+import ApplicationForm from "./ApplicationForm.astro";
+
+const checklist = [
+	{
+		title: "Students aged 15–19",
+		icon: "M12 3v18M5 8h14M7 16h10",
+		size: "tall",
+	},
+	{
+		title: "From Shumen or anywhere in Bulgaria",
+		icon: "M12 21s7-5.1 7-11a7 7 0 0 0-14 0c0 5.9 7 11 7 11Z M12 10.5h.01",
+		size: "short",
+	},
+	{
+		title: "Apply alone or with a team",
+		icon: "M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM16 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3 21a5 5 0 0 1 10 0M13.5 20.5a4.5 4.5 0 0 1 7.5 0",
+		size: "short",
+	},
+	{
+		title: "Schools can nominate students",
+		icon: "M4 10l8-5 8 5-8 5-8-5ZM6 12v5c1.5 1.4 3.5 2 6 2s4.5-.6 6-2v-5",
+		size: "tall",
+	},
+	{
+		title: "No experience required",
+		icon: "M20 6 9 17l-5-5",
+		size: "wide",
+	},
+];
+
+const checklistColumns = [checklist.slice(0, 3), checklist.slice(3)];
+
+const partners = [
+	{
+		name: "Municipality of Shumen",
+		subtitle: "Host institution",
+	},
+	{
+		name: "Sofia Tech Park",
+		subtitle: "Innovation partner",
+	},
+	{
+		name: "Shumen Institute of Technology",
+		subtitle: "Academic partner",
+	},
+	{
+		name: "Visoko Darvo",
+		subtitle: "Strategic partner",
+	},
+];
+
+---
+
+<section id="who-can-join" class="motion-section civic-grid px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
+	<div class="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+		<div>
+			<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]">
+				PARTICIPATION
+			</p>
+			<h2 class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
+				Who can join
+			</h2>
+			<p class="mt-6 max-w-md text-base leading-8 text-[var(--color-muted)]">
+				Anyone with curiosity, ideas, and the desire to build something real.
+			</p>
+		</div>
+
+		<div class="participation-list grid gap-x-12 gap-y-3 sm:grid-cols-2">
+			{checklistColumns.map((column, columnIndex) => (
+				<div class={`participation-list-column ${columnIndex === 1 ? "sm:pt-[4.35rem]" : ""}`}>
+					{column.map((item) => (
+						<div class="participation-list-item group flex items-center gap-4 border-t border-[var(--color-line)] py-4">
+							<span class="participation-icon grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[rgba(45,27,78,0.07)] text-[var(--color-purple)] transition duration-300 group-hover:-translate-y-0.5 group-hover:bg-[rgba(176,138,74,0.1)] group-hover:text-[var(--color-gold)]" aria-hidden="true">
+								<svg viewBox="0 0 24 24" class="h-[1.125rem] w-[1.125rem]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d={item.icon} />
+								</svg>
+							</span>
+							<h3 class="text-base font-semibold leading-7 tracking-[-0.015em] text-[var(--color-ink)]">
+								{item.title}
+							</h3>
+						</div>
+					))}
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<div class="brand-divider px-4 py-2 sm:px-6 lg:px-8" aria-hidden="true">
+	<div class="mx-auto flex max-w-7xl items-center overflow-hidden py-3">
+		<div class="brand-divider-track flex min-w-max items-center gap-5 text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/76">
+			{Array.from({ length: 2 }).map(() => (
+				<div class="brand-divider-sequence flex items-center gap-5 pr-5">
+					<span>CATALIZATOR</span>
+					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
+						<circle cx="64" cy="64" r="42" />
+						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
+						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
+						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
+					</svg>
+					<span>HACK THE FUTURE</span>
+					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
+						<circle cx="64" cy="64" r="42" />
+						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
+						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
+						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
+					</svg>
+					<span>SHUMEN</span>
+					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
+						<circle cx="64" cy="64" r="42" />
+						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
+						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
+						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
+					</svg>
+					<span>FUTURE READINESS CHALLENGE</span>
+					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
+						<circle cx="64" cy="64" r="42" />
+						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
+						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
+						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
+					</svg>
+					<span>YOUNG PEOPLE</span>
+					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
+						<circle cx="64" cy="64" r="42" />
+						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
+						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
+						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
+					</svg>
+				</div>
+			))}
+		</div>
+	</div>
+</div>
+
+<section id="apply" class="motion-section civic-grid px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+	<div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.82fr_minmax(0,48rem)] lg:items-start">
+		<div>
+			<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]">
+				APPLICATION
+			</p>
+			<h2 class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
+				Apply for Hack The Future
+			</h2>
+			<p class="mt-5 max-w-2xl text-base leading-7 text-[var(--color-muted)]">
+				Register your interest below.
+			</p>
+			<p class="mt-2 text-sm leading-6 text-[var(--color-muted)]/72">
+				Applications open: Date to be confirmed
+			</p>
+		</div>
+
+		<div class="w-full">
+			<ApplicationForm />
+		</div>
+	</div>
+</section>
+
+<section id="about" class="motion-section civic-grid px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+	<div class="mx-auto max-w-7xl">
+		<div class="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+			<div>
+				<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]">
+					PARTNERS
+				</p>
+				<h2 class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
+					Who's behind it
+				</h2>
+			</div>
+			<div class="space-y-6 text-base leading-8 text-[var(--color-muted)]">
+				<p>Hack the Future is part of CATALIZATOR, the leadership and governance platform hosted by the Municipality of Shumen.</p>
+				<p>CATALIZATOR brings together mayors, business leaders and academics to work on the future of cities.</p>
+				<p>Hack the Future brings the same questions to the people who will live with the answers longest.</p>
+				<p class="font-semibold text-[var(--color-ink)]">That's you.</p>
+			</div>
+		</div>
+
+		<div class="mt-12 grid gap-x-12 gap-y-4 md:grid-cols-2">
+			{partners.map((partner, index) => (
+				<article class="partner-row group border-t border-[var(--color-line)] py-7">
+					<p class="text-xs font-semibold text-[var(--color-muted)]/42">0{index + 1}</p>
+					<h3 class="mt-5 text-[1.08rem] font-semibold uppercase leading-7 tracking-[0.17em] text-[var(--color-ink)] transition-colors duration-200 group-hover:text-[var(--color-purple)]">
+						{partner.name}
+					</h3>
+					<p class="mt-2 text-sm font-medium leading-6 text-[var(--color-muted)]">
+						{partner.subtitle}
+					</p>
+				</article>
+			))}
+		</div>
+	</div>
+</section>
+
+<section class="motion-section cinematic-dark px-4 py-16 text-[var(--color-paper)] sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+	<div class="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start">
+		<div>
+			<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/54">
+				WHY THIS EXISTS
+			</p>
+			<h2 class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl">
+				The country you're about to inherit is changing faster than the systems built to run it.
+			</h2>
+		</div>
+
+		<div class="max-w-2xl">
+			<div class="mt-1 text-base leading-8 text-[var(--color-paper)]/72">
+				<div class="why-copy-group pb-7">
+					<p>The country you are about to inherit is changing faster than the systems built to run it. Work, climate, technology, your city, your own mental health, the economy — none of it looks the way it did even ten years ago, and none of it is going to slow down.</p>
+				</div>
+
+				<div class="why-copy-group py-7">
+					<p>No one has the full playbook for what comes next. Not your teachers. Not your parents. Not the mayors. Not us.</p>
+					<p class="mt-5">The honest truth is that the people who will live longest with the decisions being made right now are the ones with the least say in them.</p>
+				</div>
+
+				<div class="why-copy-group pt-4">
+					<p class="text-xl font-semibold leading-8 text-[rgba(222,213,193,0.88)] sm:text-2xl sm:leading-9">Hack the Future exists to change that.</p>
+					<p class="mt-6">The work you do in these two days is not symbolic.</p>
+					<p class="mt-5 border-l border-[rgba(222,213,193,0.88)] py-1 pl-7">Mentors take it seriously.<br />The jury takes it seriously.<br />Partners take it seriously.</p>
+					<p class="mt-6">The strongest ideas become the starting point for real conversations with institutions that can act on them.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.participation-list {
+		align-content: start;
+	}
+
+	.participation-list-column {
+		display: grid;
+		align-content: start;
+	}
+
+	.brand-divider {
+		background:
+			linear-gradient(90deg, rgba(255, 252, 247, 0.035), transparent 16%, transparent 84%, rgba(255, 252, 247, 0.035)),
+			linear-gradient(135deg, rgba(45, 27, 78, 0.98), rgba(35, 22, 60, 0.96));
+		box-shadow:
+			inset 0 1px 0 rgba(255, 252, 247, 0.08),
+			inset 0 -1px 0 rgba(8, 6, 13, 0.16);
+	}
+
+	.brand-divider-track {
+		white-space: nowrap;
+		will-change: transform;
+		animation: brand-divider-scroll 28s linear infinite;
+	}
+
+	.brand-divider-mark {
+		width: 0.9rem;
+		height: 0.9rem;
+		color: var(--color-paper);
+		opacity: 0.58;
+		stroke: currentColor;
+		stroke-width: 5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.brand-divider-mark-dot {
+		fill: currentColor;
+		stroke: none;
+	}
+
+	@keyframes brand-divider-scroll {
+		from {
+			transform: translate3d(0, 0, 0);
+		}
+
+		to {
+			transform: translate3d(-50%, 0, 0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.brand-divider-track {
+			animation-duration: 28s !important;
+		}
+	}
+</style>

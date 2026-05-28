@@ -1,0 +1,32 @@
+---
+import ArenaMoment from "../components/ArenaMoment.astro";
+import AtmosphericAnchor from "../components/AtmosphericAnchor.astro";
+import ClosingSection from "../components/ClosingSection.astro";
+import CivicImageSection from "../components/CivicImageSection.astro";
+import Hero from "../components/Hero.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import IntroSection from "../components/IntroSection.astro";
+import PublicationsSection from "../components/PublicationsSection.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteCopy } from "../i18n";
+
+const lang = "en";
+const t = siteCopy[lang];
+---
+
+<BaseLayout
+	title={t.meta.homeTitle}
+	description={t.meta.homeDescription}
+	lang={lang}
+>
+	<Header lang={lang} />
+	<Hero lang={lang} />
+	<IntroSection lang={lang} />
+	<ArenaMoment lang={lang} />
+	<CivicImageSection lang={lang} />
+	<AtmosphericAnchor lang={lang} />
+	<PublicationsSection lang={lang} />
+	<ClosingSection lang={lang} />
+	<Footer lang={lang} />
+</BaseLayout>

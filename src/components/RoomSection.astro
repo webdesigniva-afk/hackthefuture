@@ -1,0 +1,36 @@
+---
+import Section from "./Section.astro";
+import { getLang, siteCopy, type Lang } from "../i18n";
+
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+const t = siteCopy[lang].room;
+---
+
+<Section
+	id="speakers"
+	eyebrow={t.eyebrow}
+	title={t.title}
+	intro={t.intro}
+>
+	<ol class="divide-y divide-[var(--color-line)] border-y border-[var(--color-line)]">
+		{t.participants.map((participant, index) => (
+			<li class="grid gap-7 py-8 sm:py-10 lg:grid-cols-[minmax(12rem,0.42fr)_minmax(0,1fr)] lg:gap-12">
+				<div class="grid gap-4 sm:grid-cols-[3.25rem_minmax(0,1fr)] sm:items-start">
+					<span class="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-purple)]/60">
+						{String(index + 1).padStart(2, "0")}
+					</span>
+					<h3 class="max-w-md text-xl font-semibold leading-tight tracking-[-0.02em] text-[var(--color-ink)] sm:text-2xl">
+						{participant.title}
+					</h3>
+				</div>
+				<p class="max-w-xl text-base leading-8 text-[var(--color-muted)]">
+					{participant.body}
+				</p>
+			</li>
+		))}
+	</ol>
+</Section>

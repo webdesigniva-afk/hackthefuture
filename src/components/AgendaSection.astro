@@ -1,0 +1,37 @@
+---
+import Section from "./Section.astro";
+import { getLang, siteCopy, type Lang } from "../i18n";
+
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+const t = siteCopy[lang].agenda;
+---
+
+<Section
+	id="agenda"
+	eyebrow={t.eyebrow}
+	title={t.title}
+	intro={t.intro}
+	tone="dark"
+>
+	<div class="grid gap-6">
+		{t.questions.map((question) => (
+			<article class="premium-hover grid gap-6 rounded-[1.25rem] border border-white/12 bg-white/[0.045] p-6 hover:border-white/20 hover:bg-white/[0.07] md:grid-cols-[5rem_minmax(0,1fr)]">
+				<p class="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-paper)]/10 text-sm font-semibold text-[var(--color-paper)]">
+					{question.number}
+				</p>
+				<div>
+					<h3 class="text-2xl font-semibold leading-tight tracking-[-0.025em] text-[var(--color-paper)] sm:text-3xl">
+						{question.title}
+					</h3>
+					<p class="mt-5 max-w-2xl text-base leading-8 text-[var(--color-paper)]/68">
+						{question.body}
+					</p>
+				</div>
+			</article>
+		))}
+	</div>
+</Section>

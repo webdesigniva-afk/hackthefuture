@@ -1,0 +1,268 @@
+---
+const days = [
+	{
+		number: "01",
+		label: "DAY 1 — June 10",
+		title: "Form, choose, start.",
+		body: "Teams form in the morning. You meet your team, pick your theme, and start working. Mentors are in the room throughout the day to push back on weak ideas, sharpen the strong ones, and connect you to information you don't yet have. Workshops in the afternoon on how to build a pitch.",
+		weight: "dominant",
+	},
+	{
+		number: "02",
+		label: "DAY 2 — June 11",
+		title: "Build and present.",
+		body: "Your team turns your idea into something real you can show. Mentors stay in the room. By the end of the day, every team presents to the jury.",
+		weight: "medium",
+	},
+	{
+		number: "03",
+		label: "DAY 3 — June 12",
+		title: "Award ceremony.",
+		body: "The strongest teams are recognized in front of the city.",
+		weight: "compact",
+	},
+];
+---
+
+<section id="schedule" class="motion-section civic-grid px-4 py-[4.25rem] sm:px-6 sm:py-[5.25rem] lg:px-8 lg:py-[6.5rem]">
+	<div class="mx-auto max-w-7xl">
+		<div class="mb-16 grid gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-end">
+			<div>
+				<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]">
+					SCHEDULE
+				</p>
+				<h2 class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
+					How the two days work
+				</h2>
+			</div>
+		</div>
+
+		<div class="editorial-timeline">
+			<div class="timeline-rail" aria-hidden="true">
+				<span></span>
+			</div>
+
+			<ol class="timeline-content">
+				{days.map((day, index) => (
+					<li class={`timeline-entry timeline-entry--${day.weight}`} style={`--timeline-index: ${index}`}>
+						<div class="timeline-marker" aria-hidden="true"></div>
+						<p class="timeline-day-label">{day.label}</p>
+						<div class="timeline-entry-grid">
+							<p class="timeline-day-number">{day.number}</p>
+							<div>
+								<h3 class="timeline-title">{day.title}</h3>
+								<p class="timeline-body">{day.body}</p>
+							</div>
+						</div>
+					</li>
+				))}
+			</ol>
+		</div>
+	</div>
+</section>
+
+<style>
+	.editorial-timeline {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(3rem, 0.18fr) minmax(0, 1fr);
+		gap: clamp(2rem, 5vw, 5rem);
+	}
+
+	.timeline-rail {
+		position: relative;
+		min-height: 100%;
+	}
+
+	.timeline-rail::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: clamp(1.25rem, 3vw, 3rem);
+		width: 1px;
+		background: rgba(45, 27, 78, 0.14);
+	}
+
+	.timeline-rail span {
+		position: absolute;
+		top: 0;
+		left: clamp(1.25rem, 3vw, 3rem);
+		width: 1px;
+		height: 100%;
+		background: linear-gradient(180deg, rgba(45, 27, 78, 0.4), rgba(176, 138, 74, 0.55), rgba(45, 27, 78, 0.16));
+		transform: scaleY(0);
+		transform-origin: top;
+		transition: transform 1500ms var(--ease-premium);
+	}
+
+	.motion-ready .timeline-rail span {
+		transform: scaleY(1);
+	}
+
+	.timeline-content {
+		display: grid;
+		gap: clamp(4.5rem, 8vw, 8rem);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.timeline-entry {
+		position: relative;
+		opacity: 0;
+		transform: translate3d(0, 1.35rem, 0);
+		transition:
+			opacity 720ms var(--ease-premium),
+			transform 720ms var(--ease-premium);
+		transition-delay: calc(var(--timeline-index) * 120ms);
+	}
+
+	.motion-ready .timeline-entry {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+
+	.timeline-marker {
+		position: absolute;
+		top: 0.32rem;
+		left: calc(clamp(-5rem, -5vw, -2rem) - 0.62rem);
+		width: 1.24rem;
+		height: 1.24rem;
+		border: 1px solid rgba(45, 27, 78, 0.28);
+		border-radius: 999px;
+		background: var(--color-paper);
+		box-shadow: 0 0 0 0.55rem rgba(255, 252, 247, 0.9);
+	}
+
+	.timeline-marker::after {
+		content: "";
+		position: absolute;
+		inset: 0.33rem;
+		border-radius: inherit;
+		background: var(--color-gold);
+	}
+
+	.timeline-day-label {
+		margin: 0 0 1.5rem;
+		color: color-mix(in srgb, var(--color-purple) 70%, transparent);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.22em;
+		line-height: 1.4;
+		text-transform: uppercase;
+	}
+
+	.timeline-entry-grid {
+		display: grid;
+		grid-template-columns: minmax(5.4rem, 0.18fr) minmax(0, 1fr);
+		gap: clamp(1.5rem, 4vw, 4.5rem);
+		align-items: start;
+	}
+
+	.timeline-day-number {
+		margin: 0;
+		color: color-mix(in srgb, var(--color-purple) 16%, transparent);
+		font-size: clamp(4.5rem, 12vw, 10rem);
+		font-weight: 600;
+		letter-spacing: -0.06em;
+		line-height: 0.78;
+	}
+
+	.timeline-title {
+		margin: 0;
+		max-width: 16ch;
+		color: var(--color-ink);
+		font-weight: 600;
+		letter-spacing: -0.04em;
+		line-height: 1.02;
+		text-wrap: balance;
+	}
+
+	.timeline-body {
+		margin: 1.5rem 0 0;
+		max-width: 46rem;
+		color: var(--color-muted);
+		font-size: 1rem;
+		line-height: 1.85;
+		text-wrap: pretty;
+	}
+
+	.timeline-entry--dominant .timeline-title {
+		font-size: clamp(2.5rem, 5.3vw, 5.4rem);
+	}
+
+	.timeline-entry--dominant .timeline-body {
+		max-width: 54rem;
+		font-size: 1.06rem;
+	}
+
+	.timeline-entry--medium {
+		margin-left: clamp(0rem, 5vw, 4rem);
+	}
+
+	.timeline-entry--medium .timeline-title {
+		font-size: clamp(2rem, 4vw, 4.1rem);
+	}
+
+	.timeline-entry--compact {
+		margin-left: clamp(0rem, 10vw, 8rem);
+		padding-bottom: 1rem;
+	}
+
+	.timeline-entry--compact .timeline-day-number {
+		color: color-mix(in srgb, var(--color-gold) 28%, transparent);
+	}
+
+	.timeline-entry--compact .timeline-title {
+		color: var(--color-purple);
+		font-size: clamp(1.75rem, 3vw, 3.1rem);
+	}
+
+	.timeline-entry:hover .timeline-marker {
+		border-color: rgba(176, 138, 74, 0.58);
+		box-shadow:
+			0 0 0 0.65rem rgba(255, 252, 247, 0.95),
+			0 20px 48px rgba(45, 27, 78, 0.16);
+		transform: translate3d(0, -0.08rem, 0) scale(1.04);
+		transition:
+			border-color 240ms ease,
+			box-shadow 240ms ease,
+			transform 240ms ease;
+	}
+
+	@media (max-width: 767px) {
+		.editorial-timeline {
+			grid-template-columns: 1.5rem minmax(0, 1fr);
+			gap: 1.5rem;
+		}
+
+		.timeline-rail::before,
+		.timeline-rail span {
+			left: 0.68rem;
+		}
+
+		.timeline-content {
+			gap: 4rem;
+		}
+
+		.timeline-marker {
+			left: -2.43rem;
+		}
+
+		.timeline-entry,
+		.timeline-entry--medium,
+		.timeline-entry--compact {
+			margin-left: 0;
+		}
+
+		.timeline-entry-grid {
+			grid-template-columns: 1fr;
+			gap: 1.25rem;
+		}
+
+		.timeline-day-number {
+			font-size: clamp(4.2rem, 24vw, 7rem);
+		}
+	}
+</style>

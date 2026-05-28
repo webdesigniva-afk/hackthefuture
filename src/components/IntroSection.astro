@@ -1,0 +1,33 @@
+---
+import Section from "./Section.astro";
+import { getLang, siteCopy, type Lang } from "../i18n";
+
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+const t = siteCopy[lang].intro;
+---
+
+<Section
+	id="introduction"
+	eyebrow={t.eyebrow}
+	title={t.title}
+	intro={t.intro}
+>
+	<div class="grid gap-8 md:grid-cols-2">
+		<p class="text-base leading-8 text-[var(--color-muted)]">
+			{t.body[0]}
+		</p>
+		<p class="text-base leading-8 text-[var(--color-muted)]">
+			{t.body[1]}
+		</p>
+	</div>
+
+	<div class="mt-12 border-l-2 border-[var(--color-purple)] pl-6">
+		<p class="max-w-3xl text-2xl font-semibold leading-tight tracking-[-0.03em] text-[var(--color-purple)] sm:text-3xl">
+			{t.statement}
+		</p>
+	</div>
+</Section>

@@ -1,0 +1,18 @@
+---
+interface Props {
+	label?: string;
+}
+
+const { label = "Scroll to top" } = Astro.props;
+---
+
+<button
+	type="button"
+	class="scroll-to-top"
+	aria-label={label}
+	data-scroll-to-top
+>
+	<svg viewBox="0 0 24 24" aria-hidden="true">
+		<path d="M12 19V5M6.5 10.5 12 5l5.5 5.5" />
+	</svg>
+</button>

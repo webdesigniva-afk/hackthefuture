@@ -1,0 +1,135 @@
+---
+import "../styles/global.css";
+import ScrollToTop from "../components/ScrollToTop.astro";
+import { getLang, siteCopy, type Lang } from "../i18n";
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	lang?: Lang;
+}
+
+const {
+	title = "CATALIZATOR",
+	description = "A leadership platform for institutional decision-makers.",
+	image = "/catalizator-logo.png",
+	lang: langProp = "en",
+} = Astro.props;
+
+const lang = getLang(langProp);
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="alternate icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/catalizator-logo.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta name="robots" content="index, follow" />
+		<meta name="theme-color" content="#F7F5F0" />
+		<meta name="generator" content={Astro.generator} />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="CATALIZATOR" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={image} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+		<ScrollToTop label={siteCopy[lang].scrollToTop} />
+		<script>
+			const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+			const scrollToTopButton = document.querySelector("[data-scroll-to-top]");
+			const galleryComposition = document.querySelector("[data-gallery-composition]");
+			const sectionCandidates = document.querySelectorAll("main > section, article > section, body > section");
+			const cardCandidates = document.querySelectorAll(".quiet-card, .premium-hover, .publication-entry");
+			const motionTargets = new Set();
+
+			sectionCandidates.forEach((section) => {
+				if (!section.classList.contains("hero-section")) {
+					section.classList.add("motion-section");
+				}
+			});
+
+			cardCandidates.forEach((item) => item.classList.add("motion-item"));
+
+			document.querySelectorAll(".grid, ol, ul").forEach((group) => {
+				const items = Array.from(group.children)
+					.map((child) =>
+						child.matches(".motion-item, .quiet-card, .premium-hover, .publication-entry")
+							? child
+							: child.querySelector(":scope > .publication-entry")
+					)
+					.filter(Boolean);
+
+				if (items.length > 1) {
+					group.classList.add("motion-stagger");
+					items.forEach((item, index) => {
+						if (item instanceof HTMLElement) {
+							item.style.setProperty("--motion-delay", `${Math.min(index, 4) * 55}ms`);
+						}
+					});
+				}
+			});
+
+			document.querySelectorAll(".motion-section, .motion-item").forEach((target) => motionTargets.add(target));
+
+			if (reducedMotion) {
+				motionTargets.forEach((target) => target.classList.add("is-visible", "motion-ready"));
+				galleryComposition?.classList.add("gallery-is-connected");
+			} else {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								entry.target.classList.add("is-visible");
+								window.setTimeout(() => entry.target.classList.add("motion-ready"), 820);
+								observer.unobserve(entry.target);
+							}
+						});
+					},
+					{ threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
+				);
+
+				motionTargets.forEach((target) => observer.observe(target));
+
+				if (galleryComposition) {
+					const galleryObserver = new IntersectionObserver(
+						(entries) => {
+							entries.forEach((entry) => {
+								if (entry.isIntersecting) {
+									entry.target.classList.add("gallery-is-connected");
+									galleryObserver.unobserve(entry.target);
+								}
+							});
+						},
+						{ threshold: 0.42, rootMargin: "-14% 0px -18% 0px" }
+					);
+
+					galleryObserver.observe(galleryComposition);
+				}
+			}
+
+			if (scrollToTopButton) {
+				const updateScrollToTop = () => {
+					scrollToTopButton.classList.toggle("is-visible", window.scrollY > 720);
+				};
+
+				scrollToTopButton.addEventListener("click", () => {
+					window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+				});
+
+				updateScrollToTop();
+				window.addEventListener("scroll", updateScrollToTop, { passive: true });
+			}
+		</script>
+	</body>
+</html>

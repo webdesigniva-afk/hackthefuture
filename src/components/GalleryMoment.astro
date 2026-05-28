@@ -1,0 +1,43 @@
+---
+import { getLang, siteCopy, type Lang } from "../i18n";
+
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+const t = siteCopy[lang].gallery;
+const galleryImage = "/shumen-institute-campus-clean.jpg";
+const transparentPixel =
+	"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+---
+
+<section class="motion-section civic-grid px-4 py-10 sm:px-6 lg:px-8">
+	<div class="mx-auto max-w-[50rem] lg:max-w-[56rem]">
+		<figure class="gallery-mobile-frame cinematic-frame md:hidden" aria-label={t.label}>
+			<picture>
+				<source media="(max-width: 767px)" srcset={galleryImage} />
+				<img
+					class="gallery-mobile-photo"
+					src={transparentPixel}
+					alt={t.label}
+					width="1536"
+					height="1024"
+					loading="lazy"
+					decoding="async"
+					sizes="(max-width: 767px) calc(100vw - 2rem), 1px"
+				/>
+			</picture>
+		</figure>
+
+		<div class="gallery-composition hidden gap-5 md:grid md:grid-cols-3" data-gallery-composition aria-label={t.label}>
+			{t.moments.map((moment, index) => (
+				<div
+					class="gallery-composition-card cinematic-frame rounded-[1.25rem]"
+					data-panel={index + 1}
+					aria-label={moment}
+				></div>
+			))}
+		</div>
+	</div>
+</section>

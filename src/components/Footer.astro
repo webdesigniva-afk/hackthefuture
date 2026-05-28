@@ -1,0 +1,104 @@
+---
+import { getLang, langPath, siteCopy, type Lang } from "../i18n";
+
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+const t = siteCopy[lang];
+const currentPath = Astro.url.pathname.replace(/^\/(en|bg)/, "") || "/";
+
+const partners = [
+	{
+		name: "Municipality of Shumen",
+		localizedName: t.about.partners[0].name,
+		logo: "https://www.shumen.bg/assets/images/logo.svg",
+		href: "https://www.shumen.bg/bg/",
+		className: "partner-logo--shumen",
+	},
+	{
+		name: "Sofia Tech Park BIC",
+		localizedName: t.about.partners[1].name,
+		logo: "https://kt.cern/sites/default/files/images/bic/image/sofia-tech-park-bic.png",
+		href: "https://sofiatech.bg/",
+		className: "partner-logo--sofia-tech",
+	},
+	{
+		name: "Shumen IT",
+		localizedName: t.about.partners[2].name,
+		logo: "https://shumen-it.com/wp-content/uploads/2019/08/logo-sit-2.png",
+		href: "https://shumen-it.com/",
+		className: "partner-logo--shumen-it",
+	},
+	{
+		name: "Visoko Darvo",
+		localizedName: t.about.partners[3].name,
+		logo: "https://visokodarvo.org/wp-content/uploads/2026/02/Visoko-Darvo-logo-2.svg",
+		href: "https://visokodarvo.org/",
+		className: "partner-logo--visoko-darvo",
+	},
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer id="contact" class="gradient-rule civic-grid scroll-mt-28 border-t border-[rgba(26,26,26,0.1)] bg-[var(--color-paper)] px-6 py-10 text-[var(--color-muted)] sm:px-10 sm:py-12 lg:px-16">
+	<div class="mx-auto grid max-w-7xl gap-10 md:grid-cols-[minmax(0,1fr)_auto]">
+		<div>
+			<p class="max-w-5xl font-serif text-2xl leading-tight text-[var(--color-ink)]/88 sm:text-3xl lg:text-4xl">
+				<span class="block">You bring the energy. We bring the challenge.</span>
+				<span class="block">Together, we hack the future.</span>
+			</p>
+
+			<div class="footer-partners mt-10" aria-labelledby="founding-partners-title">
+				<p id="founding-partners-title" class="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-muted)]/64">
+					{t.footer.founders}
+				</p>
+
+				<ul class="mt-6 flex flex-wrap items-center gap-x-9 gap-y-6" aria-label={t.footer.partnerLabel}>
+					{partners.map((partner) => (
+						<li class="flex h-10 items-center">
+							<a class="partner-logo-link" href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`${partner.localizedName} ${t.footer.website}`}>
+								<img
+									class={`partner-logo ${partner.className}`}
+									src={partner.logo}
+									alt={partner.localizedName}
+									loading="lazy"
+									decoding="async"
+								/>
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+		</div>
+
+		<div class="flex flex-col gap-6 text-[0.82rem] md:items-end">
+			<nav class="flex flex-wrap gap-x-6 gap-y-3" aria-label={t.nav.footer}>
+				{t.footer.links.map((link) => (
+					<a class="no-underline hover:text-[var(--color-purple)]" href={link.href.startsWith("http") ? link.href : langPath(lang, link.href)}>{link.label}</a>
+				))}
+			</nav>
+
+			<div class="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em]" aria-label={t.nav.language}>
+				<a class={`${lang === "en" ? "text-[var(--color-ink)]" : "hover:text-[var(--color-purple)]"} no-underline`} href={langPath("en", currentPath)} aria-current={lang === "en" ? "true" : undefined}>EN</a>
+				<span class="h-3 w-px bg-[var(--color-line)]" aria-hidden="true"></span>
+				<a class={`${lang === "bg" ? "text-[var(--color-ink)]" : "hover:text-[var(--color-purple)]"} no-underline`} href={langPath("bg", currentPath)} aria-current={lang === "bg" ? "true" : undefined}>BG</a>
+			</div>
+
+			<p class="text-xs uppercase tracking-[0.18em]">
+				&copy; {year} Hack The Future
+			</p>
+
+			<a
+				class="footer-credit text-[0.68rem] no-underline"
+				href="https://www.it-s.org"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				Website by IT-S
+			</a>
+		</div>
+	</div>
+</footer>

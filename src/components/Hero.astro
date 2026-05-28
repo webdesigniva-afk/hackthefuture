@@ -1,0 +1,66 @@
+---
+import { getLang, siteCopy, type Lang } from "../i18n";
+
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+const t = siteCopy[lang].hero;
+---
+
+<section class="hero-section gradient-rule atmospheric-section civic-grid relative overflow-hidden px-4 pb-14 pt-5 sm:px-6 sm:pb-16 lg:px-8">
+	<div class="mx-auto max-w-7xl">
+		<div class="hero-caption mb-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-y border-[rgba(45,27,78,0.075)] py-4 text-[0.63rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]/62 lg:flex-nowrap lg:justify-between lg:gap-x-10 xl:gap-x-16">
+			{t.caption.map((item, index) => (
+				<span class="hero-caption-unit" data-caption-unit={index + 1}>
+					{index > 0 && <span class="hero-caption-separator text-[var(--color-gold)]/55" aria-hidden="true">&middot;</span>}
+					<span class="hero-caption-item" data-caption-item={index + 1}>{item}</span>
+				</span>
+			))}
+		</div>
+
+		<div class="hero-layout grid min-h-[calc(100vh-10.5rem)] gap-5 lg:grid-cols-[minmax(0,0.92fr)_minmax(23rem,0.78fr)] lg:items-center">
+			<div class="hero-intro-panel relative z-10 flex flex-col justify-center p-7 sm:p-9 lg:p-12">
+				<div class="hero-platform mb-8 flex items-center gap-3.5 text-[0.67rem] font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)]/82">
+					<img
+						src="/catalizator-logo.png"
+						alt=""
+						class="h-8 w-8 shrink-0 object-contain mix-blend-multiply"
+						loading="eager"
+						decoding="async"
+					/>
+					<span class="grid gap-1">
+						<span class="text-[0.72rem] text-[var(--color-ink)]">Hack The Future</span>
+						<span>{t.platform}</span>
+					</span>
+				</div>
+
+				<h1 class="hero-title max-w-[10.6em] text-[clamp(2rem,3.68vw,4.34rem)] font-[580] leading-[1.045] tracking-[-0.036em] text-[var(--color-ink)]">
+					{t.title}
+				</h1>
+
+				<p class="hero-copy mt-8 max-w-3xl text-base leading-8 text-[var(--color-muted)]/94 sm:text-[1rem]">
+					{t.intro}
+				</p>
+			</div>
+
+			<div class="relative z-10 grid gap-5 lg:self-center">
+				<div class="media-placeholder cinematic-frame image-card min-h-[28rem] rounded-[1.1rem]">
+					<video
+						class="media-video"
+						src="/hack-the-future-hero.mp4"
+						autoplay
+						muted
+						loop
+						playsinline
+						preload="metadata"
+						aria-label={t.videoLabel}
+					></video>
+				</div>
+
+				<div class="min-h-12 sm:min-h-14 lg:hidden" aria-hidden="true"></div>
+			</div>
+		</div>
+	</div>
+</section>
