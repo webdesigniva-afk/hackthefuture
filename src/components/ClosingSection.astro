@@ -52,7 +52,8 @@ const partners = [
 
 ---
 
-<section id="who-can-join" class="motion-section civic-grid px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
+<div class="closing-bottom-up-stack">
+<section id="who-can-join" class="closing-bottom-up-item closing-bottom-up-item--who motion-section civic-grid px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
 	<div class="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
 		<div>
 			<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]">
@@ -87,7 +88,7 @@ const partners = [
 	</div>
 </section>
 
-<div class="brand-divider px-4 py-2 sm:px-6 lg:px-8" aria-hidden="true">
+<div class="closing-bottom-up-item closing-bottom-up-item--brand brand-divider px-4 py-2 sm:px-6 lg:px-8" aria-hidden="true">
 	<div class="mx-auto flex max-w-7xl items-center overflow-hidden py-3">
 		<div class="brand-divider-track flex min-w-max items-center gap-5 text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/76">
 			{Array.from({ length: 2 }).map(() => (
@@ -133,7 +134,7 @@ const partners = [
 	</div>
 </div>
 
-<section id="apply" class="motion-section civic-grid px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+<section id="apply" class="closing-bottom-up-item closing-bottom-up-item--apply motion-section civic-grid px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
 	<div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.82fr_minmax(0,48rem)] lg:items-start">
 		<div>
 			<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]">
@@ -156,7 +157,7 @@ const partners = [
 	</div>
 </section>
 
-<section id="about" class="motion-section civic-grid px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+<section id="about" class="closing-bottom-up-item closing-bottom-up-item--about motion-section civic-grid px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
 	<div class="mx-auto max-w-7xl">
 		<div class="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
 			<div>
@@ -191,7 +192,7 @@ const partners = [
 	</div>
 </section>
 
-<section class="motion-section cinematic-dark px-4 py-16 text-[var(--color-paper)] sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+<section class="closing-bottom-up-item closing-bottom-up-item--why motion-section cinematic-dark px-4 py-16 text-[var(--color-paper)] sm:px-6 sm:py-20 lg:px-8 lg:py-24">
 	<div class="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start">
 		<div>
 			<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/54">
@@ -224,7 +225,38 @@ const partners = [
 	</div>
 </section>
 
+</div>
+
 <style>
+	.closing-bottom-up-stack {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.closing-bottom-up-stack > * {
+		width: 100%;
+	}
+
+	.closing-bottom-up-item--brand {
+		order: 1;
+	}
+
+	.closing-bottom-up-item--why {
+		order: 2;
+	}
+
+	.closing-bottom-up-item--about {
+		order: 3;
+	}
+
+	.closing-bottom-up-item--apply {
+		order: 4;
+	}
+
+	.closing-bottom-up-item--who {
+		order: 5;
+	}
+
 	.participation-list {
 		align-content: start;
 	}

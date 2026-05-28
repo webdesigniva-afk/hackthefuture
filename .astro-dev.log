@@ -37,3 +37,18 @@ Error: Failed to load url astro:server-app.js (resolved id: astro:server-app.js)
 [2m15:30:34[22m [34m[watch][39m /src/styles/global.css
 [2m15:30:35[22m [34m[200][39m /en [2m99ms[22m
 [2m15:31:11[22m [34m[watch][39m /src/styles/global.css
+[2m15:34:34[22m [34m[watch][39m /src/styles/global.css
+[2m15:34:40[22m [34m[watch][39m /src/styles/global.css
+[2m15:35:50[22m [34m[watch][39m /src/styles/global.css
+[2m15:42:47[22m [34m[watch][39m src/layouts/BaseLayout.astro
+[2m15:43:00[22m [34m[watch][39m /src/styles/global.css
+[2m15:43:07[22m [34m[watch][39m /src/styles/global.css
+[2m15:43:14[22m [34m[watch][39m /src/styles/global.css
+[2m15:44:17[22m [34m[200][39m / [2m56ms[22m
+[2m15:44:36[22m [34m[200][39m / [2m14ms[22m
+[2m15:46:17[22m [34m[200][39m /en [2m28ms[22m
+[2m15:48:39[22m [34m[watch][39m /src/components/ClosingSection.astro?astro&type=style&index=0&lang.css, /src/styles/global.css
+[2m15:48:40[22m [34m[200][39m /en [2m18ms[22m
+[2m15:49:42[22m [34m[200][39m /en [2m4ms[22m
+[2m15:51:33[22m [34m[watch][39m /src/components/ClosingSection.astro?astro&type=style&index=0&lang.css, /src/styles/global.css
+[2m15:51:33[22m [34m[200][39m /en [2m20ms[22m

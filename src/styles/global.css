@@ -81,18 +81,8 @@ body[data-scroll-flow="bottom-up"] {
 	overflow-anchor: none;
 }
 
-body[data-scroll-flow="bottom-up"] .site-header {
-	position: fixed;
-	inset: 0 0 auto;
-}
-
-body[data-scroll-flow="bottom-up"] .bottom-up-page {
+.bottom-up-page {
 	display: flow-root;
-	position: fixed;
-	inset: var(--bottom-up-header-height, 0px) 0 auto;
-	z-index: 0;
-	width: 100%;
-	will-change: transform;
 }
 
 body[data-scroll-flow="bottom-up"] .scroll-to-top {
