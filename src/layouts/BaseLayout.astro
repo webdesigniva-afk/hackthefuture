@@ -23,7 +23,7 @@ const lang = getLang(langProp);
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} data-scroll-flow={bottomUp ? "bottom-up" : undefined}>
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -43,6 +43,16 @@ const lang = getLang(langProp);
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<title>{title}</title>
+		{bottomUp && (
+			<script is:inline>
+				if (!window.location.hash) {
+					document.documentElement.classList.add("is-bottom-up-booting");
+					if ("scrollRestoration" in history) {
+						history.scrollRestoration = "manual";
+					}
+				}
+			</script>
+		)}
 	</head>
 	<body data-scroll-flow={bottomUp ? "bottom-up" : undefined}>
 		<slot />
@@ -139,6 +149,9 @@ const lang = getLang(langProp);
 			if (isBottomUp && !window.location.hash) {
 				const scrollToBottomStart = () => {
 					window.scrollTo({ top: Math.max(0, document.documentElement.scrollHeight - window.innerHeight), behavior: "auto" });
+					window.requestAnimationFrame(() => {
+						document.documentElement.classList.remove("is-bottom-up-booting");
+					});
 				};
 
 				scrollToBottomStart();

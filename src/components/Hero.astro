@@ -33,7 +33,7 @@ const t = siteCopy[lang].hero;
 						decoding="async"
 					/>
 					<span class="grid gap-1">
-						<span class="text-[0.72rem] text-[var(--color-ink)]">Hack The Future</span>
+						<span class="hero-platform-title text-[0.72rem]" data-platform-matrix-title aria-label="Hack The Future"></span>
 						<span>{t.platform}</span>
 					</span>
 				</div>
@@ -103,61 +103,12 @@ const t = siteCopy[lang].hero;
 	if (canvas instanceof HTMLCanvasElement) {
 		const context = canvas.getContext("2d", { alpha: true });
 		const symbols = ["0", "1", "A", "F", "X", "/", "{", "}", "S", "Y", "C", "D", "E"];
-		const letterMap = {
-			A: ["01110", "10001", "10001", "11111", "10001", "10001", "10001"],
-			C: ["01111", "10000", "10000", "10000", "10000", "10000", "01111"],
-			E: ["11111", "10000", "10000", "11110", "10000", "10000", "11111"],
-			F: ["11111", "10000", "10000", "11110", "10000", "10000", "10000"],
-			H: ["10001", "10001", "10001", "11111", "10001", "10001", "10001"],
-			K: ["10001", "10010", "10100", "11000", "10100", "10010", "10001"],
-			R: ["11110", "10001", "10001", "11110", "10100", "10010", "10001"],
-			T: ["11111", "00100", "00100", "00100", "00100", "00100", "00100"],
-			U: ["10001", "10001", "10001", "10001", "10001", "10001", "01110"],
-		};
-		const formationLines = ["HACK", "THE", "FUTURE"];
 		let width = 0;
 		let height = 0;
 		let columns = [];
-		let formationPoints = [];
 		let fontSize = 16;
 		let animationFrame = 0;
 		let lastFrame = 0;
-
-		const buildFormationPoints = () => {
-			const cell = window.innerWidth < 768 ? 4.8 : 5.8;
-			const letterGap = cell * 1.9;
-			const lineGap = cell * 11.2;
-			const originX = window.innerWidth < 768 ? width * 0.5 : width * 0.43;
-			const originY = window.innerWidth < 768 ? height * 0.24 : height * 0.23;
-			const points = [];
-
-			formationLines.forEach((line, lineIndex) => {
-				const lineWidth = line.length * 5 * cell + Math.max(0, line.length - 1) * letterGap;
-				let cursorX = originX - lineWidth / 2;
-				const lineY = originY + (lineIndex - 1) * lineGap;
-
-				line.split("").forEach((letter) => {
-					const pattern = letterMap[letter];
-					if (!pattern) return;
-
-					pattern.forEach((row, rowIndex) => {
-						row.split("").forEach((value, colIndex) => {
-							if (value === "1") {
-								points.push({
-									x: cursorX + colIndex * cell,
-									y: lineY + rowIndex * cell,
-									seed: (lineIndex + 1) * 31 + rowIndex * 7 + colIndex,
-								});
-							}
-						});
-					});
-
-					cursorX += 5 * cell + letterGap;
-				});
-			});
-
-			formationPoints = points;
-		};
 
 		const resize = () => {
 			const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -172,30 +123,33 @@ const t = siteCopy[lang].hero;
 			}
 
 			fontSize = window.innerWidth < 768 ? 18 : 16;
-			const density = window.innerWidth < 768 ? 0.1 : 0.16;
+			const density = window.innerWidth < 768 ? 0.24 : 0.38;
 			const count = Math.max(10, Math.floor((width / fontSize) * density));
 			columns = Array.from({ length: count }, (_, index) => ({
 				x: window.innerWidth < 768
 					? ((index + Math.random() * 0.8) / count) * width
 					: width * (0.08 + ((index + Math.random() * 0.8) / count) * 0.48),
 				y: Math.random() * height,
-				speed: 0.12 + Math.random() * 0.2,
-				alpha: 0.065 + Math.random() * 0.045,
+				speed: 0.14 + Math.random() * 0.24,
+				alpha: 0.2 + Math.random() * 0.12,
 				phase: Math.random() * Math.PI * 2,
 			}));
-			buildFormationPoints();
+
 		};
 
 		const drawStatic = () => {
 			if (!context) return;
 			context.clearRect(0, 0, width, height);
 			context.font = `${fontSize}px Arial, sans-serif`;
-			context.fillStyle = "rgba(18, 135, 42, 0.055)";
+			context.shadowColor = "rgba(0, 255, 65, 0.16)";
+			context.shadowBlur = 4;
+			context.fillStyle = "rgba(0, 125, 40, 0.22)";
 			columns.forEach((column, columnIndex) => {
 				for (let y = columnIndex % 3 * fontSize; y < height; y += fontSize * 7) {
 					context.fillText(symbols[Math.floor(columnIndex + y) % symbols.length], column.x, y);
 				}
 			});
+			context.shadowBlur = 0;
 		};
 
 		const drawFrame = (time) => {
@@ -211,54 +165,21 @@ const t = siteCopy[lang].hero;
 			context.fillRect(0, 0, width, height);
 			context.font = `${fontSize}px Arial, sans-serif`;
 			context.textBaseline = "top";
+			context.shadowColor = "rgba(0, 255, 65, 0.18)";
+			context.shadowBlur = 5;
 
 			columns.forEach((column, columnIndex) => {
 				const rowCount = 2 + (columnIndex % 3);
 				for (let row = 0; row < rowCount; row += 1) {
 					const y = (column.y - row * fontSize * 1.55 + height) % height;
 					const charIndex = Math.floor(time * 0.004 + column.phase + row + columnIndex) % symbols.length;
-					const alpha = Math.max(0.038, column.alpha - row * 0.014);
-					context.fillStyle = `rgba(18, 135, 42, ${alpha})`;
+					const alpha = Math.max(0.12, column.alpha - row * 0.026);
+					context.fillStyle = `rgba(0, 132, 42, ${alpha})`;
 					context.fillText(symbols[charIndex], column.x, y);
 				}
 				column.y = (column.y + column.speed) % (height + fontSize * 8);
 			});
-
-			const cycle = time % 16000;
-			const textWindow = cycle > 5600 && cycle < 10200;
-			if (textWindow) {
-				const local = (cycle - 5600) / 4600;
-				const fadeIn = Math.min(1, local / 0.28);
-				const fadeOut = Math.min(1, (1 - local) / 0.22);
-				const alpha = Math.min(fadeIn, fadeOut) * 0.22;
-				const assemble = Math.min(1, local * 2.6);
-				const dissolve = Math.max(0, (local - 0.78) / 0.22);
-				const glyphSize = window.innerWidth < 768 ? 8 : 9;
-				context.save();
-				context.font = `700 ${glyphSize}px Arial, sans-serif`;
-				context.textAlign = "center";
-				context.textBaseline = "middle";
-				context.shadowColor = "rgba(0, 255, 65, 0.18)";
-				context.shadowBlur = 10;
-				formationPoints.forEach((point, index) => {
-					const streamOffset = (1 - assemble) * ((point.seed % 9) - 4) * 18;
-					const fallOffset = dissolve * (24 + (point.seed % 9) * 5);
-					const jitter = Math.sin(time * 0.004 + point.seed) * (1 - assemble) * 1.1;
-					const x = point.x + jitter;
-					const y = point.y + streamOffset + fallOffset;
-					const charIndex = Math.floor(time * 0.006 + point.seed + index) % symbols.length;
-					const pointAlpha = alpha * (0.72 + (point.seed % 5) * 0.06);
-					context.fillStyle = `rgba(16, 170, 48, ${pointAlpha})`;
-					context.fillText(symbols[charIndex], x, y);
-
-					if (assemble > 0.82 && dissolve < 0.2 && point.seed % 5 === 0) {
-						context.fillStyle = `rgba(0, 255, 65, ${pointAlpha * 0.34})`;
-						context.fillText(symbols[(charIndex + 3) % symbols.length], x, y - glyphSize * 1.45);
-						context.fillText(symbols[(charIndex + 6) % symbols.length], x, y + glyphSize * 1.45);
-					}
-				});
-				context.restore();
-			}
+			context.shadowBlur = 0;
 
 			animationFrame = window.requestAnimationFrame(drawFrame);
 		};
@@ -280,4 +201,92 @@ const t = siteCopy[lang].hero;
 			}
 		}, { passive: true });
 	}
+
+	const platformTitle = document.querySelector("[data-platform-matrix-title]");
+	if (platformTitle instanceof HTMLElement && !reducedMotion) {
+		const symbols = ["0", "1", "A", "F", "X", "/", "{", "}", "S", "Y", "C", "D", "E"];
+		const phrase = "HACK THE FUTURE";
+		let started = false;
+		const cells = phrase.split("").map((character, index) => {
+			const cell = document.createElement("span");
+			cell.className = character === " " ? "matrix-title-cell matrix-title-cell--space" : "matrix-title-cell";
+			cell.style.setProperty("--matrix-cell-delay", `${index * 34 + Math.random() * 80}ms`);
+
+			if (character !== " ") {
+				const glyph = document.createElement("span");
+				glyph.className = "matrix-title-glyph";
+				glyph.textContent = symbols[(index * 4) % symbols.length];
+				cell.append(glyph);
+			}
+
+			platformTitle.append(cell);
+			return { cell, character };
+		});
+
+		const startPlatformPrint = () => {
+			if (started) return;
+			started = true;
+			window.setTimeout(() => {
+				platformTitle.classList.add("is-matrix-title-printing");
+				const glyphTimer = window.setInterval(() => {
+					cells.forEach(({ cell }, index) => {
+						const glyph = cell.querySelector(".matrix-title-glyph");
+						if (glyph && !glyph.classList.contains("is-matrix-title-locked")) {
+							glyph.textContent = symbols[(Math.floor(performance.now() * 0.018) + index * 3) % symbols.length];
+						}
+					});
+				}, 70);
+
+				cells.forEach(({ cell, character }, index) => {
+					if (character === " ") return;
+					window.setTimeout(() => {
+						const glyph = cell.querySelector(".matrix-title-glyph");
+						if (glyph) {
+							glyph.textContent = character;
+							glyph.classList.add("is-matrix-title-locked");
+						}
+					}, 880 + index * 34);
+				});
+
+				window.setTimeout(() => {
+					window.clearInterval(glyphTimer);
+					cells.forEach(({ cell, character }) => {
+						if (character === " ") return;
+						const glyph = cell.querySelector(".matrix-title-glyph");
+						if (glyph) {
+							glyph.textContent = character;
+							glyph.classList.add("is-matrix-title-locked");
+						}
+					});
+				}, 1450);
+			}, 220);
+		};
+
+		const waitForBottomUpBoot = () => {
+			if (!document.documentElement.classList.contains("is-bottom-up-booting")) {
+				startPlatformPrint();
+				return;
+			}
+
+			const observer = new MutationObserver(() => {
+				if (!document.documentElement.classList.contains("is-bottom-up-booting")) {
+					observer.disconnect();
+					startPlatformPrint();
+				}
+			});
+
+			observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+			window.setTimeout(() => {
+				observer.disconnect();
+				startPlatformPrint();
+			}, 1600);
+		};
+
+		window.requestAnimationFrame(waitForBottomUpBoot);
+	}
+
+	if (platformTitle instanceof HTMLElement && reducedMotion) {
+		platformTitle.textContent = "Hack The Future";
+	}
+
 </script>
