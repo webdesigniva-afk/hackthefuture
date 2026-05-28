@@ -19,14 +19,17 @@ const t = siteCopy[lang];
 	title={t.meta.homeTitle}
 	description={t.meta.homeDescription}
 	lang={lang}
+	bottomUp
 >
 	<Header lang={lang} />
-	<Hero lang={lang} />
-	<IntroSection lang={lang} />
-	<ArenaMoment lang={lang} />
-	<CivicImageSection lang={lang} />
-	<AtmosphericAnchor lang={lang} />
-	<PublicationsSection lang={lang} />
-	<ClosingSection lang={lang} />
-	<Footer lang={lang} />
+	<main class="bottom-up-page">
+		<Hero lang={lang} />
+		<IntroSection lang={lang} />
+		<ArenaMoment lang={lang} />
+		<CivicImageSection lang={lang} />
+		<AtmosphericAnchor lang={lang} />
+		<PublicationsSection lang={lang} />
+		<ClosingSection lang={lang} />
+		<Footer lang={lang} />
+	</main>
 </BaseLayout>

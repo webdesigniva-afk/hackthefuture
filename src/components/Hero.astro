@@ -238,7 +238,7 @@ const t = siteCopy[lang].hero;
 				context.font = `700 ${glyphSize}px Arial, sans-serif`;
 				context.textAlign = "center";
 				context.textBaseline = "middle";
-				context.shadowColor = "rgba(124, 255, 107, 0.18)";
+				context.shadowColor = "rgba(0, 255, 65, 0.18)";
 				context.shadowBlur = 10;
 				formationPoints.forEach((point, index) => {
 					const streamOffset = (1 - assemble) * ((point.seed % 9) - 4) * 18;
@@ -252,7 +252,7 @@ const t = siteCopy[lang].hero;
 					context.fillText(symbols[charIndex], x, y);
 
 					if (assemble > 0.82 && dissolve < 0.2 && point.seed % 5 === 0) {
-						context.fillStyle = `rgba(124, 255, 107, ${pointAlpha * 0.34})`;
+						context.fillStyle = `rgba(0, 255, 65, ${pointAlpha * 0.34})`;
 						context.fillText(symbols[(charIndex + 3) % symbols.length], x, y - glyphSize * 1.45);
 						context.fillText(symbols[(charIndex + 6) % symbols.length], x, y + glyphSize * 1.45);
 					}

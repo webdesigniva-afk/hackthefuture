@@ -8,6 +8,7 @@ interface Props {
 	description?: string;
 	image?: string;
 	lang?: Lang;
+	bottomUp?: boolean;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
 	description = "A leadership platform for institutional decision-makers.",
 	image = "/catalizator-logo.png",
 	lang: langProp = "en",
+	bottomUp = false,
 } = Astro.props;
 
 const lang = getLang(langProp);
@@ -42,12 +44,15 @@ const lang = getLang(langProp);
 		<meta name="twitter:description" content={description} />
 		<title>{title}</title>
 	</head>
-	<body>
+	<body data-scroll-flow={bottomUp ? "bottom-up" : undefined}>
 		<slot />
-		<ScrollToTop label={siteCopy[lang].scrollToTop} />
+		<ScrollToTop label={bottomUp && lang === "en" ? "Back to start" : siteCopy[lang].scrollToTop} />
 		<script>
 			const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+			const isBottomUp = document.body.dataset.scrollFlow === "bottom-up";
 			const scrollToTopButton = document.querySelector("[data-scroll-to-top]");
+			const bottomUpPage = document.querySelector(".bottom-up-page");
+			const siteHeader = document.querySelector(".site-header");
 			const galleryComposition = document.querySelector("[data-gallery-composition]");
 			const sectionCandidates = document.querySelectorAll("main > section, article > section, body > section");
 			const cardCandidates = document.querySelectorAll(".quiet-card, .premium-hover, .publication-entry");
@@ -119,16 +124,92 @@ const lang = getLang(langProp);
 			}
 
 			if (scrollToTopButton) {
+				const getBottomScroll = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
 				const updateScrollToTop = () => {
-					scrollToTopButton.classList.toggle("is-visible", window.scrollY > 720);
+					const distanceFromStart = isBottomUp ? getBottomScroll() - window.scrollY : window.scrollY;
+					scrollToTopButton.classList.toggle("is-visible", distanceFromStart > 720);
 				};
 
 				scrollToTopButton.addEventListener("click", () => {
-					window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+					window.scrollTo({ top: isBottomUp ? getBottomScroll() : 0, behavior: reducedMotion ? "auto" : "smooth" });
 				});
 
 				updateScrollToTop();
 				window.addEventListener("scroll", updateScrollToTop, { passive: true });
+			}
+
+			if (isBottomUp && bottomUpPage instanceof HTMLElement) {
+				let bottomUpMaxScroll = 0;
+				let bottomUpTicking = false;
+
+				const getHeaderHeight = () => siteHeader instanceof HTMLElement ? siteHeader.getBoundingClientRect().height : 0;
+				const getVirtualOffset = () => Math.max(0, bottomUpMaxScroll - window.scrollY);
+				const applyBottomUpOffset = () => {
+					bottomUpPage.style.transform = `translate3d(0, ${-getVirtualOffset()}px, 0)`;
+					bottomUpTicking = false;
+				};
+				const requestBottomUpOffset = () => {
+					if (!bottomUpTicking) {
+						window.requestAnimationFrame(applyBottomUpOffset);
+						bottomUpTicking = true;
+					}
+				};
+				const scrollToVirtualOffset = (offset, behavior = "auto") => {
+					window.scrollTo({
+						top: Math.max(0, bottomUpMaxScroll - Math.max(0, offset)),
+						behavior,
+					});
+				};
+				const findHashTarget = () => {
+					if (!window.location.hash) return null;
+
+					try {
+						return document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+					} catch {
+						return document.getElementById(window.location.hash.slice(1));
+					}
+				};
+				const syncBottomUpLayout = () => {
+					const headerHeight = getHeaderHeight();
+					document.body.style.setProperty("--bottom-up-header-height", `${headerHeight}px`);
+					document.body.style.minHeight = `${Math.max(window.innerHeight + 1, bottomUpPage.scrollHeight + headerHeight)}px`;
+					bottomUpMaxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+					requestBottomUpOffset();
+				};
+				const placeBottomUpStart = () => {
+					syncBottomUpLayout();
+					const hashTarget = findHashTarget();
+
+					if (hashTarget instanceof HTMLElement && bottomUpPage.contains(hashTarget)) {
+						scrollToVirtualOffset(hashTarget.offsetTop);
+					} else {
+						scrollToVirtualOffset(0);
+					}
+
+					applyBottomUpOffset();
+				};
+
+				placeBottomUpStart();
+				window.addEventListener("load", placeBottomUpStart, { once: true });
+				window.addEventListener("resize", () => {
+					const previousOffset = getVirtualOffset();
+					syncBottomUpLayout();
+					scrollToVirtualOffset(previousOffset);
+					applyBottomUpOffset();
+				}, { passive: true });
+				window.addEventListener("scroll", requestBottomUpOffset, { passive: true });
+				window.addEventListener("hashchange", () => {
+					const hashTarget = findHashTarget();
+
+					if (hashTarget instanceof HTMLElement && bottomUpPage.contains(hashTarget)) {
+						scrollToVirtualOffset(hashTarget.offsetTop, reducedMotion ? "auto" : "smooth");
+					}
+				});
+				window.addEventListener("pageshow", (event) => {
+					if (event.persisted) {
+						placeBottomUpStart();
+					}
+				});
 			}
 		</script>
 	</body>
