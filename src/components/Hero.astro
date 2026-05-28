@@ -125,7 +125,6 @@ const t = siteCopy[lang].hero;
 
 		const randomSymbol = (seed = 0) => symbols[Math.floor(seed + Math.random() * symbols.length) % symbols.length];
 
-		const easeOutCubic = (value) => 1 - Math.pow(1 - value, 3);
 		const easeInOutCubic = (value) => value < 0.5
 			? 4 * value * value * value
 			: 1 - Math.pow(-2 * value + 2, 3) / 2;
@@ -145,9 +144,9 @@ const t = siteCopy[lang].hero;
 			const maskHeight = Math.ceil(maskFont * 1.36);
 			const sampleStep = window.innerWidth < 768 ? 4 : 5;
 			const originX = subtitleRect
-				? subtitleRect.left - heroRect.left - maskPadding
+				? subtitleRect.left - heroRect.left
 				: anchorRect
-					? anchorRect.left - heroRect.left - maskPadding
+					? anchorRect.left - heroRect.left
 					: width * 0.14;
 			const originY = anchorRect ? anchorRect.top - heroRect.top - maskFont * 0.98 : height * 0.14;
 			maskBounds = {
@@ -156,7 +155,6 @@ const t = siteCopy[lang].hero;
 				width: maskWidth + maskFont * 0.64,
 				height: maskHeight + maskFont * 0.58,
 			};
-
 			maskCanvas.width = maskWidth;
 			maskCanvas.height = maskHeight;
 			maskContext.clearRect(0, 0, maskWidth, maskHeight);
@@ -167,19 +165,23 @@ const t = siteCopy[lang].hero;
 			maskContext.fillText(phrase, maskPadding, maskHeight * 0.58);
 
 			const image = maskContext.getImageData(0, 0, maskWidth, maskHeight);
-			const points = [];
+			const rawPoints = [];
+			let inkMinX = maskWidth;
 
 			for (let y = 0; y < maskHeight; y += sampleStep) {
 				for (let x = 0; x < maskWidth; x += sampleStep) {
 					const alpha = image.data[(y * maskWidth + x) * 4 + 3];
 					if (alpha > 28 && Math.random() > 0.02) {
-						points.push({
-							x: originX + x + (Math.random() - 0.5) * 0.25,
-							y: originY + y + (Math.random() - 0.5) * 0.25,
-						});
+						inkMinX = Math.min(inkMinX, x);
+						rawPoints.push({ x, y });
 					}
 				}
 			}
+
+			const points = rawPoints.map((point) => ({
+				x: originX + point.x - inkMinX + (Math.random() - 0.5) * 0.25,
+				y: originY + point.y + (Math.random() - 0.5) * 0.25,
+			}));
 
 			return points.sort(() => Math.random() - 0.5).slice(0, window.innerWidth < 768 ? 900 : 1500);
 		};
@@ -377,6 +379,7 @@ const t = siteCopy[lang].hero;
 					}
 				}
 			});
+
 			context.shadowBlur = 0;
 
 			animationFrame = window.requestAnimationFrame(drawFrame);
