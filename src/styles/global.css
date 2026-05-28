@@ -407,6 +407,7 @@ a:hover {
 	position: absolute;
 	inset: -1px;
 	border-radius: inherit;
+	z-index: 2;
 	pointer-events: none;
 	background:
 		linear-gradient(90deg, rgba(0, 255, 65, 0.54), transparent 2.1rem) left top / 2.8rem 1px no-repeat,
@@ -549,7 +550,8 @@ a:hover {
 .hero-position-cue {
 	position: absolute;
 	inset-inline: 1.5rem;
-	bottom: clamp(1.2rem, 2.6vw, 2.4rem);
+	top: calc(100svh - clamp(3.7rem, 5.8vw, 4.6rem));
+	bottom: auto;
 	z-index: 12;
 	display: flex;
 	align-items: center;
@@ -566,6 +568,10 @@ a:hover {
 	pointer-events: none;
 	text-shadow: 0 0 0.85rem rgba(0, 255, 65, 0.22);
 	transition: opacity 120ms linear;
+}
+
+body[data-scroll-flow="bottom-up"] .hero-position-cue {
+	top: calc(100svh - var(--bottom-up-header-height, 0px) - clamp(3.7rem, 5.8vw, 4.6rem));
 }
 
 .hero-position-cue::before,
@@ -910,6 +916,31 @@ a:hover {
 	transition: translate 170ms var(--ease-premium), border-color 170ms var(--ease-premium), box-shadow 170ms var(--ease-premium), background-color 170ms var(--ease-premium), color 170ms var(--ease-premium);
 }
 
+.cinematic-dark .premium-hover {
+	overflow: hidden;
+}
+
+.cinematic-dark .premium-hover::after {
+	content: "";
+	position: absolute;
+	inset: -18%;
+	z-index: 0;
+	pointer-events: none;
+	background:
+		linear-gradient(180deg, rgba(10, 10, 10, 0.16), transparent 28%, rgba(10, 10, 10, 0.18)),
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='360' viewBox='0 0 220 360'%3E%3Cg fill='%2300FF41' font-family='Arial, sans-serif' font-size='18' opacity='0.72'%3E%3Ctext x='22' y='28'%3E01%3C/text%3E%3Ctext x='74' y='86'%3E//%3C/text%3E%3Ctext x='142' y='42'%3E10%3C/text%3E%3Ctext x='174' y='138'%3E_%3C/text%3E%3Ctext x='38' y='176'%3E11%3C/text%3E%3Ctext x='112' y='232'%3E01%3C/text%3E%3Ctext x='184' y='286'%3E/%3C/text%3E%3Ctext x='64' y='326'%3E10%3C/text%3E%3C/g%3E%3C/svg%3E");
+	background-size: auto, 16rem 26rem;
+	opacity: 0.12;
+	filter: blur(0.55px);
+	mix-blend-mode: screen;
+	animation: matrix-card-fall 18s linear infinite;
+}
+
+.cinematic-dark .premium-hover > * {
+	position: relative;
+	z-index: 1;
+}
+
 .premium-hover:hover {
 	--hover-y: -2px;
 	border-color: rgba(10, 10, 10, 0.3);
@@ -1103,11 +1134,21 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 
 @keyframes matrix-fall {
 	0% {
-		background-position: 0 0, 0 0, 0 -30rem;
+		background-position: 0 0, 0 0, 0 0, 0 -30rem;
 	}
 
 	100% {
-		background-position: 0 0, 0 0, 0 30rem;
+		background-position: 0 0, 0 0, 0 0, 0 30rem;
+	}
+}
+
+@keyframes matrix-card-fall {
+	0% {
+		background-position: 0 0, 0 -26rem;
+	}
+
+	100% {
+		background-position: 0 0, 0 26rem;
 	}
 }
 

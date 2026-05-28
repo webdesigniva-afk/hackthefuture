@@ -25,3 +25,12 @@ Error: Failed to load url astro:server-app.js (resolved id: astro:server-app.js)
 [2m15:22:13[22m [34m[watch][39m src/components/Hero.astro
 [2m15:22:15[22m [34m[200][39m /en [2m90ms[22m
 [2m15:22:26[22m [34m[watch][39m /src/styles/global.css
+[2m15:24:44[22m [34m[watch][39m src/components/Hero.astro
+[2m15:24:45[22m [34m[200][39m /en [2m93ms[22m
+[2m15:24:51[22m [34m[watch][39m /src/styles/global.css
+[2m15:25:45[22m [34m[watch][39m /src/styles/global.css
+[2m15:26:24[22m [34m[200][39m / [2m57ms[22m
+[2m15:26:41[22m [34m[watch][39m /src/styles/global.css
+[2m15:26:56[22m [34m[watch][39m /src/styles/global.css
+[2m15:28:26[22m [34m[watch][39m /src/styles/global.css
+[2m15:28:36[22m [34m[watch][39m /src/styles/global.css
