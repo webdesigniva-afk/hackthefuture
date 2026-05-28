@@ -235,35 +235,83 @@ const partners = [
 	}
 
 	.brand-divider {
+		position: relative;
+		overflow: hidden;
 		background:
-			linear-gradient(90deg, rgba(255, 255, 255, 0.045), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.045)),
+			linear-gradient(90deg, rgba(0, 255, 65, 0.13), transparent 14%, transparent 86%, rgba(0, 255, 65, 0.13)),
+			repeating-linear-gradient(90deg, rgba(0, 255, 65, 0.075) 0 1px, transparent 1px 4rem),
+			repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0 1px, transparent 1px 5px),
 			#0A0A0A;
 		box-shadow:
-			inset 0 1px 0 rgba(255, 255, 255, 0.12),
-			inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+			inset 0 1px 0 rgba(0, 255, 65, 0.38),
+			inset 0 -1px 0 rgba(0, 255, 65, 0.24),
+			0 0 28px rgba(0, 255, 65, 0.08);
+	}
+
+	.brand-divider::before,
+	.brand-divider::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.brand-divider::before {
+		background:
+			linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent),
+			linear-gradient(180deg, transparent 0 42%, rgba(0, 255, 65, 0.12) 42% 44%, transparent 44% 100%);
+		opacity: 0.34;
+		transform: translateX(-38%);
+		animation: brand-divider-scan 6.5s linear infinite;
+	}
+
+	.brand-divider::after {
+		background:
+			linear-gradient(90deg, #0A0A0A 0%, transparent 9%, transparent 91%, #0A0A0A 100%),
+			radial-gradient(circle at 50% 50%, rgba(0, 255, 65, 0.12), transparent 58%);
+		mix-blend-mode: screen;
+		opacity: 0.7;
 	}
 
 	.brand-divider-track {
+		position: relative;
+		z-index: 1;
 		white-space: nowrap;
 		will-change: transform;
 		animation: brand-divider-scroll 28s linear infinite;
 	}
 
+	.brand-divider-sequence span {
+		color: rgba(255, 255, 255, 0.8);
+		text-shadow: 0 0 0.45rem rgba(0, 255, 65, 0.18);
+	}
+
 	.brand-divider-mark {
 		width: 0.9rem;
 		height: 0.9rem;
-		color: rgba(255, 255, 255, 0.68);
-		opacity: 0.72;
+		color: rgba(0, 255, 65, 0.82);
+		opacity: 0.9;
 		stroke: currentColor;
 		stroke-width: 5;
 		stroke-linecap: round;
 		stroke-linejoin: round;
+		filter: drop-shadow(0 0 0.38rem rgba(0, 255, 65, 0.22));
 	}
 
 	.brand-divider-mark-dot {
 		fill: var(--color-accent);
 		stroke: none;
-		filter: drop-shadow(0 0 0.22rem rgba(0, 255, 65, 0.28));
+		filter: drop-shadow(0 0 0.34rem rgba(0, 255, 65, 0.54));
+	}
+
+	@keyframes brand-divider-scan {
+		from {
+			transform: translateX(-42%);
+		}
+
+		to {
+			transform: translateX(42%);
+		}
 	}
 
 	@keyframes brand-divider-scroll {
