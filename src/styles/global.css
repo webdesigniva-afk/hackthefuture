@@ -728,61 +728,15 @@ body[data-scroll-flow="bottom-up"] .hero-position-cue {
 	align-items: baseline;
 	min-height: 1.1em;
 	color: rgba(0, 82, 24, 0.98);
-	font-family: Arial, sans-serif;
-	font-size: 1rem;
 	font-weight: 600;
 	letter-spacing: 0.12em;
 	white-space: nowrap;
-	text-shadow:
-		0 0 0.08rem rgba(0, 255, 65, 0.32),
-		0 0 0.32rem rgba(0, 255, 65, 0.14);
 }
 
-@media (prefers-reduced-motion: reduce) {
-	.hero-platform-title {
-		color: rgba(0, 82, 24, 0.98) !important;
-		text-shadow: 0 0 0.08rem rgba(0, 255, 65, 0.2);
-	}
-}
-
-.matrix-title-cell {
-	position: relative;
-	display: inline-block;
-	width: 0.78em;
-	height: 1.12em;
-}
-
-.matrix-title-cell--space {
-	width: 0.82em;
-}
-
-.matrix-title-glyph {
-	position: absolute;
-	inset: 0 auto auto 0;
-	display: inline-block;
-	width: 100%;
-	text-align: center;
+.hero-platform-title-anchor {
+	width: 18.5em;
+	height: 1.35em;
 	pointer-events: none;
-	color: rgba(0, 122, 36, 0.74);
-	opacity: 0;
-	text-shadow:
-		0 0 0.16rem rgba(0, 255, 65, 0.48),
-		0 0 0.42rem rgba(0, 255, 65, 0.16);
-	transform: translate3d(0, -5.8rem, 0);
-}
-
-.hero-platform-title.is-matrix-title-printing .matrix-title-glyph {
-	animation: matrix-glyph-fall 980ms cubic-bezier(0.18, 0.82, 0.18, 1) both;
-	animation-delay: var(--matrix-cell-delay);
-}
-
-.matrix-title-glyph.is-matrix-title-locked {
-	color: rgba(0, 96, 28, 0.86);
-	opacity: 1;
-	transform: translate3d(0, 0, 0);
-	text-shadow:
-		0 0 0.12rem rgba(0, 255, 65, 0.34),
-		0 0 0.32rem rgba(0, 255, 65, 0.12);
 }
 
 .hero-layout {
@@ -1261,30 +1215,6 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 
 	100% {
 		background-position: 0 0, 0 26rem;
-	}
-}
-
-@keyframes matrix-glyph-fall {
-	0% {
-		opacity: 0;
-		filter: blur(0.04rem);
-		transform: translate3d(0, -5.8rem, 0);
-	}
-
-	22% {
-		opacity: 0.68;
-	}
-
-	72% {
-		opacity: 0.76;
-		filter: blur(0.01rem);
-		transform: translate3d(0, 0.04rem, 0);
-	}
-
-	100% {
-		opacity: 0.82;
-		filter: blur(0);
-		transform: translate3d(0, 0, 0);
 	}
 }
 

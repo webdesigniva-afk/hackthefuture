@@ -33,8 +33,8 @@ const t = siteCopy[lang].hero;
 						decoding="async"
 					/>
 					<span class="grid gap-1">
-						<span class="hero-platform-title text-[0.72rem]" data-platform-matrix-title aria-label="Hack The Future"></span>
-						<span>{t.platform}</span>
+						<span class="hero-platform-title hero-platform-title-anchor text-[0.72rem]" data-platform-matrix-anchor aria-hidden="true"></span>
+						<span data-platform-subtitle>{t.platform}</span>
 					</span>
 				</div>
 
@@ -102,13 +102,147 @@ const t = siteCopy[lang].hero;
 
 	if (canvas instanceof HTMLCanvasElement) {
 		const context = canvas.getContext("2d", { alpha: true });
-		const symbols = ["0", "1", "A", "F", "X", "/", "{", "}", "S", "Y", "C", "D", "E"];
+		const maskCanvas = document.createElement("canvas");
+		const maskContext = maskCanvas.getContext("2d", { willReadFrequently: true });
+		const anchor = document.querySelector("[data-platform-matrix-anchor]");
+		const subtitle = document.querySelector("[data-platform-subtitle]");
+		const symbols = ["0", "1", "A", "F", "X", "/", "{", "}", "S", "Y", "C", "D", "E", "7", "9", "_", "+", "<", ">"];
+		const phrase = "HACK THE FUTURE";
 		let width = 0;
 		let height = 0;
 		let columns = [];
-		let fontSize = 16;
+		let formationParticles = [];
+		let maskPoints = [];
+		let maskBounds = null;
+		let rainFontSize = 16;
+		let formationFontSize = 10;
 		let animationFrame = 0;
 		let lastFrame = 0;
+		let loopStart = performance.now();
+
+		const formationStart = 450;
+		const holdStart = 6400;
+
+		const randomSymbol = (seed = 0) => symbols[Math.floor(seed + Math.random() * symbols.length) % symbols.length];
+
+		const easeOutCubic = (value) => 1 - Math.pow(1 - value, 3);
+		const easeInOutCubic = (value) => value < 0.5
+			? 4 * value * value * value
+			: 1 - Math.pow(-2 * value + 2, 3) / 2;
+
+		const sampleMask = () => {
+			if (!maskContext) return [];
+
+			const heroRect = hero instanceof HTMLElement ? hero.getBoundingClientRect() : canvas.getBoundingClientRect();
+			const anchorRect = anchor instanceof HTMLElement ? anchor.getBoundingClientRect() : null;
+			const subtitleRect = subtitle instanceof HTMLElement ? subtitle.getBoundingClientRect() : null;
+			const maskFont = window.innerWidth < 768 ? 34 : 48;
+			const maskPadding = Math.ceil(maskFont * 0.16);
+			maskCanvas.width = 1;
+			maskCanvas.height = 1;
+			maskContext.font = `900 ${maskFont}px Arial, sans-serif`;
+			const maskWidth = Math.ceil(maskContext.measureText(phrase).width + maskPadding * 2);
+			const maskHeight = Math.ceil(maskFont * 1.36);
+			const sampleStep = window.innerWidth < 768 ? 4 : 5;
+			const originX = subtitleRect
+				? subtitleRect.left - heroRect.left - maskPadding
+				: anchorRect
+					? anchorRect.left - heroRect.left - maskPadding
+					: width * 0.14;
+			const originY = anchorRect ? anchorRect.top - heroRect.top - maskFont * 0.98 : height * 0.14;
+			maskBounds = {
+				x: originX - maskFont * 0.32,
+				y: originY - maskFont * 0.28,
+				width: maskWidth + maskFont * 0.64,
+				height: maskHeight + maskFont * 0.58,
+			};
+
+			maskCanvas.width = maskWidth;
+			maskCanvas.height = maskHeight;
+			maskContext.clearRect(0, 0, maskWidth, maskHeight);
+			maskContext.fillStyle = "#fff";
+			maskContext.textAlign = "left";
+			maskContext.textBaseline = "middle";
+			maskContext.font = `900 ${maskFont}px Arial, sans-serif`;
+			maskContext.fillText(phrase, maskPadding, maskHeight * 0.58);
+
+			const image = maskContext.getImageData(0, 0, maskWidth, maskHeight);
+			const points = [];
+
+			for (let y = 0; y < maskHeight; y += sampleStep) {
+				for (let x = 0; x < maskWidth; x += sampleStep) {
+					const alpha = image.data[(y * maskWidth + x) * 4 + 3];
+					if (alpha > 28 && Math.random() > 0.02) {
+						points.push({
+							x: originX + x + (Math.random() - 0.5) * 0.25,
+							y: originY + y + (Math.random() - 0.5) * 0.25,
+						});
+					}
+				}
+			}
+
+			return points.sort(() => Math.random() - 0.5).slice(0, window.innerWidth < 768 ? 900 : 1500);
+		};
+
+		const createColumn = (index, count) => ({
+			x: window.innerWidth < 768
+				? ((index + Math.random() * 0.8) / count) * width
+				: width * (0.02 + ((index + Math.random() * 0.8) / count) * 0.72),
+			y: Math.random() * height,
+			speed: 0.12 + Math.random() * 0.2,
+			alpha: 0.09 + Math.random() * 0.1,
+			phase: Math.random() * Math.PI * 2,
+		});
+
+		const createFormationParticle = (index, target = null) => {
+			const nearestColumnIndex = target
+				? columns.reduce((nearestIndex, column, columnIndex) => (
+					Math.abs(column.x - target.x) < Math.abs(columns[nearestIndex].x - target.x) ? columnIndex : nearestIndex
+				), 0)
+				: index % Math.max(1, columns.length);
+			const column = columns[nearestColumnIndex];
+			return {
+				x: column?.x ?? Math.random() * width,
+				y: -rainFontSize * (2 + Math.random() * 18),
+				speed: 0.22 + Math.random() * 0.3,
+				alpha: 0.18 + Math.random() * 0.14,
+				phase: Math.random() * Math.PI * 2,
+				character: randomSymbol(index),
+				target,
+				sourceColumnIndex: nearestColumnIndex,
+				sourceRow: Math.floor(Math.random() * 8),
+				delay: Math.random() * 1700 + (index % 23) * 18,
+				duration: 3600 + Math.random() * 1400,
+				pickupX: null,
+				pickupY: null,
+				lockX: 0,
+				lockY: 0,
+				releaseSpeed: 0.22 + Math.random() * 0.28,
+				released: false,
+			};
+		};
+
+		const resetFormationState = () => {
+			maskPoints = sampleMask();
+			formationParticles.forEach((particle, index) => {
+				particle.target = maskPoints[index] || null;
+				particle.sourceColumnIndex = particle.target
+					? columns.reduce((nearestIndex, column, columnIndex) => (
+						Math.abs(column.x - particle.target.x) < Math.abs(columns[nearestIndex].x - particle.target.x) ? columnIndex : nearestIndex
+					), 0)
+					: index % Math.max(1, columns.length);
+				const column = columns[particle.sourceColumnIndex];
+				particle.released = false;
+				particle.x = column?.x ?? Math.random() * width;
+				particle.y = -rainFontSize * (2 + Math.random() * 18);
+				particle.delay = Math.random() * 1700 + (index % 23) * 18;
+				particle.duration = 3600 + Math.random() * 1400;
+				particle.pickupX = null;
+				particle.pickupY = null;
+				particle.lockX = particle.x;
+				particle.lockY = particle.y;
+			});
+		};
 
 		const resize = () => {
 			const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -122,30 +256,27 @@ const t = siteCopy[lang].hero;
 				context.setTransform(ratio, 0, 0, ratio, 0, 0);
 			}
 
-			fontSize = window.innerWidth < 768 ? 18 : 16;
-			const density = window.innerWidth < 768 ? 0.24 : 0.38;
-			const count = Math.max(10, Math.floor((width / fontSize) * density));
-			columns = Array.from({ length: count }, (_, index) => ({
-				x: window.innerWidth < 768
-					? ((index + Math.random() * 0.8) / count) * width
-					: width * (0.08 + ((index + Math.random() * 0.8) / count) * 0.48),
-				y: Math.random() * height,
-				speed: 0.14 + Math.random() * 0.24,
-				alpha: 0.2 + Math.random() * 0.12,
-				phase: Math.random() * Math.PI * 2,
-			}));
+			rainFontSize = window.innerWidth < 768 ? 15 : 16;
+			formationFontSize = window.innerWidth < 768 ? 6 : 6.5;
+			const density = window.innerWidth < 768 ? 0.3 : 0.42;
+			const columnCount = Math.max(12, Math.floor((width / rainFontSize) * density));
+			columns = Array.from({ length: columnCount }, (_, index) => createColumn(index, columnCount));
+			maskPoints = sampleMask();
+			const formationCount = Math.min(maskPoints.length, window.innerWidth < 768 ? 900 : 1500);
 
+			formationParticles = Array.from({ length: formationCount }, (_, index) => createFormationParticle(index, maskPoints[index] || null));
+			loopStart = performance.now();
 		};
 
 		const drawStatic = () => {
 			if (!context) return;
 			context.clearRect(0, 0, width, height);
-			context.font = `${fontSize}px Arial, sans-serif`;
-			context.shadowColor = "rgba(0, 255, 65, 0.16)";
+			context.font = `${rainFontSize}px Arial, sans-serif`;
+			context.shadowColor = "rgba(124, 255, 107, 0.18)";
 			context.shadowBlur = 4;
-			context.fillStyle = "rgba(0, 125, 40, 0.22)";
 			columns.forEach((column, columnIndex) => {
-				for (let y = columnIndex % 3 * fontSize; y < height; y += fontSize * 7) {
+				for (let y = columnIndex % 3 * rainFontSize; y < height; y += rainFontSize * 8) {
+					context.fillStyle = "rgba(0, 132, 42, 0.11)";
 					context.fillText(symbols[Math.floor(columnIndex + y) % symbols.length], column.x, y);
 				}
 			});
@@ -158,26 +289,93 @@ const t = siteCopy[lang].hero;
 				animationFrame = window.requestAnimationFrame(drawFrame);
 				return;
 			}
+			const loopTime = time - loopStart;
 			lastFrame = time;
 
 			context.clearRect(0, 0, width, height);
-			context.fillStyle = "rgba(255, 255, 255, 0.055)";
+			context.fillStyle = "rgba(255, 255, 255, 0.06)";
 			context.fillRect(0, 0, width, height);
-			context.font = `${fontSize}px Arial, sans-serif`;
+			context.font = `${rainFontSize}px Arial, sans-serif`;
 			context.textBaseline = "top";
-			context.shadowColor = "rgba(0, 255, 65, 0.18)";
-			context.shadowBlur = 5;
+			context.shadowColor = "rgba(124, 255, 107, 0.12)";
+			context.shadowBlur = 3;
 
 			columns.forEach((column, columnIndex) => {
-				const rowCount = 2 + (columnIndex % 3);
+				const rowCount = 4 + (columnIndex % 4);
 				for (let row = 0; row < rowCount; row += 1) {
-					const y = (column.y - row * fontSize * 1.55 + height) % height;
+					const y = (column.y - row * rainFontSize * 1.18 + height) % height;
 					const charIndex = Math.floor(time * 0.004 + column.phase + row + columnIndex) % symbols.length;
-					const alpha = Math.max(0.12, column.alpha - row * 0.026);
+					const insideMask = maskBounds
+						&& column.x > maskBounds.x
+						&& column.x < maskBounds.x + maskBounds.width
+						&& y > maskBounds.y
+						&& y < maskBounds.y + maskBounds.height;
+					const alpha = Math.max(0.018, column.alpha - row * 0.022) * (insideMask ? 0.18 : 1);
 					context.fillStyle = `rgba(0, 132, 42, ${alpha})`;
 					context.fillText(symbols[charIndex], column.x, y);
 				}
-				column.y = (column.y + column.speed) % (height + fontSize * 8);
+				column.y = (column.y + column.speed) % (height + rainFontSize * 8);
+			});
+
+			context.font = `${formationFontSize}px Arial, sans-serif`;
+			context.shadowColor = "rgba(124, 255, 107, 0.22)";
+			context.shadowBlur = 4;
+
+			formationParticles.forEach((particle, index) => {
+				if (Math.random() > 0.68) {
+					particle.character = randomSymbol(index + time * 0.02);
+				}
+
+				let x = particle.x;
+				let y = particle.y;
+				let alpha = particle.alpha;
+				const target = particle.target;
+				const sourceColumn = columns[particle.sourceColumnIndex] || columns[index % Math.max(1, columns.length)];
+				const sourceX = sourceColumn?.x ?? particle.x;
+				const sourceY = sourceColumn
+					? (sourceColumn.y - particle.sourceRow * rainFontSize * 1.18 + height) % height
+					: particle.y;
+
+				if (target && loopTime >= formationStart) {
+					const localTime = loopTime - formationStart - particle.delay;
+
+					if (localTime < 0) {
+						x = sourceX;
+						y = sourceY;
+						alpha = 0.12 + Math.sin(time * 0.012 + particle.phase) * 0.03;
+					} else if (localTime < particle.duration) {
+						if (particle.pickupX === null || particle.pickupY === null) {
+							particle.pickupX = sourceX;
+							particle.pickupY = sourceY;
+						}
+
+						const progress = easeInOutCubic(Math.min(1, localTime / particle.duration));
+						const drift = Math.sin(progress * Math.PI) * 14;
+						x = particle.pickupX + (target.x - particle.pickupX) * progress + Math.sin(particle.phase) * drift;
+						y = particle.pickupY + (target.y - particle.pickupY) * progress;
+						particle.lockX = x;
+						particle.lockY = y;
+						alpha = 0.16 + progress * 0.56 + Math.sin(time * 0.013 + particle.phase) * 0.035;
+					} else {
+						x = target.x + Math.sin(time * 0.006 + particle.phase) * 0.12;
+						y = target.y + Math.cos(time * 0.007 + particle.phase) * 0.1;
+						alpha = 0.68 + Math.sin(time * 0.017 + particle.phase) * 0.06;
+					}
+				}
+
+				context.fillStyle = target && loopTime >= formationStart
+					? `rgba(88, 226, 73, ${Math.max(0.26, Math.min(0.82, alpha))})`
+					: `rgba(0, 132, 42, ${Math.max(0.05, Math.min(0.18, alpha))})`;
+				context.fillText(particle.character, x, y);
+
+				if (!target || loopTime < formationStart) {
+					particle.y += particle.speed;
+					if (particle.y > height + rainFontSize * 5) {
+						particle.y = -rainFontSize * (1 + Math.random() * 8);
+						particle.x = columns[index % Math.max(1, columns.length)]?.x ?? Math.random() * width;
+						particle.released = false;
+					}
+				}
 			});
 			context.shadowBlur = 0;
 
@@ -200,93 +398,6 @@ const t = siteCopy[lang].hero;
 				animationFrame = window.requestAnimationFrame(drawFrame);
 			}
 		}, { passive: true });
-	}
-
-	const platformTitle = document.querySelector("[data-platform-matrix-title]");
-	if (platformTitle instanceof HTMLElement && !reducedMotion) {
-		const symbols = ["0", "1", "A", "F", "X", "/", "{", "}", "S", "Y", "C", "D", "E"];
-		const phrase = "HACK THE FUTURE";
-		let started = false;
-		const cells = phrase.split("").map((character, index) => {
-			const cell = document.createElement("span");
-			cell.className = character === " " ? "matrix-title-cell matrix-title-cell--space" : "matrix-title-cell";
-			cell.style.setProperty("--matrix-cell-delay", `${index * 34 + Math.random() * 80}ms`);
-
-			if (character !== " ") {
-				const glyph = document.createElement("span");
-				glyph.className = "matrix-title-glyph";
-				glyph.textContent = symbols[(index * 4) % symbols.length];
-				cell.append(glyph);
-			}
-
-			platformTitle.append(cell);
-			return { cell, character };
-		});
-
-		const startPlatformPrint = () => {
-			if (started) return;
-			started = true;
-			window.setTimeout(() => {
-				platformTitle.classList.add("is-matrix-title-printing");
-				const glyphTimer = window.setInterval(() => {
-					cells.forEach(({ cell }, index) => {
-						const glyph = cell.querySelector(".matrix-title-glyph");
-						if (glyph && !glyph.classList.contains("is-matrix-title-locked")) {
-							glyph.textContent = symbols[(Math.floor(performance.now() * 0.018) + index * 3) % symbols.length];
-						}
-					});
-				}, 70);
-
-				cells.forEach(({ cell, character }, index) => {
-					if (character === " ") return;
-					window.setTimeout(() => {
-						const glyph = cell.querySelector(".matrix-title-glyph");
-						if (glyph) {
-							glyph.textContent = character;
-							glyph.classList.add("is-matrix-title-locked");
-						}
-					}, 880 + index * 34);
-				});
-
-				window.setTimeout(() => {
-					window.clearInterval(glyphTimer);
-					cells.forEach(({ cell, character }) => {
-						if (character === " ") return;
-						const glyph = cell.querySelector(".matrix-title-glyph");
-						if (glyph) {
-							glyph.textContent = character;
-							glyph.classList.add("is-matrix-title-locked");
-						}
-					});
-				}, 1450);
-			}, 220);
-		};
-
-		const waitForBottomUpBoot = () => {
-			if (!document.documentElement.classList.contains("is-bottom-up-booting")) {
-				startPlatformPrint();
-				return;
-			}
-
-			const observer = new MutationObserver(() => {
-				if (!document.documentElement.classList.contains("is-bottom-up-booting")) {
-					observer.disconnect();
-					startPlatformPrint();
-				}
-			});
-
-			observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-			window.setTimeout(() => {
-				observer.disconnect();
-				startPlatformPrint();
-			}, 1600);
-		};
-
-		window.requestAnimationFrame(waitForBottomUpBoot);
-	}
-
-	if (platformTitle instanceof HTMLElement && reducedMotion) {
-		platformTitle.textContent = "Hack The Future";
 	}
 
 </script>
