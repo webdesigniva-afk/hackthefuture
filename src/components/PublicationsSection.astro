@@ -81,7 +81,7 @@ const days = [
 		bottom: 0;
 		left: clamp(1.25rem, 3vw, 3rem);
 		width: 1px;
-		background: rgba(45, 27, 78, 0.14);
+		background: rgba(10, 10, 10, 0.14);
 	}
 
 	.timeline-rail span {
@@ -90,7 +90,7 @@ const days = [
 		left: clamp(1.25rem, 3vw, 3rem);
 		width: 1px;
 		height: 100%;
-		background: linear-gradient(180deg, rgba(45, 27, 78, 0.4), rgba(176, 138, 74, 0.55), rgba(45, 27, 78, 0.16));
+		background: linear-gradient(180deg, rgba(10, 10, 10, 0.34), rgba(124, 255, 107, 0.3), rgba(10, 10, 10, 0.18));
 		transform: scaleY(0);
 		transform-origin: top;
 		transition: transform 1500ms var(--ease-premium);
@@ -129,10 +129,10 @@ const days = [
 		left: calc(clamp(-5rem, -5vw, -2rem) - 0.62rem);
 		width: 1.24rem;
 		height: 1.24rem;
-		border: 1px solid rgba(45, 27, 78, 0.28);
+		border: 1px solid rgba(10, 10, 10, 0.28);
 		border-radius: 999px;
 		background: var(--color-paper);
-		box-shadow: 0 0 0 0.55rem rgba(255, 252, 247, 0.9);
+		box-shadow: 0 0 0 0.55rem rgba(255, 255, 255, 0.92);
 	}
 
 	.timeline-marker::after {
@@ -210,6 +210,10 @@ const days = [
 		padding-bottom: 1rem;
 	}
 
+	.timeline-entry--compact .timeline-entry-grid {
+		gap: clamp(2.5rem, 5.5vw, 6.5rem);
+	}
+
 	.timeline-entry--compact .timeline-day-number {
 		color: color-mix(in srgb, var(--color-gold) 28%, transparent);
 	}
@@ -220,10 +224,11 @@ const days = [
 	}
 
 	.timeline-entry:hover .timeline-marker {
-		border-color: rgba(176, 138, 74, 0.58);
+		border-color: rgba(124, 255, 107, 0.6);
 		box-shadow:
-			0 0 0 0.65rem rgba(255, 252, 247, 0.95),
-			0 20px 48px rgba(45, 27, 78, 0.16);
+			0 0 0 0.65rem rgba(255, 255, 255, 0.96),
+			0 20px 48px rgba(10, 10, 10, 0.16),
+			0 0 20px rgba(124, 255, 107, 0.1);
 		transform: translate3d(0, -0.08rem, 0) scale(1.04);
 		transition:
 			border-color 240ms ease,

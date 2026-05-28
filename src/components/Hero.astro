@@ -9,9 +9,11 @@ const lang = getLang(Astro.props.lang);
 const t = siteCopy[lang].hero;
 ---
 
-<section class="hero-section gradient-rule atmospheric-section civic-grid relative overflow-hidden px-4 pb-14 pt-5 sm:px-6 sm:pb-16 lg:px-8">
-	<div class="mx-auto max-w-7xl">
-		<div class="hero-caption mb-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-y border-[rgba(45,27,78,0.075)] py-4 text-[0.63rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]/62 lg:flex-nowrap lg:justify-between lg:gap-x-10 xl:gap-x-16">
+<section class="hero-section gradient-rule atmospheric-section civic-grid relative overflow-hidden px-4 pb-14 pt-5 sm:px-6 sm:pb-16 lg:px-8" data-future-hero>
+	<canvas class="hero-code-rain" data-hero-code-rain aria-hidden="true"></canvas>
+
+	<div class="relative z-10 mx-auto max-w-7xl">
+		<div class="hero-caption mb-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-y border-[rgba(10,10,10,0.11)] py-4 text-[0.63rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-ink)]/70 lg:flex-nowrap lg:justify-between lg:gap-x-10 xl:gap-x-16">
 			{t.caption.map((item, index) => (
 				<span class="hero-caption-unit" data-caption-unit={index + 1}>
 					{index > 0 && <span class="hero-caption-separator text-[var(--color-gold)]/55" aria-hidden="true">&middot;</span>}
@@ -63,4 +65,219 @@ const t = siteCopy[lang].hero;
 			</div>
 		</div>
 	</div>
+
+	<div class="hero-position-cue" aria-hidden="true">
+		<span>POSITION: NOW</span>
+		<span class="hero-position-arrow">↑</span>
+		<span>FUTURE ABOVE</span>
+	</div>
 </section>
+
+<script>
+	const hero = document.querySelector("[data-future-hero]");
+	const canvas = document.querySelector("[data-hero-code-rain]");
+	const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	if (hero instanceof HTMLElement) {
+		let ticking = false;
+		const updateHeroLift = () => {
+			const rect = hero.getBoundingClientRect();
+			const progress = Math.min(1, Math.max(0, -rect.top / Math.max(1, rect.height * 0.52)));
+			hero.style.setProperty("--hero-lift", `${-progress * 34}px`);
+			hero.style.setProperty("--hero-cue-opacity", `${Math.max(0, 1 - progress * 2.4)}`);
+			ticking = false;
+		};
+
+		const requestHeroLift = () => {
+			if (!ticking) {
+				window.requestAnimationFrame(updateHeroLift);
+				ticking = true;
+			}
+		};
+
+		updateHeroLift();
+		window.addEventListener("scroll", requestHeroLift, { passive: true });
+		window.addEventListener("resize", requestHeroLift, { passive: true });
+	}
+
+	if (canvas instanceof HTMLCanvasElement) {
+		const context = canvas.getContext("2d", { alpha: true });
+		const symbols = ["0", "1", "A", "F", "X", "/", "{", "}", "S", "Y", "C", "D", "E"];
+		const letterMap = {
+			A: ["01110", "10001", "10001", "11111", "10001", "10001", "10001"],
+			C: ["01111", "10000", "10000", "10000", "10000", "10000", "01111"],
+			E: ["11111", "10000", "10000", "11110", "10000", "10000", "11111"],
+			F: ["11111", "10000", "10000", "11110", "10000", "10000", "10000"],
+			H: ["10001", "10001", "10001", "11111", "10001", "10001", "10001"],
+			K: ["10001", "10010", "10100", "11000", "10100", "10010", "10001"],
+			R: ["11110", "10001", "10001", "11110", "10100", "10010", "10001"],
+			T: ["11111", "00100", "00100", "00100", "00100", "00100", "00100"],
+			U: ["10001", "10001", "10001", "10001", "10001", "10001", "01110"],
+		};
+		const formationLines = ["HACK", "THE", "FUTURE"];
+		let width = 0;
+		let height = 0;
+		let columns = [];
+		let formationPoints = [];
+		let fontSize = 16;
+		let animationFrame = 0;
+		let lastFrame = 0;
+
+		const buildFormationPoints = () => {
+			const cell = window.innerWidth < 768 ? 4.8 : 5.8;
+			const letterGap = cell * 1.9;
+			const lineGap = cell * 11.2;
+			const originX = window.innerWidth < 768 ? width * 0.5 : width * 0.43;
+			const originY = window.innerWidth < 768 ? height * 0.24 : height * 0.23;
+			const points = [];
+
+			formationLines.forEach((line, lineIndex) => {
+				const lineWidth = line.length * 5 * cell + Math.max(0, line.length - 1) * letterGap;
+				let cursorX = originX - lineWidth / 2;
+				const lineY = originY + (lineIndex - 1) * lineGap;
+
+				line.split("").forEach((letter) => {
+					const pattern = letterMap[letter];
+					if (!pattern) return;
+
+					pattern.forEach((row, rowIndex) => {
+						row.split("").forEach((value, colIndex) => {
+							if (value === "1") {
+								points.push({
+									x: cursorX + colIndex * cell,
+									y: lineY + rowIndex * cell,
+									seed: (lineIndex + 1) * 31 + rowIndex * 7 + colIndex,
+								});
+							}
+						});
+					});
+
+					cursorX += 5 * cell + letterGap;
+				});
+			});
+
+			formationPoints = points;
+		};
+
+		const resize = () => {
+			const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
+			const rect = canvas.getBoundingClientRect();
+			width = Math.max(1, Math.floor(rect.width));
+			height = Math.max(1, Math.floor(rect.height));
+			canvas.width = Math.floor(width * ratio);
+			canvas.height = Math.floor(height * ratio);
+
+			if (context) {
+				context.setTransform(ratio, 0, 0, ratio, 0, 0);
+			}
+
+			fontSize = window.innerWidth < 768 ? 18 : 16;
+			const density = window.innerWidth < 768 ? 0.1 : 0.16;
+			const count = Math.max(10, Math.floor((width / fontSize) * density));
+			columns = Array.from({ length: count }, (_, index) => ({
+				x: window.innerWidth < 768
+					? ((index + Math.random() * 0.8) / count) * width
+					: width * (0.08 + ((index + Math.random() * 0.8) / count) * 0.48),
+				y: Math.random() * height,
+				speed: 0.12 + Math.random() * 0.2,
+				alpha: 0.065 + Math.random() * 0.045,
+				phase: Math.random() * Math.PI * 2,
+			}));
+			buildFormationPoints();
+		};
+
+		const drawStatic = () => {
+			if (!context) return;
+			context.clearRect(0, 0, width, height);
+			context.font = `${fontSize}px Arial, sans-serif`;
+			context.fillStyle = "rgba(18, 135, 42, 0.055)";
+			columns.forEach((column, columnIndex) => {
+				for (let y = columnIndex % 3 * fontSize; y < height; y += fontSize * 7) {
+					context.fillText(symbols[Math.floor(columnIndex + y) % symbols.length], column.x, y);
+				}
+			});
+		};
+
+		const drawFrame = (time) => {
+			if (!context) return;
+			if (time - lastFrame < 42) {
+				animationFrame = window.requestAnimationFrame(drawFrame);
+				return;
+			}
+			lastFrame = time;
+
+			context.clearRect(0, 0, width, height);
+			context.fillStyle = "rgba(255, 255, 255, 0.055)";
+			context.fillRect(0, 0, width, height);
+			context.font = `${fontSize}px Arial, sans-serif`;
+			context.textBaseline = "top";
+
+			columns.forEach((column, columnIndex) => {
+				const rowCount = 2 + (columnIndex % 3);
+				for (let row = 0; row < rowCount; row += 1) {
+					const y = (column.y - row * fontSize * 1.55 + height) % height;
+					const charIndex = Math.floor(time * 0.004 + column.phase + row + columnIndex) % symbols.length;
+					const alpha = Math.max(0.038, column.alpha - row * 0.014);
+					context.fillStyle = `rgba(18, 135, 42, ${alpha})`;
+					context.fillText(symbols[charIndex], column.x, y);
+				}
+				column.y = (column.y + column.speed) % (height + fontSize * 8);
+			});
+
+			const cycle = time % 16000;
+			const textWindow = cycle > 5600 && cycle < 10200;
+			if (textWindow) {
+				const local = (cycle - 5600) / 4600;
+				const fadeIn = Math.min(1, local / 0.28);
+				const fadeOut = Math.min(1, (1 - local) / 0.22);
+				const alpha = Math.min(fadeIn, fadeOut) * 0.22;
+				const assemble = Math.min(1, local * 2.6);
+				const dissolve = Math.max(0, (local - 0.78) / 0.22);
+				const glyphSize = window.innerWidth < 768 ? 8 : 9;
+				context.save();
+				context.font = `700 ${glyphSize}px Arial, sans-serif`;
+				context.textAlign = "center";
+				context.textBaseline = "middle";
+				context.shadowColor = "rgba(124, 255, 107, 0.18)";
+				context.shadowBlur = 10;
+				formationPoints.forEach((point, index) => {
+					const streamOffset = (1 - assemble) * ((point.seed % 9) - 4) * 18;
+					const fallOffset = dissolve * (24 + (point.seed % 9) * 5);
+					const jitter = Math.sin(time * 0.004 + point.seed) * (1 - assemble) * 1.1;
+					const x = point.x + jitter;
+					const y = point.y + streamOffset + fallOffset;
+					const charIndex = Math.floor(time * 0.006 + point.seed + index) % symbols.length;
+					const pointAlpha = alpha * (0.72 + (point.seed % 5) * 0.06);
+					context.fillStyle = `rgba(16, 170, 48, ${pointAlpha})`;
+					context.fillText(symbols[charIndex], x, y);
+
+					if (assemble > 0.82 && dissolve < 0.2 && point.seed % 5 === 0) {
+						context.fillStyle = `rgba(124, 255, 107, ${pointAlpha * 0.34})`;
+						context.fillText(symbols[(charIndex + 3) % symbols.length], x, y - glyphSize * 1.45);
+						context.fillText(symbols[(charIndex + 6) % symbols.length], x, y + glyphSize * 1.45);
+					}
+				});
+				context.restore();
+			}
+
+			animationFrame = window.requestAnimationFrame(drawFrame);
+		};
+
+		resize();
+		if (reducedMotion) {
+			drawStatic();
+		} else {
+			animationFrame = window.requestAnimationFrame(drawFrame);
+		}
+
+		window.addEventListener("resize", () => {
+			window.cancelAnimationFrame(animationFrame);
+			resize();
+			if (reducedMotion) {
+				drawStatic();
+			} else {
+				animationFrame = window.requestAnimationFrame(drawFrame);
+			}
+		}, { passive: true });
+	}
+</script>

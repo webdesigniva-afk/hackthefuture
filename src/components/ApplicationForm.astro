@@ -65,7 +65,7 @@ const applicationTypes = ["Applying alone", "Applying with a team"];
 	</fieldset>
 
 	<div class="pt-1">
-		<button type="submit" class="inline-flex min-h-12 items-center justify-center rounded-full bg-[var(--color-purple)] px-6 text-sm font-semibold uppercase tracking-[0.12em] text-[var(--color-paper)] transition duration-200 hover:-translate-y-0.5 hover:bg-[var(--color-ink)]">
+		<button type="submit" class="application-submit inline-flex min-h-12 items-center justify-center rounded-full px-6 text-sm font-semibold uppercase tracking-[0.12em] text-white transition duration-200">
 			Register Interest
 		</button>
 	</div>
@@ -108,7 +108,7 @@ const applicationTypes = ["Applying alone", "Applying with a team"];
 
 	.application-field span,
 	.application-fieldset legend {
-		color: color-mix(in srgb, var(--color-purple) 78%, transparent);
+		color: color-mix(in srgb, var(--color-purple) 84%, var(--color-ink));
 		font-size: 0.72rem;
 		font-weight: 700;
 		letter-spacing: 0.16em;
@@ -122,7 +122,7 @@ const applicationTypes = ["Applying alone", "Applying with a team"];
 		width: 100%;
 		border: 1px solid var(--color-line);
 		border-radius: 1rem;
-		background: rgba(255, 252, 247, 0.76);
+		background: rgba(255, 255, 255, 0.92);
 		color: var(--color-ink);
 		font: inherit;
 		line-height: 1.5;
@@ -142,9 +142,9 @@ const applicationTypes = ["Applying alone", "Applying with a team"];
 	.application-field input:focus,
 	.application-field textarea:focus,
 	.application-field select:focus {
-		border-color: color-mix(in srgb, var(--color-purple) 48%, var(--color-line));
-		background: rgba(255, 252, 247, 0.96);
-		box-shadow: 0 0 0 4px rgba(45, 27, 78, 0.08);
+		border-color: rgba(124, 255, 107, 0.62);
+		background: rgba(255, 255, 255, 0.98);
+		box-shadow: 0 0 0 4px rgba(124, 255, 107, 0.1), 0 12px 32px rgba(10, 10, 10, 0.08);
 	}
 
 	.application-fieldset {
@@ -159,7 +159,7 @@ const applicationTypes = ["Applying alone", "Applying with a team"];
 		gap: 0.75rem;
 		border: 1px solid var(--color-line);
 		border-radius: 1rem;
-		background: rgba(255, 252, 247, 0.64);
+		background: rgba(255, 255, 255, 0.86);
 		padding: 0.75rem 0.9rem;
 		color: var(--color-ink);
 		font-weight: 600;
@@ -170,12 +170,24 @@ const applicationTypes = ["Applying alone", "Applying with a team"];
 	}
 
 	.application-radio:hover {
-		border-color: color-mix(in srgb, var(--color-purple) 30%, var(--color-line));
-		background: rgba(255, 252, 247, 0.9);
+		border-color: rgba(124, 255, 107, 0.42);
+		background: rgba(255, 255, 255, 0.96);
 		transform: translateY(-1px);
 	}
 
 	.application-radio input {
 		accent-color: var(--color-purple);
+	}
+
+	.application-submit {
+		background: var(--gradient-button);
+		border: 1px solid rgba(10, 10, 10, 0.92);
+		box-shadow: 0 12px 34px rgba(10, 10, 10, 0.16);
+	}
+
+	.application-submit:hover {
+		transform: translateY(-2px);
+		border-color: var(--color-accent);
+		box-shadow: 0 16px 42px rgba(10, 10, 10, 0.18), 0 0 20px rgba(124, 255, 107, 0.15);
 	}
 </style>
