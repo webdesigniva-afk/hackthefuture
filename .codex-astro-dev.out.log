@@ -1,0 +1,15 @@
+
+> hackthefuture@0.0.1 dev
+> astro dev --host 127.0.0.1 --port 4321
+
+[vite] connected.
+[2m12:52:31[22m [34m[types][39m Generated [2m5ms[22m
+[2m12:52:31[22m [34m[vite][39m Re-optimizing dependencies because vite config has changed
+[2m12:52:31[22m [34m[vite][39m Port 4321 is in use, trying another one...
+[2m12:52:31[22m [34m[vite][39m Port 4322 is in use, trying another one...
+[42m[1m astro [22m[49m [32mv6.3.2[39m [2mready in[22m 1604 [2mms[22m
+[2m┃[22m Local    [36mhttp://127.0.0.1:4323/[39m
+[2m12:52:31[22m [32mwatching for file changes...[39m
+[2m12:52:59[22m [34m[200][39m / [2m48ms[22m
+[2m13:01:59[22m [34m[200][39m / [2m89ms[22m
+[2m13:11:16[22m [34m[200][39m / [2m90ms[22m

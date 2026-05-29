@@ -1,17 +1,22 @@
 ---
 const challenges = [
 	{
+		mission: "MISSION_01",
+		number: "01",
 		title: "Future of Work",
 		question: "How does Shumen become a place where young people build their future?",
 		description: "AI, automation, and new industries are changing what jobs exist and what skills matter. What should the path from school to work actually look like in your region?",
 		ideas: [
 			"Youth career platform",
 			"New internship model",
-			"Campaign for local opportunities",
-			"Tool connecting young people with companies",
+			"Campaign that surfaces local job opportunities",
+			"Tool that helps young people connect with companies",
 		],
+		outcomes: ["Career pathway prototype", "Employer connection model", "Youth skills roadmap"],
 	},
 	{
+		mission: "MISSION_02",
+		number: "02",
 		title: "Environment & Crisis Response",
 		question: "How does Bulgaria react faster to fires, floods, and emergencies?",
 		description: "Climate is hitting harder and faster. Communities need better tools to prepare, respond, and protect each other.",
@@ -20,122 +25,1430 @@ const challenges = [
 			"Crisis communication plan",
 			"Early-warning sensor concept",
 			"Emergency map",
-			"Public preparedness campaign",
+			"Campaign that helps citizens know what to do before disaster happens",
 		],
+		outcomes: ["Response system concept", "Citizen readiness flow", "Emergency data map"],
 	},
 	{
+		mission: "MISSION_03",
+		number: "03",
 		title: "Mental Health & Youth Wellbeing",
 		question: "How does a city actually take care of young people's mental health?",
-		description: "Anxiety, isolation, pressure, and burnout are affecting young people more than ever.",
+		description: "Anxiety, isolation, pressure, and burnout are hitting young people harder than ever, and many of the systems that should help are absent or behind. Young people are the experts on this.",
 		ideas: [
 			"Peer-support platform",
 			"School-based program",
 			"Anti-stigma campaign",
 			"Digital wellbeing tool",
-			"Municipality proposal",
+			"Proposal for how municipalities should serve young people's mental health",
 		],
+		outcomes: ["Support touchpoint model", "Youth wellbeing service proposal", "Anti-stigma launch concept"],
 	},
 	{
-		title: "Local Products & Future Business",
+		mission: "MISSION_04",
+		number: "04",
+		title: "Local Products, Food & Future Business",
 		question: "How does Bulgaria turn local strengths into future opportunities?",
-		description: "Bulgaria has strong local products, food traditions, and creative people, but many producers struggle to reach younger consumers and markets.",
+		description: "Bulgaria has serious local products, food traditions, and creative people, but many producers struggle to reach younger consumers or new markets.",
 		ideas: [
 			"Digital marketplace",
 			"Brand campaign",
 			"Tourism-food experience",
 			"Packaging concept",
-			"Platform connecting producers",
+			"Platform connecting producers with schools, restaurants, and customers",
 		],
+		outcomes: ["Market access prototype", "Local brand system", "Distribution partnership map"],
 	},
 ];
 ---
 
-<section id="challenges" class="motion-section arena-moment civic-grid px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+<section id="challenges" class="motion-section arena-moment civic-grid px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
 	<div class="mx-auto max-w-7xl">
-		<div class="mb-9 grid gap-6 lg:grid-cols-[minmax(12rem,0.34fr)_minmax(0,1fr)] lg:items-end">
-			<p class="arena-kicker">PILOT EDITION</p>
-			<div>
-				<h2 class="arena-statement">Four real challenges. One future to build.</h2>
-				<p class="mt-5 max-w-2xl text-base leading-8 text-[var(--color-muted)]">
-					Choose one of four questions Bulgaria is already facing. Spend two days building something that could become part of the answer.
-				</p>
-			</div>
+		<div class="mission-heading mx-auto mb-5 max-w-[1100px] text-center sm:mb-6">
+			<p class="arena-kicker">PILOT EDITION // SHUMEN 2026</p>
+			<h2 class="mission-heading-title mt-2.5">
+				<span>FOUR REAL CHALLENGES.</span>
+				<span>ONE <span class="mission-heading-accent">FUTURE</span> TO BUILD.</span>
+			</h2>
+			<p class="mx-auto mt-3.5 max-w-2xl text-base leading-8 text-[var(--color-muted)] sm:mt-4">
+				Choose one of four questions Bulgaria is already facing.
+				<br class="hidden sm:block" />
+				Spend two days building something that could become part of the answer.
+			</p>
+			<p class="mission-transition-cue mt-4">[ 01 FUTURE / 04 MISSIONS ]</p>
 		</div>
 
-		<div class="grid gap-4 md:grid-cols-2">
-			{challenges.map((challenge, index) => (
-				<details class="challenge-card group relative overflow-hidden rounded-[1rem] border border-[var(--color-line)] bg-white/80 shadow-[0_14px_44px_rgba(10,10,10,0.045)] transition duration-300 ease-[var(--ease-premium)] hover:-translate-y-0.5 hover:border-[rgba(124,255,107,0.42)] hover:bg-white hover:shadow-[0_20px_58px_rgba(10,10,10,0.1)]">
-					<div class="absolute right-5 top-4 text-xs font-semibold text-[var(--color-purple)]/44 transition duration-300 group-hover:text-[var(--color-purple-soft)]">
-						0{index + 1}
+		<div class="mission-terminal" data-mission-terminal data-active-mission="1">
+			<div class="mission-terminal-grid">
+				<nav class="mission-nav" aria-label="Mission selection">
+					<div class="mission-nav-header">
+						<span class="mission-live-dot" aria-hidden="true"></span>
+						<span>MISSION INDEX</span>
 					</div>
-					<summary class="challenge-summary flex min-h-[9.5rem] cursor-pointer list-none flex-col justify-between gap-5 p-5 marker:hidden sm:p-6">
-						<div class="h-0.5 w-10 bg-[linear-gradient(90deg,var(--color-ink),var(--color-accent))] opacity-60 transition-all duration-300 group-hover:w-14 group-hover:opacity-85 group-hover:shadow-[0_0_18px_rgba(124,255,107,0.18)]" aria-hidden="true"></div>
-						<div>
-							<h3 class="max-w-xl text-xl font-semibold leading-tight tracking-[-0.025em] text-[var(--color-ink)] sm:text-2xl">
-								{challenge.title}
-							</h3>
-							<p class="mt-3 max-w-xl text-sm leading-6 text-[var(--color-muted)] sm:text-base sm:leading-7">
-								{challenge.question}
-							</p>
-							<p class="mt-4 inline-flex items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[var(--color-purple)]/62">
-								<span class="challenge-toggle-icon grid h-5 w-5 place-items-center rounded-full border border-[var(--color-line)] text-[var(--color-purple)] transition duration-300" aria-hidden="true">+</span>
-								Explore
-							</p>
-						</div>
-					</summary>
-					<div class="challenge-expansion">
-						<div class="challenge-expansion-inner px-5 pb-5 sm:px-6 sm:pb-6">
-							<p class="border-t border-[var(--color-line)] pt-4 text-sm leading-7 text-[var(--color-muted)]">
-								{challenge.description}
-							</p>
-							<div class="mt-4">
-								<p class="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-purple)]/68">
-									Possible ideas
-								</p>
-								<ul class="mt-3 grid gap-1.5 sm:grid-cols-2">
-									{challenge.ideas.map((idea) => (
-										<li class="flex items-start gap-2.5 text-sm leading-6 text-[var(--color-muted)]">
-											<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-gold)]/72" aria-hidden="true"></span>
-											<span>{idea}</span>
-										</li>
-									))}
-								</ul>
+					<div class="mission-tabs" role="tablist" aria-label="Challenge missions">
+						{challenges.map((challenge, index) => (
+							<button
+								class={`mission-tab ${index === 0 ? "is-active" : ""}`}
+								type="button"
+								role="tab"
+								aria-selected={index === 0 ? "true" : "false"}
+								aria-controls={`mission-panel-${index + 1}`}
+								id={`mission-tab-${index + 1}`}
+								data-mission-tab={index + 1}
+							>
+								<span class="mission-tab-code">{challenge.mission}</span>
+								<span class="mission-tab-title">{challenge.title}</span>
+								<span class="mission-tab-signal" aria-hidden="true"></span>
+							</button>
+						))}
+					</div>
+				</nav>
+
+				<div class="mission-display">
+					<div class="mission-display-frame" aria-hidden="true">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+					{challenges.map((challenge, index) => (
+						<section
+							class={`mission-panel ${index === 0 ? "is-active" : ""}`}
+							id={`mission-panel-${index + 1}`}
+							role="tabpanel"
+							aria-labelledby={`mission-tab-${index + 1}`}
+							data-mission-panel={index + 1}
+						>
+							<div class="mission-visual" data-visual={index + 1} aria-hidden="true">
+								{index === 0 && (
+									<svg viewBox="0 0 520 320" class="mission-svg mission-svg-network">
+										<defs>
+											<radialGradient id="missionGlow01" cx="50%" cy="50%" r="50%">
+												<stop offset="0%" stop-color="rgba(196,181,253,0.78)" />
+												<stop offset="100%" stop-color="rgba(124,58,237,0)" />
+											</radialGradient>
+										</defs>
+										<path class="data-grid-line" d="M54 82 H466 M54 142 H466 M54 202 H466 M54 262 H466 M88 58 V268 M164 58 V268 M240 58 V268 M316 58 V268 M392 58 V268 M468 58 V268" />
+										<circle class="network-core" cx="260" cy="160" r="112" fill="url(#missionGlow01)" />
+										<path class="career-branch branch-a" d="M164 162 L164 108 L240 108" />
+										<path class="career-branch branch-b" d="M316 162 L316 220 L392 220" />
+										<path class="career-branch branch-c" d="M392 162 L444 108" />
+										<path class="career-route-base" d="M72 162 H164 H240 H316 H392 H462" />
+										<path class="career-route-active" d="M72 162 H164 H240 H316 H392 H462" />
+										<path class="career-cursor" d="M72 162 H164 H240 H316 H392 H462" />
+										<g class="career-nodes labelled-nodes">
+											<g>
+												<circle cx="72" cy="162" r="11" />
+												<text x="48" y="194">SCHOOL</text>
+											</g>
+											<g>
+												<circle cx="164" cy="162" r="11" />
+												<text x="140" y="194">SKILLS</text>
+											</g>
+											<g>
+												<circle cx="240" cy="162" r="11" />
+												<text x="232" y="194">AI</text>
+											</g>
+											<g>
+												<circle cx="316" cy="162" r="11" />
+												<text x="280" y="194">INTERNSHIP</text>
+											</g>
+											<g>
+												<circle cx="392" cy="162" r="11" />
+												<text x="374" y="194">WORK</text>
+											</g>
+											<g>
+												<circle cx="462" cy="162" r="12" />
+												<text x="434" y="194">STARTUP</text>
+											</g>
+											<g class="career-branch-node">
+												<circle cx="240" cy="108" r="7" />
+											</g>
+											<g class="career-branch-node">
+												<circle cx="392" cy="220" r="7" />
+											</g>
+											<g class="career-branch-node">
+												<circle cx="444" cy="108" r="7" />
+											</g>
+										</g>
+										<circle class="career-status-point" cx="462" cy="162" r="4" />
+										<text class="visual-label" x="64" y="48">CAREER PATHWAY MAP</text>
+									</svg>
+								)}
+								{index === 1 && (
+									<svg viewBox="0 0 520 320" class="mission-svg mission-svg-radar">
+										<text class="visual-label status-label" x="58" y="46">SIGNAL ACTIVE</text>
+										<text class="visual-label" x="374" y="46">RESPONSE GRID</text>
+										<path class="crisis-grid-line" d="M270 70 H474 M270 118 H474 M270 166 H474 M270 214 H474 M306 64 V248 M354 64 V248 M402 64 V248 M450 64 V248" />
+										<g class="terrain-contours">
+											<path class="topo-line" d="M46 116 C74 82 128 80 156 112 S206 146 232 112" />
+											<path class="topo-line topo-two" d="M38 160 C76 116 126 124 158 154 S208 194 246 150" />
+											<path class="topo-line topo-three" d="M52 212 C92 178 136 196 174 222 S226 238 254 198" />
+											<path class="topo-line topo-four" d="M78 82 C112 58 160 58 192 88" />
+											<path class="topo-line topo-five" d="M72 250 C122 226 180 268 232 232" />
+										</g>
+										<path class="response-route route-one" d="M238 156 L306 116 L374 138 L442 96" />
+										<path class="response-route route-two" d="M238 156 L322 196 L402 212 L462 168" />
+										<path class="response-route route-three" d="M238 156 L354 156 L438 226" />
+										<circle class="radar-ring" cx="238" cy="156" r="38" />
+										<circle class="radar-ring ring-two" cx="238" cy="156" r="74" />
+										<circle class="radar-ring ring-three" cx="238" cy="156" r="112" />
+										<path class="radar-sweep" d="M238 156 L322 78 A118 118 0 0 1 350 184 Z" />
+										<circle class="emergency-zone" cx="238" cy="156" r="16" />
+										<circle class="warning-pulse" cx="238" cy="156" r="24" />
+										<g class="response-nodes">
+											<circle class="response-node" cx="306" cy="116" r="8" />
+											<circle class="response-node" cx="374" cy="138" r="8" />
+											<circle class="response-node" cx="442" cy="96" r="9" />
+											<circle class="response-node" cx="322" cy="196" r="8" />
+											<circle class="response-node" cx="402" cy="212" r="8" />
+											<circle class="response-node" cx="462" cy="168" r="9" />
+											<circle class="response-node" cx="438" cy="226" r="8" />
+										</g>
+										<g class="alert-points">
+											<circle class="radar-pulse pulse-one" cx="118" cy="128" r="4" />
+											<circle class="radar-pulse pulse-two" cx="174" cy="222" r="4" />
+											<circle class="radar-pulse pulse-three" cx="442" cy="96" r="4" />
+											<circle class="radar-pulse pulse-four" cx="462" cy="168" r="4" />
+										</g>
+									</svg>
+								)}
+								{index === 2 && (
+									<svg viewBox="0 0 520 320" class="mission-svg mission-svg-wellbeing">
+										<defs>
+											<radialGradient id="supportGlow03" cx="50%" cy="50%" r="50%">
+												<stop offset="0%" stop-color="rgba(196,181,253,0.72)" />
+												<stop offset="100%" stop-color="rgba(124,58,237,0)" />
+											</radialGradient>
+										</defs>
+										<text class="visual-label status-label" x="64" y="48">SUPPORT NETWORK</text>
+										<circle class="support-glow" cx="260" cy="160" r="118" fill="url(#supportGlow03)" />
+										<circle class="support-layer layer-a" cx="260" cy="160" r="42" />
+										<circle class="support-layer layer-b" cx="260" cy="160" r="78" />
+										<circle class="support-layer layer-c" cx="260" cy="160" r="112" />
+										<path class="support-link link-a" d="M260 160 C226 128 200 110 168 92" />
+										<path class="support-link link-b" d="M260 160 C284 116 316 96 360 84" />
+										<path class="support-link link-c" d="M260 160 C314 154 356 156 408 164" />
+										<path class="support-link link-d" d="M260 160 C296 202 330 226 374 246" />
+										<path class="support-link link-e" d="M260 160 C226 206 190 224 142 234" />
+										<path class="support-link link-f" d="M260 160 C212 158 168 152 112 148" />
+										<path class="support-pulse pulse-a" d="M260 160 C226 128 200 110 168 92" />
+										<path class="support-pulse pulse-b" d="M260 160 C314 154 356 156 408 164" />
+										<path class="support-pulse pulse-c" d="M260 160 C226 206 190 224 142 234" />
+										<g class="support-orbit-nodes">
+											<g>
+												<circle class="support-node" cx="168" cy="92" r="14" />
+												<text x="138" y="70">FRIENDS</text>
+											</g>
+											<g>
+												<circle class="support-node" cx="360" cy="84" r="13" />
+												<text x="336" y="62">SCHOOL</text>
+											</g>
+											<g>
+												<circle class="support-node support-node-active" cx="408" cy="164" r="15" />
+												<text x="374" y="194">COMMUNITY</text>
+											</g>
+											<g>
+												<circle class="support-node" cx="374" cy="246" r="13" />
+												<text x="346" y="276">MENTORS</text>
+											</g>
+											<g>
+												<circle class="support-node" cx="142" cy="234" r="13" />
+												<text x="116" y="264">FAMILY</text>
+											</g>
+											<g>
+												<circle class="support-node" cx="112" cy="148" r="13" />
+												<text x="78" y="132">SUPPORT</text>
+											</g>
+										</g>
+										<g class="young-person-node">
+											<circle class="young-person-aura" cx="260" cy="160" r="24" />
+											<circle class="young-person-core" cx="260" cy="160" r="13" />
+											<circle class="support-status-point" cx="260" cy="160" r="3.4" />
+										</g>
+									</svg>
+								)}
+								{index === 3 && (
+									<svg viewBox="0 0 520 320" class="mission-svg mission-svg-supply">
+										<text class="visual-label status-label" x="64" y="48">LOCAL VALUE CHAIN</text>
+										<path class="value-grid-line" d="M62 92 H456 M62 162 H456 M62 232 H456 M116 70 V252 M226 70 V252 M336 70 V252 M446 70 V252" />
+										<path class="value-flow-base" d="M78 184 C126 148 166 146 210 150 S274 154 306 152 S360 154 392 145 S432 120 458 96" />
+										<path class="value-flow-active" d="M78 184 C126 148 166 146 210 150 S274 154 306 152 S360 154 392 145 S432 120 458 96" />
+										<path class="value-particle particle-a" d="M78 184 C126 148 166 146 210 150 S274 154 306 152 S360 154 392 145 S432 120 458 96" />
+										<path class="value-particle particle-b" d="M78 184 C126 148 166 146 210 150 S274 154 306 152 S360 154 392 145 S432 120 458 96" />
+										<path class="growth-line" d="M322 232 L358 210 L388 216 L424 176 L456 140" />
+										<circle class="growth-ring ring-one" cx="392" cy="145" r="30" />
+										<circle class="growth-ring ring-two" cx="392" cy="145" r="50" />
+										<circle class="growth-ring ring-three" cx="392" cy="145" r="70" />
+										<g class="product-shapes">
+											<rect class="package-shape" x="190" y="110" width="40" height="40" rx="8" />
+											<path class="package-detail" d="M190 124 H230 M210 110 V150" />
+											<rect class="brand-shape" x="282" y="112" width="48" height="28" rx="7" />
+											<path class="package-detail" d="M292 126 H320" />
+										</g>
+										<g class="value-chain-nodes">
+											<g>
+												<circle class="value-node producer-node" cx="78" cy="184" r="12" />
+												<text x="44" y="214">PRODUCER</text>
+											</g>
+											<g>
+												<circle class="value-node product-node" cx="210" cy="150" r="17" />
+												<text x="182" y="190">PRODUCT</text>
+											</g>
+											<g>
+												<circle class="value-node brand-node" cx="306" cy="152" r="14" />
+												<text x="286" y="102">BRAND</text>
+											</g>
+											<g>
+												<circle class="value-node market-node" cx="392" cy="145" r="20" />
+												<text x="368" y="190">MARKET</text>
+											</g>
+											<g>
+												<circle class="value-node growth-node" cx="458" cy="96" r="14" />
+												<text x="430" y="76">GROWTH</text>
+											</g>
+										</g>
+										<circle class="value-status-point" cx="458" cy="96" r="3.6" />
+									</svg>
+								)}
 							</div>
-						</div>
-					</div>
-				</details>
-			))}
+
+							<div class="mission-briefing">
+								<div class="mission-briefing-topline">
+									<span class="mission-live-dot" aria-hidden="true"></span>
+									<span>BRIEF ACTIVE</span>
+									<span>48H BUILD WINDOW</span>
+								</div>
+								<p class="mission-number">MISSION {challenge.number}</p>
+								<h3>{challenge.title}</h3>
+								<p class="mission-question">{challenge.question}</p>
+								<p class="mission-description">{challenge.description}</p>
+
+								<div class="mission-briefing-grid">
+									<div>
+										<p class="mission-list-label">POSSIBLE DIRECTIONS</p>
+										<ul>
+											{challenge.ideas.map((idea) => (
+												<li>{idea}</li>
+											))}
+										</ul>
+									</div>
+									<div>
+										<p class="mission-list-label">EXPECTED OUTCOMES</p>
+										<ul>
+											{challenge.outcomes.map((outcome) => (
+												<li>{outcome}</li>
+											))}
+										</ul>
+									</div>
+								</div>
+							</div>
+						</section>
+					))}
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
 
 <style>
-	.challenge-summary::-webkit-details-marker {
-		display: none;
+	.mission-heading-title {
+		color: var(--color-ink);
+		font-size: clamp(36px, 4.6vw, 62px);
+		font-weight: 800;
+		letter-spacing: -0.035em;
+		line-height: 1;
+		text-wrap: balance;
 	}
 
-	.challenge-expansion {
+	.mission-heading-title > span {
+		display: block;
+	}
+
+	.mission-heading-accent {
+		display: inline;
+		color: #a78bfa;
+		text-shadow: 0 0 30px rgba(167, 139, 250, 0.22);
+	}
+
+	.mission-transition-cue {
+		color: rgba(124, 58, 237, 0.48);
+		font-size: 0.68rem;
+		font-weight: 800;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+	}
+
+	.mission-terminal {
+		position: relative;
+		border: 1px solid rgba(196, 181, 253, 0.18);
+		border-radius: 1.15rem;
+		background:
+			linear-gradient(120deg, rgba(124, 58, 237, 0.12), transparent 34%),
+			linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012)),
+			#030408;
+		box-shadow:
+			0 34px 110px rgba(0, 0, 0, 0.4),
+			0 0 0 1px rgba(196, 181, 253, 0.06),
+			0 0 58px rgba(124, 58, 237, 0.16);
+		isolation: isolate;
+	}
+
+	.mission-terminal::before {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background:
+			linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
+		background-size: 3.5rem 3.5rem;
+		content: "";
+		mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.75), transparent 78%);
+		opacity: 0.13;
+		animation: mission-grid-drift 18s linear infinite;
+	}
+
+	.mission-terminal::after {
+		position: absolute;
+		inset: -18%;
+		z-index: -1;
+		background: radial-gradient(circle at 48% 18%, rgba(124, 58, 237, 0.2), transparent 34%);
+		content: "";
+		opacity: 0.34;
+		animation: mission-ambient-shift 14s ease-in-out infinite;
+	}
+
+	.mission-terminal-grid {
 		display: grid;
-		grid-template-rows: 0fr;
-		opacity: 0;
-		transition:
-			grid-template-rows 360ms var(--ease-premium),
-			opacity 260ms var(--ease-premium);
+		grid-template-columns: minmax(14rem, 0.36fr) minmax(0, 1fr);
 	}
 
-	.challenge-expansion-inner {
+	.mission-nav {
+		position: relative;
+		border-right: 1px solid rgba(196, 181, 253, 0.14);
+		background: rgba(0, 0, 0, 0.22);
+		padding: 1rem;
+	}
+
+	.mission-nav-header,
+	.mission-briefing-topline,
+	.mission-list-label {
+		color: rgba(255, 255, 255, 0.46);
+		font-size: 0.64rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+
+	.mission-nav-header,
+	.mission-briefing-topline {
+		display: flex;
+		align-items: center;
+		gap: 0.55rem;
+	}
+
+	.mission-live-dot {
+		width: 0.4rem;
+		height: 0.4rem;
+		border-radius: 999px;
+		background: #69f7ad;
+		box-shadow: 0 0 14px rgba(105, 247, 173, 0.52);
+		flex: 0 0 auto;
+	}
+
+	.mission-tabs {
+		margin-top: 1rem;
+		display: grid;
+		gap: 0.65rem;
+	}
+
+	.mission-tab {
+		position: relative;
+		display: grid;
+		gap: 0.4rem;
+		width: 100%;
 		overflow: hidden;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 0.45rem;
+		background: rgba(255, 255, 255, 0.025);
+		min-height: 5.25rem;
+		padding: 0.9rem;
+		text-align: left;
+		transition:
+			border-color 260ms var(--ease-premium),
+			background 260ms var(--ease-premium),
+			box-shadow 260ms var(--ease-premium),
+			transform 260ms var(--ease-premium);
 	}
 
-	.challenge-card[open] .challenge-expansion {
-		grid-template-rows: 1fr;
+	.mission-tab::before {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(90deg, rgba(124, 58, 237, 0.18), transparent 58%);
+		content: "";
+		opacity: 0;
+		transition: opacity 260ms var(--ease-premium);
+	}
+
+	.mission-tab:hover,
+	.mission-tab.is-active {
+		border-color: rgba(196, 181, 253, 0.54);
+		background: rgba(124, 58, 237, 0.1);
+		box-shadow: 0 0 32px rgba(124, 58, 237, 0.16);
+		filter: brightness(1.07);
+		transform: translateX(0.18rem) translateY(-2px);
+	}
+
+	.mission-tab.is-active {
+		border-color: rgba(196, 181, 253, 0.72);
+		background: linear-gradient(90deg, rgba(124, 58, 237, 0.18), rgba(255, 255, 255, 0.035));
+		box-shadow:
+			0 0 0 1px rgba(196, 181, 253, 0.1),
+			0 0 38px rgba(124, 58, 237, 0.22);
+	}
+
+	.mission-tab:hover::before,
+	.mission-tab.is-active::before {
 		opacity: 1;
 	}
 
-	.challenge-card[open] .challenge-toggle-icon {
-		rotate: 45deg;
-		border-color: rgba(0, 255, 65, 0.54);
-		background: rgba(0, 255, 65, 0.1);
-		box-shadow: 0 0 22px rgba(0, 255, 65, 0.12);
+	.mission-tab:focus-visible {
+		outline: 2px solid rgba(196, 181, 253, 0.82);
+		outline-offset: 0.2rem;
+	}
+
+	.mission-tab-code,
+	.mission-tab-title,
+	.mission-tab-signal {
+		position: relative;
+		z-index: 1;
+	}
+
+	.mission-tab-code {
+		color: rgba(196, 181, 253, 0.9);
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.16em;
+	}
+
+	.mission-tab-title {
+		color: rgba(255, 255, 255, 0.82);
+		font-size: 0.95rem;
+		font-weight: 650;
+		line-height: 1.35;
+	}
+
+	.mission-tab.is-active .mission-tab-title {
+		color: rgba(255, 255, 255, 0.98);
+	}
+
+	.mission-tab-signal {
+		width: 2.6rem;
+		height: 1px;
+		background: linear-gradient(90deg, rgba(196, 181, 253, 0.8), transparent);
+	}
+
+	.mission-display {
+		position: relative;
+		background:
+			radial-gradient(circle at 68% 22%, rgba(124, 58, 237, 0.16), transparent 32%),
+			linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
+		padding-bottom: 0.25rem;
+	}
+
+	.mission-display-frame span {
+		position: absolute;
+		z-index: 3;
+		width: 1.1rem;
+		height: 1.1rem;
+		border-color: rgba(196, 181, 253, 0.55);
+	}
+
+	.mission-display-frame span:nth-child(1) {
+		left: 1rem;
+		top: 1rem;
+		border-left: 1px solid;
+		border-top: 1px solid;
+	}
+
+	.mission-display-frame span:nth-child(2) {
+		right: 1rem;
+		top: 1rem;
+		border-right: 1px solid;
+		border-top: 1px solid;
+	}
+
+	.mission-display-frame span:nth-child(3) {
+		bottom: 1rem;
+		left: 1rem;
+		border-bottom: 1px solid;
+		border-left: 1px solid;
+	}
+
+	.mission-display-frame span:nth-child(4) {
+		right: 1rem;
+		bottom: 1rem;
+		border-bottom: 1px solid;
+		border-right: 1px solid;
+	}
+
+	.mission-panel {
+		display: none;
+		grid-template-rows: 14.5rem auto;
+		gap: 0.8rem;
+		padding: 1.05rem 1.05rem 1.25rem;
+		opacity: 0;
+		transform: translateY(0.45rem) scale(0.992);
+		transition:
+			opacity 360ms var(--ease-premium),
+			transform 420ms var(--ease-premium);
+	}
+
+	.mission-panel.is-active {
+		display: grid;
+		animation: mission-panel-in 360ms var(--ease-premium) both;
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+
+	.mission-visual {
+		position: relative;
+		overflow: hidden;
+		border: 1px solid rgba(196, 181, 253, 0.12);
+		border-radius: 0.75rem;
+		background:
+			linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.01)),
+			radial-gradient(circle at 50% 45%, rgba(124, 58, 237, 0.18), transparent 48%);
+	}
+
+	.mission-visual::before {
+		position: absolute;
+		inset: 0;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.032) 1px, transparent 1px);
+		background-size: 2.5rem 2.5rem;
+		content: "";
+		opacity: 0.14;
+	}
+
+	.mission-svg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.network-path,
+	.topo-line,
+	.calm-wave,
+	.route,
+	.neural-link,
+	.data-grid-line,
+	.supply-grid {
+		fill: none;
+		stroke: rgba(196, 181, 253, 0.64);
+		stroke-linecap: round;
+		stroke-width: 2;
+	}
+
+	.network-path,
+	.route {
+		stroke-dasharray: 9 13;
+		animation: mission-dash 5.8s linear infinite;
+	}
+
+	.career-route-base,
+	.career-route-active,
+	.career-branch,
+	.career-cursor {
+		fill: none;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.career-route-base {
+		stroke: rgba(255, 255, 255, 0.18);
+		stroke-width: 5;
+	}
+
+	.career-route-active {
+		stroke: rgba(196, 181, 253, 0.88);
+		stroke-width: 3;
+		filter: drop-shadow(0 0 12px rgba(124, 58, 237, 0.46));
+	}
+
+	.career-branch {
+		stroke: rgba(196, 181, 253, 0.32);
+		stroke-dasharray: 4 9;
+		stroke-width: 2;
+	}
+
+	.career-cursor {
+		stroke: rgba(255, 255, 255, 0.82);
+		stroke-dasharray: 28 430;
+		stroke-width: 4;
+		filter: drop-shadow(0 0 12px rgba(196, 181, 253, 0.5));
+		animation: career-cursor-run 4.6s ease-in-out infinite;
+	}
+
+	.data-grid-line,
+	.supply-grid {
+		stroke: rgba(255, 255, 255, 0.08);
+		stroke-width: 1;
+	}
+
+	.network-cursor {
+		fill: none;
+		stroke: rgba(255, 255, 255, 0.74);
+		stroke-dasharray: 36 260;
+		stroke-linecap: round;
+		stroke-width: 3;
+		filter: drop-shadow(0 0 10px rgba(196, 181, 253, 0.48));
+		animation: cursor-run 4.2s ease-in-out infinite;
+	}
+
+	.network-nodes circle,
+	.career-nodes circle,
+	.soft-node,
+	.hub {
+		fill: rgba(10, 10, 16, 0.94);
+		stroke: rgba(196, 181, 253, 0.88);
+		stroke-width: 2;
+		filter: drop-shadow(0 0 12px rgba(124, 58, 237, 0.42));
+	}
+
+	.career-nodes circle {
+		fill: #070812;
+		stroke-width: 2.4;
+	}
+
+	.career-branch-node circle {
+		stroke: rgba(196, 181, 253, 0.44);
+		stroke-width: 1.5;
+		filter: none;
+	}
+
+	.career-status-point {
+		fill: #69f7ad;
+		filter: drop-shadow(0 0 10px rgba(105, 247, 173, 0.58));
+	}
+
+	.network-core {
+		opacity: 0.68;
+		animation: mission-breathe 4.8s ease-in-out infinite;
+	}
+
+	.network-core,
+	.radar-pulse,
+	.warning-pulse,
+	.breath-ring {
+		transform-box: fill-box;
+		transform-origin: center;
+	}
+
+	.mission-svg text {
+		fill: rgba(255, 255, 255, 0.82);
+		font-size: 11px;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+	}
+
+	.mission-svg .visual-label {
+		fill: rgba(196, 181, 253, 0.86);
+		font-size: 10px;
+	}
+
+	.mission-svg .status-label {
+		fill: rgba(105, 247, 173, 0.78);
+	}
+
+	.radar-ring,
+	.breath-ring {
+		fill: none;
+		stroke: rgba(196, 181, 253, 0.32);
+		stroke-width: 1.5;
+	}
+
+	.radar-sweep {
+		fill: rgba(124, 58, 237, 0.18);
+		transform-origin: 260px 160px;
+		animation: radar-sweep 5s linear infinite;
+	}
+
+	.radar-pulse {
+		fill: #69f7ad;
+		opacity: 0.8;
+		animation: pulse-signal 2.8s ease-in-out infinite;
+	}
+
+	.crisis-grid-line,
+	.response-route {
+		fill: none;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.crisis-grid-line {
+		stroke: rgba(255, 255, 255, 0.075);
+		stroke-width: 1;
+	}
+
+	.response-route {
+		stroke: rgba(196, 181, 253, 0.58);
+		stroke-dasharray: 7 10;
+		stroke-width: 2;
+		filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.28));
+		animation: response-route-flow 5.4s linear infinite;
+	}
+
+	.route-two {
+		animation-delay: 0.7s;
+		opacity: 0.82;
+	}
+
+	.route-three {
+		animation-delay: 1.3s;
+		opacity: 0.72;
+	}
+
+	.emergency-zone {
+		fill: rgba(124, 58, 237, 0.32);
+		stroke: rgba(196, 181, 253, 0.92);
+		stroke-width: 2;
+		filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.54));
+	}
+
+	.warning-pulse {
+		fill: none;
+		stroke: rgba(105, 247, 173, 0.62);
+		stroke-width: 1.5;
+		animation: warning-ring 2.4s ease-in-out infinite;
+	}
+
+	.response-node {
+		fill: #070812;
+		stroke: rgba(196, 181, 253, 0.86);
+		stroke-width: 2;
+		filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.36));
+	}
+
+	.pulse-two {
+		animation-delay: 0.8s;
+	}
+
+	.pulse-three {
+		animation-delay: 1.4s;
+	}
+
+	.pulse-four {
+		animation-delay: 2s;
+	}
+
+	.topo-line {
+		stroke: rgba(196, 181, 253, 0.28);
+		stroke-width: 1.4;
+	}
+
+	.topo-two,
+	.topo-three,
+	.topo-four,
+	.topo-five {
+		opacity: 0.62;
+	}
+
+	.support-glow {
+		opacity: 0.48;
+		animation: support-glow-breathe 6s ease-in-out infinite;
+	}
+
+	.support-layer {
+		fill: none;
+		stroke: rgba(196, 181, 253, 0.23);
+		stroke-width: 1.5;
+		transform-box: fill-box;
+		transform-origin: center;
+		animation: support-layer-breathe 6.2s ease-in-out infinite;
+	}
+
+	.layer-b {
+		animation-delay: 0.8s;
+		opacity: 0.75;
+	}
+
+	.layer-c {
+		animation-delay: 1.6s;
+		opacity: 0.52;
+	}
+
+	.support-link,
+	.support-pulse {
+		fill: none;
+		stroke-linecap: round;
+	}
+
+	.support-link {
+		stroke: rgba(196, 181, 253, 0.42);
+		stroke-width: 1.7;
+	}
+
+	.support-pulse {
+		stroke: rgba(255, 255, 255, 0.7);
+		stroke-dasharray: 18 160;
+		stroke-width: 2.4;
+		filter: drop-shadow(0 0 9px rgba(196, 181, 253, 0.44));
+		animation: support-pulse-travel 4.8s ease-in-out infinite;
+	}
+
+	.pulse-b {
+		animation-delay: 1.2s;
+	}
+
+	.pulse-c {
+		animation-delay: 2.3s;
+	}
+
+	.support-node,
+	.young-person-core {
+		fill: #080912;
+		stroke: rgba(196, 181, 253, 0.86);
+		stroke-width: 2;
+		filter: drop-shadow(0 0 14px rgba(124, 58, 237, 0.36));
+	}
+
+	.support-node-active {
+		stroke: rgba(105, 247, 173, 0.72);
+	}
+
+	.young-person-aura {
+		fill: rgba(124, 58, 237, 0.18);
+		stroke: rgba(196, 181, 253, 0.54);
+		stroke-width: 1.5;
+		transform-box: fill-box;
+		transform-origin: center;
+		animation: young-person-breathe 4.8s ease-in-out infinite;
+	}
+
+	.young-person-core {
+		fill: rgba(196, 181, 253, 0.2);
+		stroke-width: 2.4;
+		transform-box: fill-box;
+		transform-origin: center;
+		animation: young-person-breathe 4.8s ease-in-out infinite;
+	}
+
+	.support-status-point {
+		fill: #69f7ad;
+		filter: drop-shadow(0 0 10px rgba(105, 247, 173, 0.6));
+	}
+
+	.route {
+		stroke-width: 2.3;
+		marker-end: url("#flowArrow04");
+	}
+
+	.hub-main {
+		fill: rgba(124, 58, 237, 0.16);
+		stroke: rgba(196, 181, 253, 0.86);
+		stroke-width: 2;
+		filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.4));
+	}
+
+	.value-grid-line,
+	.value-flow-base,
+	.value-flow-active,
+	.value-particle,
+	.growth-line,
+	.package-detail {
+		fill: none;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.value-grid-line {
+		stroke: rgba(255, 255, 255, 0.075);
+		stroke-width: 1;
+	}
+
+	.value-flow-base {
+		stroke: rgba(255, 255, 255, 0.16);
+		stroke-width: 5;
+	}
+
+	.value-flow-active {
+		stroke: rgba(196, 181, 253, 0.78);
+		stroke-width: 2.5;
+		filter: drop-shadow(0 0 12px rgba(124, 58, 237, 0.38));
+	}
+
+	.value-particle {
+		stroke: rgba(255, 255, 255, 0.82);
+		stroke-dasharray: 12 440;
+		stroke-width: 4;
+		filter: drop-shadow(0 0 10px rgba(196, 181, 253, 0.48));
+		animation: value-particle-flow 4.8s ease-in-out infinite;
+	}
+
+	.particle-b {
+		animation-delay: 1.8s;
+		stroke: rgba(196, 181, 253, 0.72);
+	}
+
+	.value-node {
+		fill: #070812;
+		stroke: rgba(196, 181, 253, 0.84);
+		stroke-width: 2;
+		filter: drop-shadow(0 0 12px rgba(124, 58, 237, 0.34));
+	}
+
+	.product-node,
+	.market-node {
+		fill: rgba(124, 58, 237, 0.16);
+		stroke-width: 2.4;
+		animation: value-node-brighten 4.8s ease-in-out infinite;
+	}
+
+	.market-node {
+		animation-delay: 1.2s;
+	}
+
+	.growth-node {
+		stroke: rgba(105, 247, 173, 0.7);
+	}
+
+	.package-shape,
+	.brand-shape {
+		fill: rgba(124, 58, 237, 0.12);
+		stroke: rgba(196, 181, 253, 0.54);
+		stroke-width: 1.5;
+	}
+
+	.product-shapes {
+		opacity: 0.72;
+	}
+
+	.package-detail {
+		stroke: rgba(196, 181, 253, 0.34);
+		stroke-width: 1.2;
+	}
+
+	.growth-line {
+		stroke: rgba(196, 181, 253, 0.72);
+		stroke-dasharray: 8 10;
+		stroke-width: 2.4;
+		filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.38));
+		animation: growth-lift 4.8s ease-in-out infinite;
+	}
+
+	.growth-ring {
+		fill: none;
+		stroke: rgba(196, 181, 253, 0.2);
+		stroke-width: 1.4;
+		transform-box: fill-box;
+		transform-origin: center;
+		animation: growth-ring-expand 5.2s ease-in-out infinite;
+	}
+
+	.growth-ring.ring-two {
+		animation-delay: 0.8s;
+	}
+
+	.growth-ring.ring-three {
+		animation-delay: 1.6s;
+		opacity: 0.54;
+	}
+
+	.value-status-point {
+		fill: #69f7ad;
+		filter: drop-shadow(0 0 10px rgba(105, 247, 173, 0.6));
+	}
+
+	.mission-briefing {
+		position: relative;
+		border-top: 1px solid rgba(196, 181, 253, 0.14);
+		padding: 0.8rem 0.2rem 0;
+	}
+
+	.mission-briefing-topline {
+		flex-wrap: wrap;
+		justify-content: space-between;
+		margin-bottom: 0.65rem;
+	}
+
+	.mission-number {
+		color: rgba(196, 181, 253, 0.92);
+		font-size: 0.78rem;
+		font-weight: 800;
+		letter-spacing: 0.18em;
+	}
+
+	.mission-briefing h3 {
+		margin-top: 0.3rem;
+		color: rgba(255, 255, 255, 0.98);
+		font-size: clamp(1.5rem, 2.55vw, 2.55rem);
+		font-weight: 760;
+		line-height: 1.04;
+	}
+
+	.mission-question,
+	.mission-description,
+	.mission-briefing li {
+		color: rgba(255, 255, 255, 0.68);
+	}
+
+	.mission-question {
+		margin-top: 0.55rem;
+		max-width: 48rem;
+		font-size: 0.95rem;
+		font-weight: 650;
+		line-height: 1.55;
+	}
+
+	.mission-description {
+		margin-top: 0.45rem;
+		max-width: 54rem;
+		font-size: 0.9rem;
+		line-height: 1.62;
+	}
+
+	.mission-briefing-grid {
+		display: grid;
+		gap: 0.8rem;
+		margin-top: 0.9rem;
+		grid-template-columns: minmax(0, 1fr) minmax(13rem, 0.58fr);
+	}
+
+	.mission-briefing ul {
+		margin-top: 0.5rem;
+		display: grid;
+		gap: 0.34rem;
+	}
+
+	.mission-briefing li {
+		position: relative;
+		padding-left: 1rem;
+		font-size: 0.84rem;
+		line-height: 1.42;
+	}
+
+	.mission-briefing li::before {
+		position: absolute;
+		left: 0;
+		top: 0.66em;
+		width: 0.34rem;
+		height: 0.34rem;
+		border-radius: 999px;
+		background: rgba(196, 181, 253, 0.88);
+		content: "";
+	}
+
+	@media (max-width: 920px) {
+		.mission-terminal-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.mission-nav {
+			border-right: 0;
+			border-bottom: 1px solid rgba(196, 181, 253, 0.14);
+		}
+
+		.mission-tabs {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.mission-tab:hover,
+		.mission-tab.is-active {
+			transform: translateY(-2px);
+		}
+
+		.mission-briefing-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.mission-tabs {
+			grid-template-columns: 1fr;
+		}
+
+		.mission-panel {
+			grid-template-rows: 13.5rem auto;
+			padding: 1rem;
+		}
+	}
+
+	@keyframes mission-grid-drift {
+		to {
+			background-position: 3.5rem 3.5rem, 3.5rem 0;
+		}
+	}
+
+	@keyframes mission-ambient-shift {
+		0%,
+		100% {
+			opacity: 0.22;
+			transform: translate3d(-1rem, 0, 0);
+		}
+
+		50% {
+			opacity: 0.38;
+			transform: translate3d(1rem, 0.7rem, 0);
+		}
+	}
+
+	@keyframes mission-panel-in {
+		from {
+			opacity: 0;
+			transform: translateY(0.45rem) scale(0.992);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes mission-dash {
+		to {
+			stroke-dashoffset: -120;
+		}
+	}
+
+	@keyframes cursor-run {
+		0% {
+			stroke-dashoffset: 260;
+			opacity: 0;
+		}
+
+		18%,
+		76% {
+			opacity: 1;
+		}
+
+		100% {
+			stroke-dashoffset: -80;
+			opacity: 0;
+		}
+	}
+
+	@keyframes career-cursor-run {
+		0% {
+			stroke-dashoffset: 430;
+			opacity: 0;
+		}
+
+		14%,
+		82% {
+			opacity: 1;
+		}
+
+		100% {
+			stroke-dashoffset: -80;
+			opacity: 0;
+		}
+	}
+
+	@keyframes radar-sweep {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	@keyframes pulse-signal {
+		0%,
+		100% {
+			opacity: 0.35;
+			transform: scale(0.85);
+		}
+
+		50% {
+			opacity: 1;
+			transform: scale(1.45);
+		}
+	}
+
+	@keyframes warning-ring {
+		0%,
+		100% {
+			opacity: 0.25;
+			transform: scale(0.72);
+		}
+
+		50% {
+			opacity: 0.85;
+			transform: scale(1.25);
+		}
+	}
+
+	@keyframes response-route-flow {
+		to {
+			stroke-dashoffset: -86;
+		}
+	}
+
+	@keyframes support-glow-breathe {
+		0%,
+		100% {
+			opacity: 0.34;
+			transform: scale(0.98);
+		}
+
+		50% {
+			opacity: 0.58;
+			transform: scale(1.03);
+		}
+	}
+
+	@keyframes support-layer-breathe {
+		0%,
+		100% {
+			opacity: 0.34;
+			transform: scale(0.985);
+		}
+
+		50% {
+			opacity: 0.78;
+			transform: scale(1.025);
+		}
+	}
+
+	@keyframes support-pulse-travel {
+		0% {
+			stroke-dashoffset: 160;
+			opacity: 0;
+		}
+
+		18%,
+		74% {
+			opacity: 0.72;
+		}
+
+		100% {
+			stroke-dashoffset: -70;
+			opacity: 0;
+		}
+	}
+
+	@keyframes young-person-breathe {
+		0%,
+		100% {
+			opacity: 0.72;
+			transform: scale(0.96);
+		}
+
+		50% {
+			opacity: 1;
+			transform: scale(1.08);
+		}
+	}
+
+	@keyframes value-particle-flow {
+		0% {
+			stroke-dashoffset: 440;
+			opacity: 0;
+		}
+
+		16%,
+		78% {
+			opacity: 1;
+		}
+
+		100% {
+			stroke-dashoffset: -80;
+			opacity: 0;
+		}
+	}
+
+	@keyframes value-node-brighten {
+		0%,
+		100% {
+			filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.28));
+		}
+
+		50% {
+			filter: drop-shadow(0 0 18px rgba(196, 181, 253, 0.5));
+		}
+	}
+
+	@keyframes growth-lift {
+		0%,
+		100% {
+			transform: translateY(0.25rem);
+			opacity: 0.62;
+		}
+
+		50% {
+			transform: translateY(-0.2rem);
+			opacity: 1;
+		}
+	}
+
+	@keyframes growth-ring-expand {
+		0%,
+		100% {
+			opacity: 0.22;
+			transform: scale(0.96);
+		}
+
+		50% {
+			opacity: 0.58;
+			transform: scale(1.04);
+		}
+	}
+
+	@keyframes mission-breathe {
+		0%,
+		100% {
+			opacity: 0.42;
+			transform: scale(0.96);
+		}
+
+		50% {
+			opacity: 0.92;
+			transform: scale(1.04);
+		}
+	}
+
+	@keyframes wave-shift {
+		0%,
+		100% {
+			transform: translateX(-0.4rem);
+		}
+
+		50% {
+			transform: translateX(0.4rem);
+		}
 	}
 </style>
+
+<script>
+	const terminal = document.querySelector("[data-mission-terminal]");
+
+	if (terminal instanceof HTMLElement) {
+		const tabs = Array.from(terminal.querySelectorAll("[data-mission-tab]"));
+		const panels = Array.from(terminal.querySelectorAll("[data-mission-panel]"));
+
+		tabs.forEach((tab) => {
+			if (!(tab instanceof HTMLButtonElement)) return;
+
+			tab.addEventListener("click", () => {
+				const targetMission = tab.dataset.missionTab;
+				if (!targetMission) return;
+
+				terminal.dataset.activeMission = targetMission;
+
+				tabs.forEach((candidate) => {
+					if (!(candidate instanceof HTMLButtonElement)) return;
+					const isActive = candidate.dataset.missionTab === targetMission;
+					candidate.classList.toggle("is-active", isActive);
+					candidate.setAttribute("aria-selected", isActive ? "true" : "false");
+				});
+
+				panels.forEach((panel) => {
+					if (!(panel instanceof HTMLElement)) return;
+					panel.classList.toggle("is-active", panel.dataset.missionPanel === targetMission);
+				});
+			});
+		});
+	}
+</script>

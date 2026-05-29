@@ -60,6 +60,7 @@ const lang = getLang(langProp);
 		<script>
 			const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 			const isBottomUp = document.body.dataset.scrollFlow === "bottom-up";
+			const siteHeader = document.querySelector("[data-site-header]");
 			const scrollToTopButton = document.querySelector("[data-scroll-to-top]");
 			const galleryComposition = document.querySelector("[data-gallery-composition]");
 			const sectionCandidates = document.querySelectorAll("main > section, article > section, body > section");
@@ -144,6 +145,32 @@ const lang = getLang(langProp);
 
 				updateScrollToTop();
 				window.addEventListener("scroll", updateScrollToTop, { passive: true });
+			}
+
+			if (siteHeader instanceof HTMLElement) {
+				let headerThemeTicking = false;
+				const updateHeaderTheme = () => {
+					const rect = siteHeader.getBoundingClientRect();
+					const probeX = Math.max(1, Math.min(window.innerWidth - 1, window.innerWidth / 2));
+					const probeY = Math.max(1, Math.min(window.innerHeight - 1, rect.bottom + 2));
+					const elementBelowHeader = document.elementFromPoint(probeX, probeY);
+					const isOverHero = Boolean(elementBelowHeader?.closest(".hero-section"));
+
+					siteHeader.classList.toggle("is-over-hero", isOverHero);
+					headerThemeTicking = false;
+				};
+
+				const requestHeaderTheme = () => {
+					if (!headerThemeTicking) {
+						window.requestAnimationFrame(updateHeaderTheme);
+						headerThemeTicking = true;
+					}
+				};
+
+				updateHeaderTheme();
+				window.addEventListener("scroll", requestHeaderTheme, { passive: true });
+				window.addEventListener("resize", requestHeaderTheme, { passive: true });
+				window.addEventListener("load", requestHeaderTheme, { once: true });
 			}
 
 			if (isBottomUp && !window.location.hash) {
