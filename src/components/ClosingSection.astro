@@ -89,8 +89,8 @@ const partners = [
 </section>
 
 <div class="closing-bottom-up-item closing-bottom-up-item--brand brand-divider px-4 py-2 sm:px-6 lg:px-8" aria-hidden="true">
-	<div class="mx-auto flex max-w-7xl items-center overflow-hidden py-3">
-		<div class="brand-divider-track flex min-w-max items-center gap-5 text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/76">
+	<div class="brand-divider-mask mx-auto flex max-w-7xl items-center overflow-hidden py-3">
+		<div class="brand-divider-track flex items-center gap-5 text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/76">
 			{Array.from({ length: 2 }).map(() => (
 				<div class="brand-divider-sequence flex items-center gap-5 pr-5">
 					<span>CATALIZATOR</span>
@@ -280,6 +280,17 @@ const partners = [
 			0 0 28px rgba(124, 58, 237, 0.1);
 	}
 
+	.brand-divider-mask {
+		contain: strict;
+		height: 2.4rem;
+		min-width: 0;
+		overflow: clip;
+		padding-bottom: 0;
+		padding-top: 0;
+		position: relative;
+		width: 100%;
+	}
+
 	.brand-divider::before,
 	.brand-divider::after {
 		content: "";
@@ -306,8 +317,11 @@ const partners = [
 	}
 
 	.brand-divider-track {
-		position: relative;
+		left: 0;
+		position: absolute;
+		top: 50%;
 		z-index: 1;
+		width: max-content;
 		white-space: nowrap;
 		will-change: transform;
 		animation: brand-divider-scroll 28s linear infinite;
@@ -348,11 +362,11 @@ const partners = [
 
 	@keyframes brand-divider-scroll {
 		from {
-			transform: translate3d(0, 0, 0);
+			transform: translate3d(0, -50%, 0);
 		}
 
 		to {
-			transform: translate3d(-50%, 0, 0);
+			transform: translate3d(-50%, -50%, 0);
 		}
 	}
 

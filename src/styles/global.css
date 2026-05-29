@@ -49,6 +49,7 @@
 html {
 	background: var(--color-paper);
 	color: var(--color-ink);
+	overflow-x: clip;
 	scroll-behavior: smooth;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -60,6 +61,7 @@ html.is-bottom-up-booting body {
 }
 
 body {
+	overflow-x: clip;
 	min-height: 100vh;
 	margin: 0;
 	background:

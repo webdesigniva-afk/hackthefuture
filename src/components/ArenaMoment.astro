@@ -381,6 +381,7 @@ const challenges = [
 
 	.mission-terminal {
 		position: relative;
+		overflow: clip;
 		border: 1px solid rgba(196, 181, 253, 0.18);
 		border-radius: 1.15rem;
 		background:
@@ -410,9 +411,10 @@ const challenges = [
 
 	.mission-terminal::after {
 		position: absolute;
-		inset: -18%;
+		inset: 0;
 		z-index: -1;
-		background: radial-gradient(circle at 48% 18%, rgba(124, 58, 237, 0.2), transparent 34%);
+		border-radius: inherit;
+		background: radial-gradient(circle at 48% 18%, rgba(124, 58, 237, 0.2), transparent 46%);
 		content: "";
 		opacity: 0.34;
 		animation: mission-ambient-shift 14s ease-in-out infinite;

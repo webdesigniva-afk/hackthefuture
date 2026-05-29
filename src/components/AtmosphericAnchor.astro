@@ -3,13 +3,16 @@
 
 <section id="why" class="motion-section cinematic-dark px-4 py-20 text-[var(--color-paper)] sm:px-6 sm:py-24 lg:px-8 lg:py-32">
 	<div class="relative z-10 mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-		<div class="premium-hover flex min-h-[28rem] flex-col justify-between rounded-[1.25rem] border border-white/10 bg-white/[0.045] p-6 sm:p-8">
-			<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/54">
-				WHY THIS EXISTS
-			</p>
+		<div class="why-brief-card premium-hover flex min-h-[28rem] flex-col justify-between rounded-[1.25rem] border border-white/10 bg-white/[0.045] p-6 sm:p-8">
+			<div>
+				<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/54">
+					WHY THIS EXISTS
+				</p>
+				<p class="why-system-label mt-4">FUTURE READINESS REPORT</p>
+			</div>
 			<div>
 				<h2 class="max-w-2xl text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl">
-					The future is changing faster than the systems built around it.
+					The <span class="why-accent">future</span> is changing faster than the systems built around it.
 				</h2>
 				<p class="mt-6 max-w-xl text-base leading-8 text-[var(--color-paper)]/66">
 					The people who will live longest with today's decisions usually have the smallest voice in making them.
@@ -18,7 +21,7 @@
 		</div>
 
 		<div
-			class="media-placeholder cinematic-frame image-card plain-photo-frame min-h-[28rem] rounded-[1.25rem] lg:min-h-[36rem]"
+			class="why-image-card media-placeholder cinematic-frame image-card plain-photo-frame min-h-[28rem] rounded-[1.25rem] lg:min-h-[36rem]"
 		>
 			<img
 				class="media-photo"
@@ -27,6 +30,87 @@
 				loading="lazy"
 				decoding="async"
 			/>
+			<div class="why-photo-overlay" aria-hidden="true">
+				<span class="why-photo-label why-photo-location">SHUMEN // BULGARIA</span>
+				<span class="why-photo-label why-photo-status">FUTURE READINESS ACTIVE</span>
+			</div>
 		</div>
 	</div>
 </section>
+
+<style>
+	.why-brief-card,
+	.why-image-card {
+		position: relative;
+		box-shadow: 0 30px 100px rgba(0, 0, 0, 0.28), 0 0 54px rgba(124, 58, 237, 0.13);
+	}
+
+	.why-brief-card::before,
+	.why-image-card::before {
+		position: absolute;
+		inset: -1px;
+		z-index: -1;
+		border-radius: inherit;
+		background: radial-gradient(circle at 52% 18%, rgba(167, 139, 250, 0.16), transparent 42%);
+		content: "";
+		opacity: 0.72;
+	}
+
+	.why-system-label {
+		color: rgba(196, 181, 253, 0.68);
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+	}
+
+	.why-accent {
+		color: #a78bfa;
+	}
+
+	.why-image-card {
+		overflow: hidden;
+	}
+
+	.why-photo-overlay {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.why-photo-overlay::before {
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+		background-size: 5.5rem 5.5rem;
+		content: "";
+		opacity: 0.08;
+	}
+
+	.why-photo-label {
+		position: absolute;
+		border: 1px solid rgba(196, 181, 253, 0.24);
+		background: rgba(4, 5, 10, 0.28);
+		padding: 0.3rem 0.42rem;
+		color: rgba(255, 255, 255, 0.6);
+		font-size: 0.5rem;
+		font-weight: 750;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		backdrop-filter: blur(10px);
+	}
+
+	.why-photo-location {
+		left: 0.95rem;
+		bottom: 0.95rem;
+	}
+
+	.why-photo-status {
+		right: 0.95rem;
+		top: 0.95rem;
+		color: rgba(105, 247, 173, 0.62);
+	}
+
+</style>

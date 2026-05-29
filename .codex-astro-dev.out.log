@@ -13,3 +13,17 @@
 [2m12:52:59[22m [34m[200][39m / [2m48ms[22m
 [2m13:01:59[22m [34m[200][39m / [2m89ms[22m
 [2m13:11:16[22m [34m[200][39m / [2m90ms[22m
+[2m13:59:50[22m [34m[200][39m / [2m68ms[22m
+[2m14:00:42[22m [34m[200][39m / [2m7ms[22m
+[2m14:01:09[22m [34m[200][39m / [2m7ms[22m
+[2m14:01:43[22m [34m[watch][39m /src/components/ClosingSection.astro?astro&type=style&index=0&lang.css, /src/styles/global.css
+[2m14:02:35[22m [34m[200][39m / [2m35ms[22m
+[2m14:02:57[22m [34m[watch][39m /src/components/ClosingSection.astro?astro&type=style&index=0&lang.css
+[2m14:02:57[22m [34m[watch][39m src/components/ClosingSection.astro
+[vite] program reload
+[2m14:03:48[22m [34m[200][39m / [2m26ms[22m
+[2m14:05:11[22m [34m[watch][39m /src/styles/global.css
+[2m14:05:11[22m [34m[watch][39m /src/components/ClosingSection.astro?astro&type=style&index=0&lang.css
+[2m14:05:11[22m [34m[watch][39m src/components/ClosingSection.astro
+[vite] program reload
+[2m14:05:46[22m [34m[200][39m / [2m23ms[22m
