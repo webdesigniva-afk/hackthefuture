@@ -1,5 +1,4 @@
 ---
-import Section from "./Section.astro";
 import { getLang, siteCopy, type Lang } from "../i18n";
 
 interface Props {
@@ -10,24 +9,80 @@ const lang = getLang(Astro.props.lang);
 const t = siteCopy[lang].intro;
 ---
 
-<Section
-	id="introduction"
-	eyebrow={t.eyebrow}
-	title={t.title}
-	intro={t.intro}
->
-	<div class="grid gap-8 md:grid-cols-2">
-		<p class="text-base leading-8 text-[var(--color-muted)]">
-			{t.body[0]}
-		</p>
-		<p class="text-base leading-8 text-[var(--color-muted)]">
-			{t.body[1]}
-		</p>
-	</div>
+<section id="introduction" class="motion-section scroll-mt-28 civic-grid px-4 sm:px-6 lg:px-8">
+	<div class="introduction-layout relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(14rem,0.32fr)_minmax(0,1fr)] lg:items-start">
+		<div class="introduction-heading">
+			<h2 class="introduction-title max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
+				{t.title}
+			</h2>
+		</div>
 
-	<div class="mt-12 border-l-2 border-[var(--color-purple)] pl-6">
-		<p class="max-w-3xl text-2xl font-semibold leading-tight tracking-[-0.03em] text-[var(--color-purple)] sm:text-3xl">
-			{t.statement}
+		<div class="introduction-content">
+			<p class="max-w-3xl text-base leading-8 text-[var(--color-muted)] sm:text-lg">
+				{t.intro}
+			</p>
+
+			<div class="mt-10 grid gap-8 md:grid-cols-2">
+				<p class="text-base leading-8 text-[var(--color-muted)]">
+					{t.body[0]}
+				</p>
+				<p class="text-base leading-8 text-[var(--color-muted)]">
+					{t.body[1]}
+				</p>
+			</div>
+
+			<div class="mt-12 border-l-2 border-[var(--color-purple)] pl-6">
+				<p class="max-w-3xl text-2xl font-semibold leading-tight tracking-[-0.03em] text-[var(--color-purple)] sm:text-3xl">
+					{t.statement}
+				</p>
+			</div>
+		</div>
+
+		<p class="section-kicker introduction-kicker">
+			{t.eyebrow}
 		</p>
 	</div>
-</Section>
+</section>
+
+<style>
+	#introduction {
+		padding-top: clamp(0.75rem, 2vw, 1.5rem);
+		padding-bottom: clamp(5rem, 7vw, 6.5rem);
+	}
+
+	@media (min-width: 1024px) {
+		#introduction {
+			padding-top: 0;
+			padding-bottom: clamp(4.5rem, 5.6vw, 5.25rem);
+		}
+
+		.introduction-heading {
+			position: sticky;
+			top: 120px;
+			align-self: start;
+			z-index: 2;
+		}
+
+		.introduction-heading::after {
+			content: "";
+			display: block;
+			width: min(11rem, 46%);
+			height: 1px;
+			margin-top: clamp(2rem, 5vw, 4.5rem);
+			background: linear-gradient(90deg, rgba(10, 10, 10, 0.36), rgba(124, 58, 237, 0.26), transparent);
+		}
+
+		.introduction-title {
+			margin-top: -0.08em;
+		}
+
+		.introduction-content {
+			padding-top: 0.08rem;
+		}
+
+		.introduction-kicker {
+			grid-column: 1 / -1;
+			margin-top: 2.75rem;
+		}
+	}
+</style>

@@ -3,14 +3,8 @@
 
 <section id="why" class="motion-section cinematic-dark px-4 py-20 text-[var(--color-paper)] sm:px-6 sm:py-24 lg:px-8 lg:py-32">
 	<div class="relative z-10 mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.8fr_1.2fr]">
-		<div class="why-brief-card premium-hover flex min-h-[28rem] flex-col justify-between rounded-[1.25rem] border border-white/10 bg-white/[0.045] p-6 sm:p-8">
-			<div>
-				<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/54">
-					WHY THIS EXISTS
-				</p>
-				<p class="why-system-label mt-4">FUTURE READINESS REPORT</p>
-			</div>
-			<div>
+		<div class="why-brief-card premium-hover flex min-h-[28rem] flex-col justify-center rounded-[9px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:justify-start">
+			<div class="why-brief-copy">
 				<h2 class="max-w-2xl text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl">
 					The <span class="why-accent">future</span> is changing faster than the systems built around it.
 				</h2>
@@ -21,7 +15,7 @@
 		</div>
 
 		<div
-			class="why-image-card media-placeholder cinematic-frame image-card plain-photo-frame min-h-[28rem] rounded-[1.25rem] lg:min-h-[36rem]"
+			class="why-image-card media-placeholder cinematic-frame image-card plain-photo-frame min-h-[28rem] rounded-[9px] lg:min-h-[36rem]"
 		>
 			<img
 				class="media-photo"
@@ -62,6 +56,10 @@
 		font-weight: 700;
 		letter-spacing: 0.18em;
 		text-transform: uppercase;
+	}
+
+	.why-brief-copy {
+		padding-block: clamp(1.25rem, 5vw, 4.5rem);
 	}
 
 	.why-accent {
@@ -110,7 +108,7 @@
 	.why-photo-status {
 		right: 0.95rem;
 		top: 0.95rem;
-		color: rgba(105, 247, 173, 0.62);
+		color: rgba(251, 146, 60, 0.72);
 	}
 
 </style>

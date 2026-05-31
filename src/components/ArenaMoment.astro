@@ -75,10 +75,10 @@ const challenges = [
 				<br class="hidden sm:block" />
 				Spend two days building something that could become part of the answer.
 			</p>
-			<p class="mission-transition-cue mt-4">[ 01 FUTURE / 04 MISSIONS ]</p>
 		</div>
 
 		<div class="mission-terminal" data-mission-terminal data-active-mission="1">
+			<span class="mission-reveal-sweep" aria-hidden="true"></span>
 			<div class="mission-terminal-grid">
 				<nav class="mission-nav" aria-label="Mission selection">
 					<div class="mission-nav-header">
@@ -348,6 +348,8 @@ const challenges = [
 				</div>
 			</div>
 		</div>
+
+		<p class="mission-transition-cue mt-4">[ 01 FUTURE / 04 MISSIONS ]</p>
 	</div>
 </section>
 
@@ -383,7 +385,7 @@ const challenges = [
 		position: relative;
 		overflow: clip;
 		border: 1px solid rgba(196, 181, 253, 0.18);
-		border-radius: 1.15rem;
+		border-radius: 9px;
 		background:
 			linear-gradient(120deg, rgba(124, 58, 237, 0.12), transparent 34%),
 			linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012)),
@@ -393,6 +395,17 @@ const challenges = [
 			0 0 0 1px rgba(196, 181, 253, 0.06),
 			0 0 58px rgba(124, 58, 237, 0.16);
 		isolation: isolate;
+		opacity: 0;
+		clip-path: inset(100% 0 0 0 round 9px);
+		transform: translate3d(0, 0.45rem, 0);
+		transform-origin: center bottom;
+		filter: saturate(0.9) brightness(0.86);
+		transition:
+			clip-path 1800ms cubic-bezier(0.16, 1, 0.3, 1),
+			opacity 920ms ease,
+			filter 1600ms var(--ease-premium),
+			transform 1600ms var(--ease-premium),
+			box-shadow 1600ms var(--ease-premium);
 	}
 
 	.mission-terminal::before {
@@ -420,6 +433,50 @@ const challenges = [
 		animation: mission-ambient-shift 14s ease-in-out infinite;
 	}
 
+	.mission-terminal.is-visible,
+	.mission-terminal.is-bottom-up-revealed {
+		opacity: 1;
+		clip-path: inset(0 0 0 0 round 9px);
+		transform: translate3d(0, 0, 0);
+		filter: saturate(1) brightness(1);
+		box-shadow:
+			0 34px 110px rgba(0, 0, 0, 0.4),
+			0 0 0 1px rgba(196, 181, 253, 0.08),
+			0 0 72px rgba(124, 58, 237, 0.2);
+	}
+
+	.mission-reveal-sweep {
+		position: absolute;
+		inset: 0;
+		z-index: 6;
+		pointer-events: none;
+		background:
+			linear-gradient(180deg, transparent 0 38%, rgba(196, 181, 253, 0.18) 45%, rgba(251, 146, 60, 0.32) 50%, rgba(196, 181, 253, 0.18) 56%, transparent 66%),
+			repeating-linear-gradient(180deg, transparent 0 5px, rgba(255, 255, 255, 0.08) 5px 6px);
+		mix-blend-mode: screen;
+		opacity: 0;
+		transform: translate3d(0, 110%, 0);
+	}
+
+	.mission-terminal.is-visible .mission-reveal-sweep,
+	.mission-terminal.is-bottom-up-revealed .mission-reveal-sweep {
+		animation: mission-terminal-scan 2400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+	}
+
+	.mission-terminal-grid {
+		opacity: 0;
+		transform: translate3d(0, 0.25rem, 0);
+		transition:
+			opacity 1080ms var(--ease-premium) 760ms,
+			transform 1180ms var(--ease-premium) 760ms;
+	}
+
+	.mission-terminal.motion-ready .mission-terminal-grid,
+	.mission-terminal.is-bottom-up-revealed .mission-terminal-grid {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+
 	.mission-terminal-grid {
 		display: grid;
 		grid-template-columns: minmax(14rem, 0.36fr) minmax(0, 1fr);
@@ -427,6 +484,8 @@ const challenges = [
 
 	.mission-nav {
 		position: relative;
+		display: flex;
+		flex-direction: column;
 		border-right: 1px solid rgba(196, 181, 253, 0.14);
 		background: rgba(0, 0, 0, 0.22);
 		padding: 1rem;
@@ -453,25 +512,29 @@ const challenges = [
 		width: 0.4rem;
 		height: 0.4rem;
 		border-radius: 999px;
-		background: #69f7ad;
-		box-shadow: 0 0 14px rgba(105, 247, 173, 0.52);
+		background: #fb923c;
+		box-shadow: 0 0 14px rgba(251, 146, 60, 0.52);
 		flex: 0 0 auto;
 	}
 
 	.mission-tabs {
 		margin-top: 1rem;
 		display: grid;
+		flex: 1;
 		gap: 0.65rem;
+		grid-template-rows: repeat(4, minmax(0, 1fr));
 	}
 
 	.mission-tab {
 		position: relative;
 		display: grid;
+		align-content: start;
 		gap: 0.4rem;
 		width: 100%;
+		height: 100%;
 		overflow: hidden;
 		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 0.45rem;
+		border-radius: 9px;
 		background: rgba(255, 255, 255, 0.025);
 		min-height: 5.25rem;
 		padding: 0.9rem;
@@ -617,7 +680,7 @@ const challenges = [
 		position: relative;
 		overflow: hidden;
 		border: 1px solid rgba(196, 181, 253, 0.12);
-		border-radius: 0.75rem;
+		border-radius: 9px;
 		background:
 			linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.01)),
 			radial-gradient(circle at 50% 45%, rgba(124, 58, 237, 0.18), transparent 48%);
@@ -732,8 +795,8 @@ const challenges = [
 	}
 
 	.career-status-point {
-		fill: #69f7ad;
-		filter: drop-shadow(0 0 10px rgba(105, 247, 173, 0.58));
+		fill: #fb923c;
+		filter: drop-shadow(0 0 10px rgba(251, 146, 60, 0.58));
 	}
 
 	.network-core {
@@ -762,7 +825,7 @@ const challenges = [
 	}
 
 	.mission-svg .status-label {
-		fill: rgba(105, 247, 173, 0.78);
+		fill: rgba(251, 146, 60, 0.78);
 	}
 
 	.radar-ring,
@@ -779,7 +842,7 @@ const challenges = [
 	}
 
 	.radar-pulse {
-		fill: #69f7ad;
+		fill: #fb923c;
 		opacity: 0.8;
 		animation: pulse-signal 2.8s ease-in-out infinite;
 	}
@@ -823,7 +886,7 @@ const challenges = [
 
 	.warning-pulse {
 		fill: none;
-		stroke: rgba(105, 247, 173, 0.62);
+		stroke: rgba(251, 146, 60, 0.62);
 		stroke-width: 1.5;
 		animation: warning-ring 2.4s ease-in-out infinite;
 	}
@@ -919,7 +982,7 @@ const challenges = [
 	}
 
 	.support-node-active {
-		stroke: rgba(105, 247, 173, 0.72);
+		stroke: rgba(251, 146, 60, 0.72);
 	}
 
 	.young-person-aura {
@@ -940,8 +1003,8 @@ const challenges = [
 	}
 
 	.support-status-point {
-		fill: #69f7ad;
-		filter: drop-shadow(0 0 10px rgba(105, 247, 173, 0.6));
+		fill: #fb923c;
+		filter: drop-shadow(0 0 10px rgba(251, 146, 60, 0.6));
 	}
 
 	.route {
@@ -1015,7 +1078,7 @@ const challenges = [
 	}
 
 	.growth-node {
-		stroke: rgba(105, 247, 173, 0.7);
+		stroke: rgba(251, 146, 60, 0.7);
 	}
 
 	.package-shape,
@@ -1061,8 +1124,8 @@ const challenges = [
 	}
 
 	.value-status-point {
-		fill: #69f7ad;
-		filter: drop-shadow(0 0 10px rgba(105, 247, 173, 0.6));
+		fill: #fb923c;
+		filter: drop-shadow(0 0 10px rgba(251, 146, 60, 0.6));
 	}
 
 	.mission-briefing {
@@ -1195,6 +1258,26 @@ const challenges = [
 		50% {
 			opacity: 0.38;
 			transform: translate3d(1rem, 0.7rem, 0);
+		}
+	}
+
+	@keyframes mission-terminal-scan {
+		0% {
+			opacity: 0;
+			transform: translate3d(0, 110%, 0);
+		}
+
+		18% {
+			opacity: 0.95;
+		}
+
+		70% {
+			opacity: 0.72;
+		}
+
+		100% {
+			opacity: 0;
+			transform: translate3d(0, -112%, 0);
 		}
 	}
 
@@ -1427,6 +1510,57 @@ const challenges = [
 	const terminal = document.querySelector("[data-mission-terminal]");
 
 	if (terminal instanceof HTMLElement) {
+		const shouldUseBottomUpReveal = document.body.dataset.scrollFlow === "bottom-up" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+		if (shouldUseBottomUpReveal) {
+			terminal.classList.remove("is-visible", "motion-ready", "is-bottom-up-revealed");
+
+			let lastScrollY = window.scrollY;
+			let hasMovedTowardTerminal = false;
+			let revealQueued = false;
+			const revealFromBottomUp = () => {
+				const currentScrollY = window.scrollY;
+				const isScrollingUpDocument = currentScrollY < lastScrollY - 2;
+				lastScrollY = currentScrollY;
+
+				if (isScrollingUpDocument) {
+					hasMovedTowardTerminal = true;
+				}
+
+				if (terminal.classList.contains("is-bottom-up-revealed") || !hasMovedTowardTerminal) {
+					revealQueued = false;
+					return;
+				}
+
+				const rect = terminal.getBoundingClientRect();
+				const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+				const hasEnteredFromTop = rect.top < viewportHeight * 0.64 && rect.bottom > viewportHeight * 0.46;
+
+				if (hasEnteredFromTop) {
+					terminal.classList.add("is-bottom-up-revealed");
+				}
+
+				revealQueued = false;
+			};
+
+			const requestRevealCheck = () => {
+				if (!revealQueued) {
+					revealQueued = true;
+					window.requestAnimationFrame(revealFromBottomUp);
+				}
+			};
+
+			window.setTimeout(() => {
+				terminal.classList.remove("is-visible", "motion-ready", "is-bottom-up-revealed");
+				lastScrollY = window.scrollY;
+				hasMovedTowardTerminal = false;
+			}, 450);
+
+			window.addEventListener("scroll", requestRevealCheck, { passive: true });
+		} else {
+			terminal.classList.add("is-bottom-up-revealed");
+		}
+
 		const tabs = Array.from(terminal.querySelectorAll("[data-mission-tab]"));
 		const panels = Array.from(terminal.querySelectorAll("[data-mission-panel]"));
 

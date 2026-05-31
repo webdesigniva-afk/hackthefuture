@@ -2,21 +2,21 @@
 const days = [
 	{
 		number: "03",
-		label: "DAY 3 — June 12",
+		label: "June 27",
 		title: "Award ceremony.",
 		body: "The strongest teams are recognized in front of the city.",
 		weight: "compact",
 	},
 	{
 		number: "02",
-		label: "DAY 2 — June 11",
+		label: "June 27",
 		title: "Build and present.",
 		body: "Your team turns your idea into something real you can show. Mentors stay in the room. By the end of the day, every team presents to the jury.",
 		weight: "medium",
 	},
 	{
 		number: "01",
-		label: "DAY 1 — June 10",
+		label: "June 26",
 		title: "Form, choose, start.",
 		body: "Teams form in the morning. You meet your team, pick your theme, and start working. Mentors are in the room throughout the day to push back on weak ideas, sharpen the strong ones, and connect you to information you don't yet have. Workshops in the afternoon on how to build a pitch.",
 		weight: "dominant",
@@ -26,29 +26,22 @@ const days = [
 
 <section id="schedule" class="motion-section civic-grid px-4 py-[4.25rem] sm:px-6 sm:py-[5.25rem] lg:px-8 lg:py-[6.5rem]">
 	<div class="mx-auto max-w-7xl">
-		<div class="mb-16 grid gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-end">
-			<div>
-				<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]">
-					SCHEDULE
-				</p>
-				<h2 class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
-					How the two days work
-				</h2>
-			</div>
-		</div>
-
-		<div class="editorial-timeline">
+		<div class="editorial-timeline" data-schedule-timeline>
 			<div class="timeline-rail" aria-hidden="true">
 				<span></span>
 			</div>
 
 			<ol class="timeline-content">
 				{days.map((day, index) => (
-					<li class={`timeline-entry timeline-entry--${day.weight}`} style={`--timeline-index: ${index}`}>
+					<li
+						class={`timeline-entry timeline-entry--${day.weight}`}
+						data-schedule-step={day.number}
+						style={`--timeline-index: ${index}`}
+					>
 						<div class="timeline-marker" aria-hidden="true"></div>
 						<p class="timeline-day-label">{day.label}</p>
 						<div class="timeline-entry-grid">
-							<p class="timeline-day-number">{day.number}</p>
+							<p class="timeline-day-number" data-day-number={day.number}>{day.number}</p>
 							<div>
 								<h3 class="timeline-title">{day.title}</h3>
 								<p class="timeline-body">{day.body}</p>
@@ -58,15 +51,24 @@ const days = [
 				))}
 			</ol>
 		</div>
+
+		<p class="section-kicker schedule-bottom-kicker">
+			SCHEDULE
+		</p>
 	</div>
 </section>
 
 <style>
+	.schedule-bottom-kicker {
+		margin-top: 4.75rem;
+	}
+
 	.editorial-timeline {
+		--timeline-number-column: clamp(12rem, 16vw, 16rem);
 		position: relative;
 		display: grid;
-		grid-template-columns: minmax(3rem, 0.18fr) minmax(0, 1fr);
-		gap: clamp(2rem, 5vw, 5rem);
+		grid-template-columns: minmax(3rem, 0.12fr) minmax(0, 1fr);
+		gap: clamp(1.25rem, 3vw, 3rem);
 	}
 
 	.timeline-rail {
@@ -118,45 +120,74 @@ const days = [
 		transition-delay: calc(var(--timeline-index) * 120ms);
 	}
 
-	.motion-ready .timeline-entry {
+	.motion-ready:not(.schedule-sequence-ready) .timeline-entry {
 		opacity: 1;
 		transform: translate3d(0, 0, 0);
 	}
 
+	#schedule.schedule-sequence-ready .timeline-entry {
+		opacity: 0;
+		transform: translate3d(0, 2rem, 0);
+		transition:
+			opacity 1280ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 1280ms cubic-bezier(0.16, 1, 0.3, 1);
+		transition-delay: 0ms;
+	}
+
+	#schedule.schedule-sequence-ready .timeline-entry.is-step-visible {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+
+	#schedule.schedule-sequence-ready .timeline-entry.is-step-visible .timeline-marker {
+		border-color: rgba(196, 181, 253, 0.52);
+		box-shadow:
+			0 0 0 0.3rem rgba(255, 255, 255, 0.62),
+			0 0 1.1rem rgba(167, 139, 250, 0.18);
+	}
+
 	.timeline-marker {
 		position: absolute;
-		top: 0.32rem;
-		left: calc(clamp(-5rem, -5vw, -2rem) - 0.62rem);
-		width: 1.24rem;
-		height: 1.24rem;
-		border: 1px solid rgba(10, 10, 10, 0.28);
+		top: 0.05rem;
+		left: calc(clamp(-5rem, -5vw, -2rem) - 0.44rem);
+		width: 0.88rem;
+		height: 0.88rem;
+		border: 1px solid rgba(196, 181, 253, 0.5);
 		border-radius: 999px;
-		background: var(--color-paper);
-		box-shadow: 0 0 0 0.55rem rgba(255, 255, 255, 0.92);
+		background:
+			radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.5) 0 0.16rem, transparent 0.17rem),
+			radial-gradient(circle at 50% 50%, rgba(196, 181, 253, 0.14), transparent 72%),
+			var(--color-paper);
+		box-shadow:
+			0 0 0 0.34rem rgba(255, 255, 255, 0.72),
+			0 0 1.25rem rgba(167, 139, 250, 0.2);
 	}
 
 	.timeline-marker::after {
-		content: "";
+		content: none;
 		position: absolute;
-		inset: 0.33rem;
+		inset: -0.28rem;
 		border-radius: inherit;
-		background: var(--color-gold);
+		border: 1px solid rgba(167, 139, 250, 0.08);
+		background: transparent;
 	}
 
 	.timeline-day-label {
 		margin: 0 0 1.5rem;
-		color: color-mix(in srgb, var(--color-purple) 70%, transparent);
-		font-size: 0.72rem;
-		font-weight: 700;
-		letter-spacing: 0.22em;
-		line-height: 1.4;
+		width: var(--timeline-number-column);
+		color: var(--color-purple);
+		font-size: 0.86rem;
+		font-weight: 850;
+		letter-spacing: 0.18em;
+		line-height: 1.2;
+		text-align: center;
 		text-transform: uppercase;
 	}
 
 	.timeline-entry-grid {
 		display: grid;
-		grid-template-columns: minmax(5.4rem, 0.18fr) minmax(0, 1fr);
-		gap: clamp(1.5rem, 4vw, 4.5rem);
+		grid-template-columns: var(--timeline-number-column) minmax(0, 1fr);
+		gap: clamp(3rem, 5vw, 4.5rem);
 		align-items: start;
 	}
 
@@ -167,6 +198,8 @@ const days = [
 		font-weight: 600;
 		letter-spacing: -0.06em;
 		line-height: 0.78;
+		text-align: center;
+		font-variant-numeric: tabular-nums;
 	}
 
 	.timeline-title {
@@ -211,7 +244,7 @@ const days = [
 	}
 
 	.timeline-entry--compact .timeline-entry-grid {
-		gap: clamp(2.5rem, 5.5vw, 6.5rem);
+		gap: clamp(3rem, 5vw, 4.5rem);
 	}
 
 	.timeline-entry--compact .timeline-day-number {
@@ -251,6 +284,11 @@ const days = [
 			gap: 4rem;
 		}
 
+		.timeline-day-label {
+			width: auto;
+			text-align: left;
+		}
+
 		.timeline-marker {
 			left: -2.43rem;
 		}
@@ -270,4 +308,103 @@ const days = [
 			font-size: clamp(4.2rem, 24vw, 7rem);
 		}
 	}
+
 </style>
+
+<script>
+	const scheduleSection = document.querySelector<HTMLElement>("#schedule");
+	const scheduleEntries = Array.from(document.querySelectorAll<HTMLElement>("#schedule [data-schedule-step]"));
+	const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	const isBottomUpSchedule = document.body.dataset.scrollFlow === "bottom-up";
+
+	if (scheduleSection && scheduleEntries.length && !reducedMotion) {
+		const revealOrder = isBottomUpSchedule ? [...scheduleEntries].reverse() : [...scheduleEntries];
+		let played = false;
+		let ticking = false;
+		let lastScrollY = window.scrollY;
+		let hasMovedTowardSchedule = !isBottomUpSchedule || Boolean(window.location.hash);
+		let scheduleObserver: IntersectionObserver | undefined;
+
+		scheduleSection.classList.add("schedule-sequence-ready");
+
+		const reveal = () => {
+			if (played) return;
+			played = true;
+			scheduleSection.classList.add("schedule-sequence-played");
+			revealOrder.forEach((entry, index) => {
+				window.setTimeout(() => {
+					entry.classList.add("is-step-visible");
+				}, index * 920);
+			});
+			window.removeEventListener("scroll", requestCheck);
+			window.removeEventListener("resize", requestCheck);
+			window.removeEventListener("load", requestCheck);
+			scheduleObserver?.disconnect();
+		};
+
+		const check = () => {
+			ticking = false;
+			if (played) return;
+
+			const currentScrollY = window.scrollY;
+			if (isBottomUpSchedule ? currentScrollY < lastScrollY - 2 : currentScrollY > lastScrollY + 2) {
+				hasMovedTowardSchedule = true;
+			}
+			lastScrollY = currentScrollY;
+
+			const rect = scheduleSection.getBoundingClientRect();
+			const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+			const hasReachedSchedule = isBottomUpSchedule
+				? rect.top < viewportHeight * 0.76 && rect.bottom > viewportHeight * 0.48
+				: rect.top < viewportHeight * 0.72 && rect.bottom > viewportHeight * 0.2;
+
+			if (hasMovedTowardSchedule && hasReachedSchedule) {
+				reveal();
+			}
+		};
+
+		function requestCheck() {
+			if (ticking) return;
+			ticking = true;
+			window.requestAnimationFrame(check);
+		}
+
+		const startScheduleSequence = () => {
+			if (played) return;
+
+			if (!isBottomUpSchedule && "IntersectionObserver" in window) {
+				scheduleObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								reveal();
+							}
+						});
+					},
+					{ threshold: 0.24, rootMargin: "0px 0px -18% 0px" }
+				);
+				scheduleObserver.observe(scheduleSection);
+			}
+
+			window.addEventListener("scroll", requestCheck, { passive: true });
+			window.addEventListener("resize", requestCheck);
+			window.addEventListener("load", requestCheck, { once: true });
+			requestCheck();
+			window.setTimeout(requestCheck, 160);
+			window.setTimeout(requestCheck, 420);
+		};
+
+		const waitForBottomUpBoot = () => {
+			if (!isBottomUpSchedule || !document.documentElement.classList.contains("is-bottom-up-booting")) {
+				startScheduleSequence();
+				return;
+			}
+
+			window.requestAnimationFrame(waitForBottomUpBoot);
+		};
+
+		waitForBottomUpBoot();
+	} else {
+		scheduleEntries.forEach((entry) => entry.classList.add("is-step-visible"));
+	}
+</script>

@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import HTFCursorTrail from "../components/HTFCursorTrail.astro";
 import ScrollToTop from "../components/ScrollToTop.astro";
 import { getLang, siteCopy, type Lang } from "../i18n";
 
@@ -56,6 +57,7 @@ const lang = getLang(langProp);
 	</head>
 	<body data-scroll-flow={bottomUp ? "bottom-up" : undefined}>
 		<slot />
+		<HTFCursorTrail />
 		<ScrollToTop label={bottomUp && lang === "en" ? "Back to start" : siteCopy[lang].scrollToTop} />
 		<script>
 			const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -152,7 +154,9 @@ const lang = getLang(langProp);
 				const updateHeaderTheme = () => {
 					const rect = siteHeader.getBoundingClientRect();
 					const probeX = Math.max(1, Math.min(window.innerWidth - 1, window.innerWidth / 2));
-					const probeY = Math.max(1, Math.min(window.innerHeight - 1, rect.bottom + 2));
+					const probeY = isBottomUp
+						? Math.max(1, Math.min(window.innerHeight - 1, rect.top - 2))
+						: Math.max(1, Math.min(window.innerHeight - 1, rect.bottom + 2));
 					const elementBelowHeader = document.elementFromPoint(probeX, probeY);
 					const isOverHero = Boolean(elementBelowHeader?.closest(".hero-section"));
 
@@ -174,15 +178,39 @@ const lang = getLang(langProp);
 			}
 
 			if (isBottomUp && !window.location.hash) {
+				let bottomUpReleased = false;
+				let userMovedAfterRelease = false;
+				const getBottomStart = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+				const pinToBottomStart = () => {
+					if (!userMovedAfterRelease) {
+						window.scrollTo({ top: getBottomStart(), behavior: "auto" });
+					}
+				};
 				const scrollToBottomStart = () => {
-					window.scrollTo({ top: Math.max(0, document.documentElement.scrollHeight - window.innerHeight), behavior: "auto" });
+					pinToBottomStart();
 					window.requestAnimationFrame(() => {
-						document.documentElement.classList.remove("is-bottom-up-booting");
+						pinToBottomStart();
+						window.requestAnimationFrame(() => {
+							pinToBottomStart();
+							bottomUpReleased = true;
+							document.documentElement.classList.remove("is-bottom-up-booting");
+						});
 					});
+				};
+				const markUserMoved = () => {
+					if (bottomUpReleased) {
+						userMovedAfterRelease = true;
+					}
 				};
 
 				scrollToBottomStart();
+				window.setTimeout(pinToBottomStart, 120);
+				window.setTimeout(pinToBottomStart, 360);
+				document.fonts?.ready?.then(() => window.setTimeout(pinToBottomStart, 0));
 				window.addEventListener("load", scrollToBottomStart, { once: true });
+				window.addEventListener("wheel", markUserMoved, { passive: true });
+				window.addEventListener("touchstart", markUserMoved, { passive: true });
+				window.addEventListener("keydown", markUserMoved);
 				window.addEventListener("pageshow", (event) => {
 					if (event.persisted) {
 						scrollToBottomStart();

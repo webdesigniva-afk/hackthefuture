@@ -29,8 +29,6 @@ const checklist = [
 	},
 ];
 
-const checklistColumns = [checklist.slice(0, 3), checklist.slice(3)];
-
 const partners = [
 	{
 		name: "Municipality of Shumen",
@@ -54,44 +52,43 @@ const partners = [
 
 <div class="closing-bottom-up-stack">
 <section id="who-can-join" class="closing-bottom-up-item closing-bottom-up-item--who motion-section civic-grid px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
-	<div class="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
-		<div>
-			<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]">
-				PARTICIPATION
-			</p>
-			<h2 class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
+	<div class="participation-layout relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[minmax(17rem,0.44fr)_minmax(0,1fr)] lg:items-start lg:gap-8 xl:gap-10">
+		<div class="participation-heading">
+			<h2 class="max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
 				Who can join
 			</h2>
-			<p class="mt-6 max-w-md text-base leading-8 text-[var(--color-muted)]">
-				Anyone with curiosity, ideas, and the desire to build something real.
-			</p>
 		</div>
 
-		<div class="participation-list grid gap-x-12 gap-y-3 sm:grid-cols-2">
-			{checklistColumns.map((column, columnIndex) => (
-				<div class={`participation-list-column ${columnIndex === 1 ? "sm:pt-[4.35rem]" : ""}`}>
-					{column.map((item) => (
-						<div class="participation-list-item group flex items-center gap-4 border-t border-[var(--color-line)] py-4">
-							<span class="participation-icon grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[rgba(10,10,10,0.06)] text-[var(--color-ink)] transition duration-300 group-hover:-translate-y-0.5 group-hover:bg-[rgba(124,58,237,0.12)] group-hover:text-[var(--color-ink)] group-hover:shadow-[0_0_20px_rgba(124,58,237,0.12)]" aria-hidden="true">
-								<svg viewBox="0 0 24 24" class="h-[1.125rem] w-[1.125rem]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-									<path d={item.icon} />
-								</svg>
-							</span>
-							<h3 class="text-base font-semibold leading-7 tracking-[-0.015em] text-[var(--color-ink)]">
-								{item.title}
-							</h3>
-						</div>
-					))}
+		<div class="participation-list participation-timeline grid gap-6 lg:pt-1" data-participation-timeline>
+			{checklist.map((item, index) => (
+				<div
+					class={`participation-timeline-item ${index % 2 === 1 ? "participation-timeline-item--right" : "participation-timeline-item--left"}`}
+				>
+					<div class="participation-timeline-copy">
+						<span class="participation-timeline-rule" aria-hidden="true"></span>
+						<h3 class="text-base font-semibold leading-7 tracking-[-0.015em] text-[var(--color-ink)]">
+							{item.title}
+						</h3>
+					</div>
+					<span class="participation-icon participation-timeline-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+							<path d={item.icon} />
+						</svg>
+					</span>
 				</div>
 			))}
 		</div>
+
+		<p class="section-kicker participation-kicker">
+			PARTICIPATION
+		</p>
 	</div>
 </section>
 
 <div class="closing-bottom-up-item closing-bottom-up-item--brand brand-divider px-4 py-2 sm:px-6 lg:px-8" aria-hidden="true">
 	<div class="brand-divider-mask mx-auto flex max-w-7xl items-center overflow-hidden py-3">
 		<div class="brand-divider-track flex items-center gap-5 text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/76">
-			{Array.from({ length: 2 }).map(() => (
+			{Array.from({ length: 4 }).map(() => (
 				<div class="brand-divider-sequence flex items-center gap-5 pr-5">
 					<span>CATALIZATOR</span>
 					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
@@ -134,91 +131,95 @@ const partners = [
 	</div>
 </div>
 
-<section id="apply" class="closing-bottom-up-item closing-bottom-up-item--apply motion-section civic-grid px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
-	<div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.82fr_minmax(0,48rem)] lg:items-start">
-		<div>
-			<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]">
-				APPLICATION
-			</p>
-			<h2 class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
+<section id="apply" class="closing-bottom-up-item closing-bottom-up-item--apply motion-section civic-grid px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+	<div class="application-layout mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(18rem,0.72fr)_minmax(0,48rem)] lg:items-start lg:gap-14 xl:gap-20">
+		<div class="application-copy">
+			<h2 class="max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
 				Apply for Hack The Future
 			</h2>
-			<p class="mt-5 max-w-2xl text-base leading-7 text-[var(--color-muted)]">
-				Register your interest below.
-			</p>
-			<p class="mt-2 text-sm leading-6 text-[var(--color-muted)]/72">
-				Applications open: Date to be confirmed
-			</p>
 		</div>
 
 		<div class="w-full">
 			<ApplicationForm />
 		</div>
+
+		<p class="section-kicker application-kicker">
+			APPLICATION
+		</p>
 	</div>
 </section>
 
 <section id="about" class="closing-bottom-up-item closing-bottom-up-item--about motion-section civic-grid px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
 	<div class="mx-auto max-w-7xl">
-		<div class="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
-			<div>
-				<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-purple)]">
-					PARTNERS
-				</p>
-				<h2 class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
+		<div class="about-main grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+			<div class="about-heading">
+				<h2 class="max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
 					Who's behind it
 				</h2>
 			</div>
-			<div class="space-y-6 text-base leading-8 text-[var(--color-muted)]">
-				<p>Hack the Future is part of CATALIZATOR, the leadership and governance platform hosted by the Municipality of Shumen.</p>
-				<p>CATALIZATOR brings together mayors, business leaders and academics to work on the future of cities.</p>
-				<p>Hack the Future brings the same questions to the people who will live with the answers longest.</p>
-				<p class="font-semibold text-[var(--color-ink)]">That's you.</p>
-			</div>
-		</div>
+			<div class="about-content">
+				<div class="partner-index">
+					{partners.map((partner) => (
+						<article class="partner-row group">
+							<h3 class="partner-name">
+								{partner.name}
+							</h3>
+							<p class="partner-role">
+								{partner.subtitle}
+							</p>
+						</article>
+					))}
+				</div>
 
-		<div class="mt-12 grid gap-x-12 gap-y-4 md:grid-cols-2">
-			{partners.map((partner, index) => (
-				<article class="partner-row group border-t border-[var(--color-line)] py-7">
-					<p class="text-xs font-semibold text-[var(--color-muted)]/42">0{index + 1}</p>
-					<h3 class="mt-5 text-[1.08rem] font-semibold uppercase leading-7 tracking-[0.17em] text-[var(--color-ink)] transition-colors duration-200 group-hover:text-[var(--color-purple)]">
-						{partner.name}
-					</h3>
-					<p class="mt-2 text-sm font-medium leading-6 text-[var(--color-muted)]">
-						{partner.subtitle}
-					</p>
-				</article>
-			))}
+				<div class="about-copy text-base leading-8 text-[var(--color-muted)]">
+					<p>Hack the Future is part of CATALIZATOR, the leadership and governance platform hosted by the Municipality of Shumen.</p>
+					<p>CATALIZATOR brings together mayors, business leaders and academics to work on the future of cities.</p>
+					<p>Hack the Future brings the same questions to the people who will live with the answers longest.</p>
+					<p class="font-semibold text-[var(--color-ink)]">That's you.</p>
+				</div>
+			</div>
+
+			<p class="section-kicker about-bottom-kicker">
+				ABOUT
+			</p>
 		</div>
 	</div>
 </section>
 
-<section class="closing-bottom-up-item closing-bottom-up-item--why motion-section cinematic-dark matrix-clear-right px-4 py-16 text-[var(--color-paper)] sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-	<div class="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start">
-		<div>
-			<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/54">
+<section class="closing-bottom-up-item closing-bottom-up-item--why motion-section cinematic-dark px-4 py-16 text-[var(--color-paper)] sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+	<div class="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-stretch">
+		<div class="why-exists-heading flex h-full flex-col gap-8">
+			<h2 class="why-exists-title mt-1 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl">
+				The country you're about to inherit is changing faster than the systems built to run&nbsp;it.
+			</h2>
+			<p class="max-w-xl text-base leading-8 text-[var(--color-paper)]/72">
+				Work, climate, technology, your city, your own mental health, the economy - none of it looks the way it did even ten years ago, and none of it is going to slow down.
+			</p>
+			<p class="section-kicker why-exists-kicker">
 				WHY THIS EXISTS
 			</p>
-			<h2 class="mt-5 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl">
-				The country you're about to inherit is changing faster than the systems built to run it.
-			</h2>
 		</div>
 
-		<div class="max-w-2xl">
-			<div class="mt-1 text-base leading-8 text-[var(--color-paper)]/72">
-				<div class="why-copy-group pb-7">
+		<div class="why-exists-copy">
+			<div class="why-exists-copy-flow mt-1 text-base leading-8 text-[var(--color-paper)]/72">
+				<div class="why-copy-column">
+				<div class="why-copy-group">
 					<p>The country you are about to inherit is changing faster than the systems built to run it. Work, climate, technology, your city, your own mental health, the economy — none of it looks the way it did even ten years ago, and none of it is going to slow down.</p>
 				</div>
 
-				<div class="why-copy-group py-7">
+				<div class="why-copy-group">
 					<p>No one has the full playbook for what comes next. Not your teachers. Not your parents. Not the mayors. Not us.</p>
 					<p class="mt-5">The honest truth is that the people who will live longest with the decisions being made right now are the ones with the least say in them.</p>
 				</div>
+				</div>
 
-				<div class="why-copy-group pt-4">
-					<p class="text-xl font-semibold leading-8 text-[rgba(222,213,193,0.88)] sm:text-2xl sm:leading-9">Hack the Future exists to change that.</p>
+				<div class="why-copy-column">
+				<div class="why-copy-group">
+					<p class="text-xl font-semibold leading-8 text-[rgba(196,181,253,0.9)] sm:text-2xl sm:leading-9">Hack the Future exists to change that.</p>
 					<p class="mt-6">The work you do in these two days is not symbolic.</p>
-					<p class="mt-5 border-l border-[rgba(222,213,193,0.88)] py-1 pl-7">Mentors take it seriously.<br />The jury takes it seriously.<br />Partners take it seriously.</p>
+					<p class="mt-5 border-l border-[rgba(196,181,253,0.78)] py-1 pl-7">Mentors take it seriously.<br />The jury takes it seriously.<br />Partners take it seriously.</p>
 					<p class="mt-6">The strongest ideas become the starting point for real conversations with institutions that can act on them.</p>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -241,6 +242,42 @@ const partners = [
 		order: 1;
 	}
 
+	.why-exists-kicker {
+		margin-top: auto;
+		color: rgba(196, 181, 253, 0.9);
+	}
+
+	.why-exists-title {
+		text-wrap: balance;
+	}
+
+	.why-exists-copy-flow,
+	.why-exists-copy-grid {
+		display: grid;
+		gap: 2rem;
+	}
+
+	.why-exists-copy-flow > .why-copy-column {
+		display: contents;
+	}
+
+	.why-exists-copy-flow > .why-copy-column:first-child > .why-copy-group:first-child {
+		display: none;
+	}
+
+	.why-copy-column {
+		display: grid;
+		align-content: start;
+		gap: 2rem;
+	}
+
+	@media (min-width: 768px) {
+		.why-exists-copy-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: clamp(2rem, 4vw, 4.5rem);
+		}
+	}
+
 	.closing-bottom-up-item--about {
 		order: 2;
 	}
@@ -257,32 +294,294 @@ const partners = [
 		order: 5;
 	}
 
+	.closing-bottom-up-item--apply {
+		overflow: visible;
+		background:
+			linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(248, 246, 255, 0.86) 18%, rgba(250, 248, 255, 0.96) 58%, rgba(255, 255, 255, 0) 100%),
+			radial-gradient(circle at 13% 18%, rgba(124, 58, 237, 0.08), transparent 26rem),
+			radial-gradient(circle at 82% 54%, rgba(183, 140, 255, 0.065), transparent 30rem);
+	}
+
+	.closing-bottom-up-item--apply::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
+		background:
+			linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.16), transparent) top center / min(74rem, calc(100% - 2rem)) 1px no-repeat,
+			linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.1), transparent) bottom center / min(68rem, calc(100% - 2rem)) 1px no-repeat;
+		opacity: 0.72;
+	}
+
+	.application-copy {
+		position: relative;
+		align-self: start;
+		padding-top: 0.15rem;
+	}
+
+	.application-copy::after {
+		content: "";
+		display: block;
+		width: min(11rem, 46%);
+		height: 1px;
+		margin-top: clamp(2rem, 5vw, 4.5rem);
+		background: linear-gradient(90deg, rgba(10, 10, 10, 0.36), rgba(124, 58, 237, 0.26), transparent);
+	}
+
+	@media (min-width: 1024px) {
+		.application-copy {
+			position: sticky;
+			top: 120px;
+		}
+	}
+
 	.participation-list {
 		align-content: start;
 	}
 
-	.participation-list-column {
+	@media (min-width: 1024px) {
+		.participation-heading {
+			position: sticky;
+			top: 120px;
+			align-self: start;
+			z-index: 2;
+		}
+
+		.participation-heading::after {
+			content: "";
+			display: block;
+			width: min(11rem, 46%);
+			height: 1px;
+			margin-top: clamp(2rem, 5vw, 4.5rem);
+			background: linear-gradient(90deg, rgba(10, 10, 10, 0.36), rgba(124, 58, 237, 0.26), transparent);
+		}
+
+		.participation-kicker {
+			grid-column: 1 / -1;
+			margin-top: 2rem;
+		}
+	}
+
+	.participation-timeline {
+		margin-inline: 0;
+		max-width: min(100%, 45rem);
+	}
+
+	.participation-timeline-item {
+		--participation-delay: 0ms;
 		display: grid;
-		align-content: start;
+		grid-template-columns: minmax(0, 1fr) 1.5rem minmax(0, 1fr);
+		column-gap: clamp(0.85rem, 2vw, 1.35rem);
+		align-items: center;
+		opacity: 0;
+		filter: blur(10px);
+		transform: translate3d(var(--participation-enter-x), 20px, 0);
+		transition:
+			opacity 920ms cubic-bezier(0.16, 1, 0.3, 1),
+			filter 920ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 920ms cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.participation-timeline-item--left {
+		--participation-enter-x: -3.25rem;
+	}
+
+	.participation-timeline-item--right {
+		--participation-enter-x: 3.25rem;
+	}
+
+	.participation-timeline-item.is-item-visible {
+		opacity: 1;
+		filter: blur(0);
+		transform: translate3d(0, 0, 0);
+	}
+
+	.participation-timeline-icon {
+		display: grid;
+		grid-column: 2;
+		grid-row: 1;
+		width: 1.5rem;
+		height: 1.5rem;
+		place-items: center;
+		color: var(--color-ink);
+		transition: color 240ms var(--ease-premium), transform 240ms var(--ease-premium);
+	}
+
+	.participation-timeline-item:hover .participation-timeline-icon {
+		color: var(--color-purple);
+		transform: translateY(-1px);
+	}
+
+	.participation-timeline-copy {
+		display: grid;
+		gap: 0.72rem;
+		min-width: 0;
+	}
+
+	.participation-timeline-rule {
+		display: block;
+		width: 100%;
+		height: 1px;
+		background: var(--color-line);
+		opacity: 0.7;
+	}
+
+	.participation-timeline-item--left .participation-timeline-copy {
+		grid-column: 1;
+		text-align: right;
+	}
+
+	.participation-timeline-item--right .participation-timeline-copy {
+		grid-column: 3;
+		text-align: left;
+	}
+
+	@media (max-width: 639px) {
+		.participation-timeline {
+			margin-inline: 0;
+			max-width: none;
+		}
+
+		.participation-timeline-item {
+			grid-template-columns: 1.5rem minmax(0, 1fr);
+			column-gap: 1rem;
+		}
+
+		.participation-timeline-icon {
+			grid-column: 1;
+		}
+
+		.participation-timeline-item--left .participation-timeline-copy,
+		.participation-timeline-item--right .participation-timeline-copy {
+			grid-column: 2;
+			text-align: left;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.participation-timeline-item {
+			opacity: 1;
+			filter: none;
+			transform: none;
+			transition: none;
+		}
+	}
+
+	.application-kicker {
+		margin-top: 1.5rem;
+	}
+
+	.about-bottom-kicker {
+		margin-top: 2.75rem;
+	}
+
+	.about-content {
+		display: grid;
+		gap: clamp(2.5rem, 5vw, 4.25rem);
+	}
+
+	.partner-index {
+		display: grid;
+		border-top: 1px solid rgba(10, 10, 10, 0.11);
+	}
+
+	.partner-row {
+		display: grid;
+		gap: 0.45rem;
+		padding-block: 1.15rem;
+		border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+	}
+
+	.partner-name {
+		margin: 0;
+		color: var(--color-ink);
+		font-size: 0.98rem;
+		font-weight: 650;
+		letter-spacing: 0.02em;
+		line-height: 1.45;
+		transition: color 180ms var(--ease-premium);
+	}
+
+	.partner-role {
+		margin: 0;
+		color: color-mix(in srgb, var(--color-muted) 78%, transparent);
+		font-family: var(--font-ui);
+		font-size: 0.76rem;
+		font-weight: 650;
+		letter-spacing: 0.15em;
+		line-height: 1.45;
+		text-transform: uppercase;
+	}
+
+	.partner-row:hover .partner-name {
+		color: var(--color-purple);
+	}
+
+	.about-copy {
+		display: grid;
+		gap: 1.35rem;
+		max-width: 42rem;
+	}
+
+	@media (min-width: 1024px) {
+		.about-heading {
+			position: sticky;
+			top: 120px;
+			align-self: start;
+			z-index: 2;
+		}
+
+		.about-heading::after {
+			content: "";
+			display: block;
+			width: min(11rem, 46%);
+			height: 1px;
+			margin-top: clamp(2rem, 5vw, 4.5rem);
+			background: linear-gradient(90deg, rgba(10, 10, 10, 0.36), rgba(124, 58, 237, 0.26), transparent);
+		}
+
+		.about-bottom-kicker {
+			grid-column: 1 / -1;
+		}
+
+		.partner-row {
+			grid-template-columns: minmax(0, 1fr) minmax(10rem, 0.46fr);
+			align-items: baseline;
+			gap: clamp(1.5rem, 3vw, 3rem);
+		}
+
+		.partner-role {
+			justify-self: end;
+			text-align: right;
+		}
+
+		.application-kicker {
+			grid-column: 1 / -1;
+			margin-top: 2.75rem;
+		}
 	}
 
 	.brand-divider {
+		--brand-divider-deep: #07070a;
 		position: relative;
 		overflow: hidden;
 		background:
+			radial-gradient(circle at 16% 50%, rgba(124, 58, 237, 0.32), transparent 24rem),
+			radial-gradient(circle at 84% 50%, rgba(240, 76, 255, 0.18), transparent 22rem),
 			linear-gradient(90deg, rgba(124, 58, 237, 0.18), transparent 14%, transparent 86%, rgba(240, 76, 255, 0.14)),
-			repeating-linear-gradient(90deg, rgba(124, 58, 237, 0.08) 0 1px, transparent 1px 4rem),
+			repeating-linear-gradient(90deg, rgba(167, 139, 250, 0.11) 0 1px, transparent 1px 4.6rem),
 			repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0 1px, transparent 1px 5px),
-			#0A0A0A;
+			var(--brand-divider-deep);
 		box-shadow:
-			inset 0 1px 0 rgba(124, 58, 237, 0.38),
-			inset 0 -1px 0 rgba(240, 76, 255, 0.22),
-			0 0 28px rgba(124, 58, 237, 0.1);
+			inset 0 1px 0 rgba(196, 181, 253, 0.48),
+			inset 0 -1px 0 rgba(240, 76, 255, 0.26),
+			0 0 34px rgba(124, 58, 237, 0.14);
 	}
 
 	.brand-divider-mask {
 		contain: strict;
-		height: 2.4rem;
+		height: 3.05rem;
 		min-width: 0;
 		overflow: clip;
 		padding-bottom: 0;
@@ -301,19 +600,20 @@ const partners = [
 
 	.brand-divider::before {
 		background:
-			linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.22), transparent),
-			linear-gradient(180deg, transparent 0 42%, rgba(240, 76, 255, 0.12) 42% 44%, transparent 44% 100%);
-		opacity: 0.34;
-		transform: translateX(-38%);
-		animation: brand-divider-scan 6.5s linear infinite;
+			linear-gradient(90deg, transparent 0 30%, rgba(255, 255, 255, 0.18) 47%, rgba(167, 139, 250, 0.34) 50%, rgba(240, 76, 255, 0.18) 53%, transparent 70%),
+			linear-gradient(180deg, transparent 0 47%, rgba(240, 76, 255, 0.16) 47% 50%, transparent 50% 100%);
+		opacity: 0.42;
+		transform: translateX(-46%);
+		animation: brand-divider-scan 7.8s linear infinite;
 	}
 
 	.brand-divider::after {
 		background:
-			linear-gradient(90deg, #0A0A0A 0%, transparent 9%, transparent 91%, #0A0A0A 100%),
-			radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.16), transparent 58%);
+			linear-gradient(90deg, var(--brand-divider-deep) 0%, transparent 10%, transparent 90%, var(--brand-divider-deep) 100%),
+			linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 24%, transparent 76%, rgba(124, 58, 237, 0.1)),
+			radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.22), transparent 62%);
 		mix-blend-mode: screen;
-		opacity: 0.7;
+		opacity: 0.78;
 	}
 
 	.brand-divider-track {
@@ -324,30 +624,40 @@ const partners = [
 		width: max-content;
 		white-space: nowrap;
 		will-change: transform;
-		animation: brand-divider-scroll 28s linear infinite;
+		animation: brand-divider-scroll 42s linear infinite;
+		animation-play-state: running;
+	}
+
+	.brand-divider-sequence {
+		position: relative;
 	}
 
 	.brand-divider-sequence span {
-		color: rgba(255, 255, 255, 0.8);
-		text-shadow: 0 0 0.45rem rgba(124, 58, 237, 0.22);
+		color: rgba(255, 255, 255, 0.84);
+		text-shadow:
+			0 0 0.45rem rgba(124, 58, 237, 0.26),
+			0 0 1.4rem rgba(167, 139, 250, 0.1);
 	}
 
 	.brand-divider-mark {
 		width: 0.9rem;
 		height: 0.9rem;
-		color: rgba(183, 140, 255, 0.86);
-		opacity: 0.9;
+		color: rgba(255, 255, 255, 0.82);
+		opacity: 0.86;
 		stroke: currentColor;
 		stroke-width: 5;
 		stroke-linecap: round;
 		stroke-linejoin: round;
-		filter: drop-shadow(0 0 0.38rem rgba(124, 58, 237, 0.24));
+		filter: drop-shadow(0 0 0.38rem rgba(255, 255, 255, 0.12));
 	}
 
 	.brand-divider-mark-dot {
 		fill: var(--color-accent);
 		stroke: none;
+		transform-box: fill-box;
+		transform-origin: center;
 		filter: drop-shadow(0 0 0.34rem rgba(124, 58, 237, 0.48));
+		animation: brand-divider-dot-pulse 2.8s var(--ease-premium) infinite;
 	}
 
 	@keyframes brand-divider-scan {
@@ -370,9 +680,130 @@ const partners = [
 		}
 	}
 
+	@keyframes brand-divider-dot-pulse {
+		0%,
+		100% {
+			opacity: 0.86;
+			transform: scale(1);
+		}
+
+		50% {
+			opacity: 1;
+			transform: scale(1.18);
+		}
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		.brand-divider-track {
 			animation-duration: 28s !important;
 		}
 	}
 </style>
+
+<script>
+	const participationTimelines = Array.from(document.querySelectorAll<HTMLElement>("[data-participation-timeline]"));
+	const participationReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	if (participationReducedMotion) {
+		participationTimelines.forEach((timeline) => {
+			timeline.classList.add("is-visible");
+			timeline.querySelectorAll<HTMLElement>(".participation-timeline-item").forEach((item) => item.classList.add("is-item-visible"));
+		});
+	} else {
+		const isBottomUpParticipation = document.body.dataset.scrollFlow === "bottom-up";
+		let lastParticipationScrollY = window.scrollY;
+		let hasMovedTowardParticipation = !isBottomUpParticipation || Boolean(window.location.hash);
+		let participationObserver: IntersectionObserver | undefined;
+
+		const revealParticipationTimeline = (timeline: HTMLElement) => {
+			timeline.classList.add("is-visible");
+			const timelineItems = Array.from(timeline.querySelectorAll<HTMLElement>(".participation-timeline-item")).reverse();
+
+			timelineItems.forEach((item, index) => {
+				window.setTimeout(() => {
+					item.classList.add("is-item-visible");
+				}, index * 540);
+			});
+
+			participationObserver?.unobserve(timeline);
+		};
+
+		const checkParticipationTimelines = () => {
+			const currentScrollY = window.scrollY;
+			if (isBottomUpParticipation ? currentScrollY < lastParticipationScrollY - 2 : currentScrollY > lastParticipationScrollY + 2) {
+				hasMovedTowardParticipation = true;
+			}
+			lastParticipationScrollY = currentScrollY;
+
+			const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+			participationTimelines.forEach((timeline) => {
+				if (timeline.classList.contains("is-visible")) return;
+
+				const revealTarget = timeline.closest<HTMLElement>(".closing-bottom-up-item") ?? timeline;
+				const rect = revealTarget.getBoundingClientRect();
+				const hasReachedTimeline = isBottomUpParticipation
+					? rect.top < viewportHeight * 0.66 && rect.bottom > viewportHeight * 0.54
+					: rect.top < viewportHeight * 0.72 && rect.bottom > viewportHeight * 0.2;
+
+				if (hasMovedTowardParticipation && hasReachedTimeline) {
+					revealParticipationTimeline(timeline);
+				}
+			});
+
+			if (participationTimelines.every((timeline) => timeline.classList.contains("is-visible"))) {
+				window.removeEventListener("scroll", requestParticipationCheck);
+				window.removeEventListener("resize", requestParticipationCheck);
+				window.removeEventListener("load", requestParticipationCheck);
+				participationObserver?.disconnect();
+			}
+		};
+
+		let participationTicking = false;
+		function requestParticipationCheck() {
+			if (participationTicking) return;
+			participationTicking = true;
+			window.requestAnimationFrame(() => {
+				participationTicking = false;
+				checkParticipationTimelines();
+			});
+		}
+
+		const startParticipationTimeline = () => {
+			if (participationTimelines.every((timeline) => timeline.classList.contains("is-visible"))) return;
+
+			if (!isBottomUpParticipation && "IntersectionObserver" in window) {
+				participationObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting && entry.target instanceof HTMLElement) {
+								revealParticipationTimeline(entry.target);
+							}
+						});
+					},
+					{ threshold: 0.24, rootMargin: "0px 0px -18% 0px" }
+				);
+
+				participationTimelines.forEach((timeline) => participationObserver?.observe(timeline));
+			}
+
+			window.addEventListener("scroll", requestParticipationCheck, { passive: true });
+			window.addEventListener("resize", requestParticipationCheck);
+			window.addEventListener("load", requestParticipationCheck, { once: true });
+			requestParticipationCheck();
+			window.setTimeout(requestParticipationCheck, 160);
+			window.setTimeout(requestParticipationCheck, 420);
+		};
+
+		const waitForBottomUpBoot = () => {
+			if (!isBottomUpParticipation || !document.documentElement.classList.contains("is-bottom-up-booting")) {
+				startParticipationTimeline();
+				return;
+			}
+
+			window.requestAnimationFrame(waitForBottomUpBoot);
+		};
+
+		waitForBottomUpBoot();
+	}
+</script>

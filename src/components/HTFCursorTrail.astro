@@ -1,0 +1,148 @@
+<div class="htf-cursor-trail" data-htf-cursor-trail aria-hidden="true"></div>
+
+<script>
+	const trailRoot = document.querySelector("[data-htf-cursor-trail]");
+	const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+	const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+	const desktopQuery = window.matchMedia("(min-width: 768px)");
+	const maxMarks = 10;
+	const minDistance = 18;
+	const minInterval = 42;
+	let lastX = 0;
+	let lastY = 0;
+	let lastMarkAt = 0;
+	let activeMarks = [];
+
+	const canRunTrail = () => (
+		trailRoot instanceof HTMLElement
+		&& !reducedMotionQuery.matches
+		&& finePointerQuery.matches
+		&& desktopQuery.matches
+	);
+
+	const clearTrail = () => {
+		activeMarks.forEach((mark) => mark.remove());
+		activeMarks = [];
+	};
+
+	const isOverDarkSurface = (x, y) => {
+		const elements = document.elementsFromPoint(x, y);
+		const surface = elements.find((element) => !element.closest("[data-htf-cursor-trail]"));
+
+		return Boolean(surface?.closest(".hero-section, .cinematic-dark, .mission-terminal, .site-header.is-over-hero"));
+	};
+
+	const createMark = (x, y) => {
+		if (!(trailRoot instanceof HTMLElement)) {
+			return;
+		}
+
+		const mark = document.createElement("span");
+		const duration = 620 + Math.random() * 660;
+		const driftX = (Math.random() - 0.5) * 6;
+		const driftY = -4 - Math.random() * 8;
+
+		mark.className = "htf-cursor-trail__mark";
+		mark.dataset.tone = isOverDarkSurface(x, y) ? "dark" : "light";
+		mark.textContent = "HTF";
+		mark.style.left = `${x}px`;
+		mark.style.top = `${y}px`;
+		mark.style.setProperty("--htf-duration", `${duration}ms`);
+		mark.style.setProperty("--htf-drift-x", `${driftX}px`);
+		mark.style.setProperty("--htf-drift-y", `${driftY}px`);
+		trailRoot.append(mark);
+		activeMarks.push(mark);
+
+		if (activeMarks.length > maxMarks) {
+			activeMarks.shift()?.remove();
+		}
+
+		window.setTimeout(() => {
+			mark.remove();
+			activeMarks = activeMarks.filter((activeMark) => activeMark !== mark);
+		}, duration + 80);
+	};
+
+	const handlePointerMove = (event) => {
+		if (!canRunTrail() || event.pointerType !== "mouse") {
+			clearTrail();
+			return;
+		}
+
+		const now = performance.now();
+		const distance = Math.hypot(event.clientX - lastX, event.clientY - lastY);
+
+		if (distance < minDistance || now - lastMarkAt < minInterval) {
+			return;
+		}
+
+		lastX = event.clientX;
+		lastY = event.clientY;
+		lastMarkAt = now;
+		createMark(event.clientX, event.clientY);
+	};
+
+	const handleCapabilityChange = () => {
+		if (!canRunTrail()) {
+			clearTrail();
+		}
+	};
+
+	window.addEventListener("pointermove", handlePointerMove, { passive: true });
+	reducedMotionQuery.addEventListener("change", handleCapabilityChange);
+	finePointerQuery.addEventListener("change", handleCapabilityChange);
+	desktopQuery.addEventListener("change", handleCapabilityChange);
+</script>
+
+<style>
+	:global(.htf-cursor-trail) {
+		position: fixed;
+		inset: 0;
+		z-index: 2147483647;
+		pointer-events: none;
+	}
+
+	:global(.htf-cursor-trail__mark) {
+		position: fixed;
+		left: 0;
+		top: 0;
+		color: var(--htf-trail-color, var(--color-purple));
+		font-family: var(--font-ui);
+		font-size: 0.58rem;
+		font-weight: 760;
+		letter-spacing: 0.11em;
+		line-height: 1;
+		opacity: 0;
+		text-transform: uppercase;
+		transform: translate3d(-50%, -50%, 0) scale(0.96);
+		animation: htf-cursor-signature var(--htf-duration) var(--ease-premium) forwards;
+		will-change: opacity, transform;
+	}
+
+	:global(.htf-cursor-trail__mark[data-tone="dark"]) {
+		--htf-trail-color: #c4b5fd;
+		text-shadow: 0 0 0.72rem rgba(196, 181, 253, 0.26);
+	}
+
+	@keyframes htf-cursor-signature {
+		0% {
+			opacity: 0;
+			transform: translate3d(-50%, -50%, 0) scale(0.94);
+		}
+
+		16% {
+			opacity: 0.18;
+		}
+
+		100% {
+			opacity: 0;
+			transform: translate3d(calc(-50% + var(--htf-drift-x)), calc(-50% + var(--htf-drift-y)), 0) scale(1.015);
+		}
+	}
+
+	@media (hover: none), (pointer: coarse), (max-width: 767px), (prefers-reduced-motion: reduce) {
+		:global(.htf-cursor-trail) {
+			display: none;
+		}
+	}
+</style>

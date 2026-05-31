@@ -13,7 +13,7 @@ const lang = getLang(Astro.props.lang);
 const t = siteCopy[lang].publicationsHome;
 ---
 
-<article class={`publication-entry premium-hover group flex h-full flex-col overflow-hidden rounded-[1.1rem] border bg-[var(--color-surface)] shadow-[0_20px_68px_rgba(10,10,10,0.055)] ${featured ? "border-[rgba(10,10,10,0.22)] md:grid md:grid-cols-[1.08fr_0.92fr]" : "min-h-[33rem] border-[var(--color-line)]"}`}>
+<article class={`publication-entry premium-hover group flex h-full flex-col overflow-hidden rounded-[9px] border bg-[var(--color-surface)] shadow-[0_20px_68px_rgba(10,10,10,0.055)] ${featured ? "border-[rgba(10,10,10,0.22)] md:grid md:grid-cols-[1.08fr_0.92fr]" : "min-h-[33rem] border-[var(--color-line)]"}`}>
 	<a href={langPath(lang, `/publications/${publication.slug}`)} class={`media-placeholder cinematic-frame shrink-0 no-underline ${featured ? "min-h-[22rem] md:min-h-full" : "aspect-[16/10]"}`} aria-label={publication.title}>
 		{publication.imageUrl && (
 			<img

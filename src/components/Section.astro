@@ -5,32 +5,65 @@ interface Props {
 	intro?: string;
 	tone?: "light" | "dark";
 	id?: string;
+	eyebrowPlacement?: "top" | "bottom";
+	headingPlacement?: "top" | "bottom";
 }
 
-const { eyebrow, title, intro, tone = "light", id } = Astro.props;
+const {
+	eyebrow,
+	title,
+	intro,
+	tone = "light",
+	id,
+	eyebrowPlacement = "top",
+	headingPlacement = "top",
+} = Astro.props;
 const isDark = tone === "dark";
 ---
 
 <section id={id} class={`motion-section scroll-mt-28 px-4 py-[4.25rem] sm:px-6 sm:py-[5.25rem] lg:px-8 lg:py-[6.5rem] ${isDark ? "cinematic-dark text-[var(--color-paper)]" : "civic-grid"}`}>
 	<div class="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(14rem,0.32fr)_minmax(0,1fr)]">
-		<div>
-			<p class={`text-xs font-semibold uppercase tracking-[0.22em] ${isDark ? "text-[var(--color-paper)]/58" : "text-[var(--color-purple)]"}`}>
-				{eyebrow}
-			</p>
+		<div class={eyebrowPlacement === "bottom" ? "flex items-end" : undefined}>
+			{eyebrowPlacement === "top" && (
+				<p class={`text-xs font-semibold uppercase tracking-[0.22em] ${isDark ? "text-[var(--color-paper)]/58" : "text-[var(--color-purple)]"}`}>
+					{eyebrow}
+				</p>
+			)}
+			{eyebrowPlacement === "bottom" && (
+				<p class="section-kicker">
+					{eyebrow}
+				</p>
+			)}
 		</div>
 
 		<div>
-			<h2 class={`max-w-4xl text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl lg:text-5xl ${isDark ? "text-[var(--color-paper)]" : "text-[var(--color-ink)]"}`}>
-				{title}
-			</h2>
-			{intro && (
-				<p class={`mt-6 max-w-3xl text-base leading-8 sm:text-lg ${isDark ? "text-[var(--color-paper)]/68" : "text-[var(--color-muted)]"}`}>
-					{intro}
-				</p>
+			{headingPlacement === "top" && (
+				<div>
+					<h2 class={`max-w-4xl text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl lg:text-5xl ${isDark ? "text-[var(--color-paper)]" : "text-[var(--color-ink)]"}`}>
+						{title}
+					</h2>
+					{intro && (
+						<p class={`mt-6 max-w-3xl text-base leading-8 sm:text-lg ${isDark ? "text-[var(--color-paper)]/68" : "text-[var(--color-muted)]"}`}>
+							{intro}
+						</p>
+					)}
+				</div>
 			)}
-			<div class="mt-10">
+			<div class={headingPlacement === "top" ? "mt-10" : undefined}>
 				<slot />
 			</div>
+			{headingPlacement === "bottom" && (
+				<div class="mt-12">
+					<h2 class={`max-w-4xl text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl lg:text-5xl ${isDark ? "text-[var(--color-paper)]" : "text-[var(--color-ink)]"}`}>
+						{title}
+					</h2>
+					{intro && (
+						<p class={`mt-6 max-w-3xl text-base leading-8 sm:text-lg ${isDark ? "text-[var(--color-paper)]/68" : "text-[var(--color-muted)]"}`}>
+							{intro}
+						</p>
+					)}
+				</div>
+			)}
 		</div>
 	</div>
 </section>

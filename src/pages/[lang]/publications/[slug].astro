@@ -57,7 +57,7 @@ const related = await getRelatedPublications(publication, lang);
 
 			<section class="motion-section px-4 pb-12 sm:px-6 lg:px-8">
 				<div class="mx-auto max-w-6xl border-y border-[var(--color-line)] py-5">
-					<div class="media-placeholder cinematic-frame image-card aspect-[16/8] rounded-[1.1rem]" aria-label={publication.image}>
+					<div class="media-placeholder cinematic-frame image-card aspect-[16/8] rounded-[9px]" aria-label={publication.image}>
 						{publication.imageUrl && (
 							<img src={publication.imageUrl} alt={publication.imageAlt} class="media-photo" loading="eager" decoding="async" />
 						)}
@@ -67,8 +67,8 @@ const related = await getRelatedPublications(publication, lang);
 
 			{publication.type === "Video" && (
 				<section class="motion-section px-4 pb-12 sm:px-6 lg:px-8">
-					<div class="mx-auto max-w-4xl rounded-[1.1rem] border border-[var(--color-line)] bg-[var(--color-deep)] p-4">
-						<div class="aspect-video overflow-hidden rounded-[0.85rem] bg-black">
+					<div class="mx-auto max-w-4xl rounded-[9px] border border-[var(--color-line)] bg-[var(--color-deep)] p-4">
+						<div class="aspect-video overflow-hidden rounded-[9px] bg-black">
 							{publication.videoUrl ? (
 								<iframe
 									src={publication.videoUrl}
@@ -104,7 +104,7 @@ const related = await getRelatedPublications(publication, lang);
 				<section class="motion-section px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
 					<div class="mx-auto grid max-w-6xl gap-5 md:grid-cols-2">
 						{publication.gallery.map((image) => (
-							<div class="media-placeholder cinematic-frame aspect-[4/3] rounded-[1.1rem]" aria-label={image.alt}>
+							<div class="media-placeholder cinematic-frame aspect-[4/3] rounded-[9px]" aria-label={image.alt}>
 								<img src={image.url} alt={image.alt} class="media-photo" loading="lazy" decoding="async" />
 							</div>
 						))}

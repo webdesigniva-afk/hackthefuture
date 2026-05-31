@@ -9,35 +9,14 @@ const lang = getLang(Astro.props.lang);
 const t = siteCopy[lang].hero;
 ---
 
-<section class="hero-section gradient-rule atmospheric-section civic-grid relative overflow-hidden px-4 pb-14 pt-5 sm:px-6 sm:pb-16 lg:px-8" data-future-hero>
-	<canvas class="hero-code-rain" data-hero-code-rain aria-hidden="true"></canvas>
+<section class="hero-section gradient-rule atmospheric-section civic-grid relative px-4 pb-14 pt-5 sm:px-6 sm:pb-16 lg:px-8" data-future-hero>
+	<div class="hero-compass-watermark" aria-hidden="true">
+		<img src="/htf-compass-watermark.png" alt="" loading="eager" decoding="async" />
+	</div>
 
 	<div class="relative z-10 mx-auto max-w-7xl">
-		<div class="hero-caption mb-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-y border-[rgba(10,10,10,0.11)] py-4 text-[0.63rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-ink)]/70 lg:flex-nowrap lg:justify-between lg:gap-x-10 xl:gap-x-16">
-			{t.caption.map((item, index) => (
-				<span class="hero-caption-unit" data-caption-unit={index + 1}>
-					{index > 0 && <span class="hero-caption-separator text-[var(--color-gold)]/55" aria-hidden="true">&middot;</span>}
-					<span class="hero-caption-item" data-caption-item={index + 1}>{item}</span>
-				</span>
-			))}
-		</div>
-
-		<div class="hero-layout grid min-h-[calc(100vh-10.5rem)] gap-5 lg:grid-cols-[minmax(0,0.92fr)_minmax(23rem,0.78fr)] lg:items-center">
-			<div class="hero-intro-panel relative z-10 flex flex-col justify-center p-7 sm:p-9 lg:p-12">
-				<div class="hero-platform mb-8 flex items-center gap-3.5 text-[0.67rem] font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)]/82">
-					<img
-						src="/catalizator-logo.png"
-						alt=""
-						class="h-8 w-8 shrink-0 object-contain mix-blend-multiply"
-						loading="eager"
-						decoding="async"
-					/>
-					<span class="grid gap-1">
-						<span class="hero-platform-title hero-platform-title-anchor text-[0.72rem]" data-platform-matrix-anchor aria-hidden="true"></span>
-						<span data-platform-subtitle>{t.platform}</span>
-					</span>
-				</div>
-
+		<div class="hero-layout grid min-h-[calc(100svh-8rem)] gap-5 lg:grid-cols-[minmax(0,0.92fr)_minmax(23rem,0.78fr)] lg:items-center">
+			<div class="hero-intro-panel relative z-10 flex min-h-[28rem] flex-col justify-center p-7 sm:p-9 lg:min-h-[28rem] lg:p-12">
 				<h1 class="hero-title max-w-[10.6em] text-[clamp(2rem,3.68vw,4.34rem)] font-[580] leading-[1.045] tracking-[-0.036em] text-[var(--color-ink)]">
 					{t.title}
 				</h1>
@@ -45,10 +24,19 @@ const t = siteCopy[lang].hero;
 				<p class="hero-copy mt-8 max-w-3xl text-base leading-8 text-[var(--color-muted)]/94 sm:text-[1rem]">
 					{t.intro}
 				</p>
+
+				<p class="hero-event-meta mt-5 max-w-3xl" aria-label={t.caption.join(" · ")}>
+					{t.caption.map((item, index) => (
+						<>
+							{index > 0 && <span class="hero-event-meta-separator" aria-hidden="true">·</span>}
+							<span>{item}</span>
+						</>
+					))}
+				</p>
 			</div>
 
 			<div class="relative z-10 grid gap-5 lg:self-center">
-				<div class="media-placeholder cinematic-frame image-card min-h-[28rem] rounded-[1.1rem]">
+				<div class="media-placeholder cinematic-frame image-card min-h-[28rem] rounded-[9px]">
 					<video
 						class="media-video"
 						src="/hack-the-future-hero.mp4"
@@ -68,15 +56,17 @@ const t = siteCopy[lang].hero;
 
 	<div class="hero-position-cue" aria-hidden="true">
 		<span>NOW: YOU ARE HERE DOWN</span>
-		<span class="hero-position-arrow">↑</span>
+		<span class="hero-position-arrow">
+			<svg viewBox="0 0 24 24" aria-hidden="true">
+				<path d="M12 19V5M7.5 9.5 12 5l4.5 4.5" />
+			</svg>
+		</span>
 		<span>SCROLL UP TO THE FUTURE</span>
 	</div>
 </section>
 
 <script>
 	const hero = document.querySelector("[data-future-hero]");
-	const canvas = document.querySelector("[data-hero-code-rain]");
-	const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 	if (hero instanceof HTMLElement) {
 		let ticking = false;
@@ -99,308 +89,4 @@ const t = siteCopy[lang].hero;
 		window.addEventListener("scroll", requestHeroLift, { passive: true });
 		window.addEventListener("resize", requestHeroLift, { passive: true });
 	}
-
-	if (canvas instanceof HTMLCanvasElement) {
-		const context = canvas.getContext("2d", { alpha: true });
-		const maskCanvas = document.createElement("canvas");
-		const maskContext = maskCanvas.getContext("2d", { willReadFrequently: true });
-		const anchor = document.querySelector("[data-platform-matrix-anchor]");
-		const subtitle = document.querySelector("[data-platform-subtitle]");
-		const symbols = ["0", "1", "A", "F", "X", "/", "{", "}", "S", "Y", "C", "D", "E", "7", "9", "_", "+", "<", ">"];
-		const phrase = "HACK THE FUTURE";
-		let width = 0;
-		let height = 0;
-		let columns = [];
-		let formationParticles = [];
-		let maskPoints = [];
-		let maskBounds = null;
-		let rainFontSize = 16;
-		let formationFontSize = 10;
-		let animationFrame = 0;
-		let lastFrame = 0;
-		let loopStart = performance.now();
-
-		const formationStart = 450;
-		const holdStart = 6400;
-
-		const randomSymbol = (seed = 0) => symbols[Math.floor(seed + Math.random() * symbols.length) % symbols.length];
-
-		const easeInOutCubic = (value) => value < 0.5
-			? 4 * value * value * value
-			: 1 - Math.pow(-2 * value + 2, 3) / 2;
-
-		const sampleMask = () => {
-			if (!maskContext) return [];
-
-			const heroRect = hero instanceof HTMLElement ? hero.getBoundingClientRect() : canvas.getBoundingClientRect();
-			const anchorRect = anchor instanceof HTMLElement ? anchor.getBoundingClientRect() : null;
-			const subtitleRect = subtitle instanceof HTMLElement ? subtitle.getBoundingClientRect() : null;
-			const maskFont = window.innerWidth < 768 ? 34 : 48;
-			const maskPadding = Math.ceil(maskFont * 0.16);
-			maskCanvas.width = 1;
-			maskCanvas.height = 1;
-			maskContext.font = `900 ${maskFont}px Arial, sans-serif`;
-			const maskWidth = Math.ceil(maskContext.measureText(phrase).width + maskPadding * 2);
-			const maskHeight = Math.ceil(maskFont * 1.36);
-			const sampleStep = window.innerWidth < 768 ? 4 : 5;
-			const originX = subtitleRect
-				? subtitleRect.left - heroRect.left
-				: anchorRect
-					? anchorRect.left - heroRect.left
-					: width * 0.14;
-			const originY = anchorRect ? anchorRect.top - heroRect.top - maskFont * 0.98 : height * 0.14;
-			maskBounds = {
-				x: originX - maskFont * 0.32,
-				y: originY - maskFont * 0.28,
-				width: maskWidth + maskFont * 0.64,
-				height: maskHeight + maskFont * 0.58,
-			};
-			maskCanvas.width = maskWidth;
-			maskCanvas.height = maskHeight;
-			maskContext.clearRect(0, 0, maskWidth, maskHeight);
-			maskContext.fillStyle = "#fff";
-			maskContext.textAlign = "left";
-			maskContext.textBaseline = "middle";
-			maskContext.font = `900 ${maskFont}px Arial, sans-serif`;
-			maskContext.fillText(phrase, maskPadding, maskHeight * 0.58);
-
-			const image = maskContext.getImageData(0, 0, maskWidth, maskHeight);
-			const rawPoints = [];
-			let inkMinX = maskWidth;
-
-			for (let y = 0; y < maskHeight; y += sampleStep) {
-				for (let x = 0; x < maskWidth; x += sampleStep) {
-					const alpha = image.data[(y * maskWidth + x) * 4 + 3];
-					if (alpha > 28 && Math.random() > 0.02) {
-						inkMinX = Math.min(inkMinX, x);
-						rawPoints.push({ x, y });
-					}
-				}
-			}
-
-			const points = rawPoints.map((point) => ({
-				x: originX + point.x - inkMinX + (Math.random() - 0.5) * 0.25,
-				y: originY + point.y + (Math.random() - 0.5) * 0.25,
-			}));
-
-			return points.sort(() => Math.random() - 0.5).slice(0, window.innerWidth < 768 ? 900 : 1500);
-		};
-
-		const createColumn = (index, count) => ({
-			x: window.innerWidth < 768
-				? ((index + Math.random() * 0.8) / count) * width
-				: width * (0.02 + ((index + Math.random() * 0.8) / count) * 0.72),
-			y: Math.random() * height,
-			speed: 0.12 + Math.random() * 0.2,
-			alpha: 0.09 + Math.random() * 0.1,
-			phase: Math.random() * Math.PI * 2,
-		});
-
-		const createFormationParticle = (index, target = null) => {
-			const nearestColumnIndex = target
-				? columns.reduce((nearestIndex, column, columnIndex) => (
-					Math.abs(column.x - target.x) < Math.abs(columns[nearestIndex].x - target.x) ? columnIndex : nearestIndex
-				), 0)
-				: index % Math.max(1, columns.length);
-			const column = columns[nearestColumnIndex];
-			return {
-				x: column?.x ?? Math.random() * width,
-				y: -rainFontSize * (2 + Math.random() * 18),
-				speed: 0.22 + Math.random() * 0.3,
-				alpha: 0.18 + Math.random() * 0.14,
-				phase: Math.random() * Math.PI * 2,
-				character: randomSymbol(index),
-				target,
-				sourceColumnIndex: nearestColumnIndex,
-				sourceRow: Math.floor(Math.random() * 8),
-				delay: Math.random() * 1700 + (index % 23) * 18,
-				duration: 3600 + Math.random() * 1400,
-				pickupX: null,
-				pickupY: null,
-				lockX: 0,
-				lockY: 0,
-				releaseSpeed: 0.22 + Math.random() * 0.28,
-				released: false,
-			};
-		};
-
-		const resetFormationState = () => {
-			maskPoints = sampleMask();
-			formationParticles.forEach((particle, index) => {
-				particle.target = maskPoints[index] || null;
-				particle.sourceColumnIndex = particle.target
-					? columns.reduce((nearestIndex, column, columnIndex) => (
-						Math.abs(column.x - particle.target.x) < Math.abs(columns[nearestIndex].x - particle.target.x) ? columnIndex : nearestIndex
-					), 0)
-					: index % Math.max(1, columns.length);
-				const column = columns[particle.sourceColumnIndex];
-				particle.released = false;
-				particle.x = column?.x ?? Math.random() * width;
-				particle.y = -rainFontSize * (2 + Math.random() * 18);
-				particle.delay = Math.random() * 1700 + (index % 23) * 18;
-				particle.duration = 3600 + Math.random() * 1400;
-				particle.pickupX = null;
-				particle.pickupY = null;
-				particle.lockX = particle.x;
-				particle.lockY = particle.y;
-			});
-		};
-
-		const resize = () => {
-			const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-			const rect = canvas.getBoundingClientRect();
-			width = Math.max(1, Math.floor(rect.width));
-			height = Math.max(1, Math.floor(rect.height));
-			canvas.width = Math.floor(width * ratio);
-			canvas.height = Math.floor(height * ratio);
-
-			if (context) {
-				context.setTransform(ratio, 0, 0, ratio, 0, 0);
-			}
-
-			rainFontSize = window.innerWidth < 768 ? 15 : 16;
-			formationFontSize = window.innerWidth < 768 ? 6 : 6.5;
-			const density = window.innerWidth < 768 ? 0.3 : 0.42;
-			const columnCount = Math.max(12, Math.floor((width / rainFontSize) * density));
-			columns = Array.from({ length: columnCount }, (_, index) => createColumn(index, columnCount));
-			maskPoints = sampleMask();
-			const formationCount = Math.min(maskPoints.length, window.innerWidth < 768 ? 900 : 1500);
-
-			formationParticles = Array.from({ length: formationCount }, (_, index) => createFormationParticle(index, maskPoints[index] || null));
-			loopStart = performance.now();
-		};
-
-		const drawStatic = () => {
-			if (!context) return;
-			context.clearRect(0, 0, width, height);
-			context.font = `${rainFontSize}px Arial, sans-serif`;
-			context.shadowColor = "rgba(124, 255, 107, 0.18)";
-			context.shadowBlur = 4;
-			columns.forEach((column, columnIndex) => {
-				for (let y = columnIndex % 3 * rainFontSize; y < height; y += rainFontSize * 8) {
-					context.fillStyle = "rgba(0, 132, 42, 0.11)";
-					context.fillText(symbols[Math.floor(columnIndex + y) % symbols.length], column.x, y);
-				}
-			});
-			context.shadowBlur = 0;
-		};
-
-		const drawFrame = (time) => {
-			if (!context) return;
-			if (time - lastFrame < 42) {
-				animationFrame = window.requestAnimationFrame(drawFrame);
-				return;
-			}
-			const loopTime = time - loopStart;
-			lastFrame = time;
-
-			context.clearRect(0, 0, width, height);
-			context.fillStyle = "rgba(5, 6, 7, 0.12)";
-			context.fillRect(0, 0, width, height);
-			context.font = `${rainFontSize}px Arial, sans-serif`;
-			context.textBaseline = "top";
-			context.shadowColor = "rgba(124, 255, 107, 0.12)";
-			context.shadowBlur = 3;
-
-			columns.forEach((column, columnIndex) => {
-				const rowCount = 4 + (columnIndex % 4);
-				for (let row = 0; row < rowCount; row += 1) {
-					const y = (column.y - row * rainFontSize * 1.18 + height) % height;
-					const charIndex = Math.floor(time * 0.004 + column.phase + row + columnIndex) % symbols.length;
-					const insideMask = maskBounds
-						&& column.x > maskBounds.x
-						&& column.x < maskBounds.x + maskBounds.width
-						&& y > maskBounds.y
-						&& y < maskBounds.y + maskBounds.height;
-					const alpha = Math.max(0.018, column.alpha - row * 0.022) * (insideMask ? 0.18 : 1);
-					context.fillStyle = `rgba(0, 132, 42, ${alpha})`;
-					context.fillText(symbols[charIndex], column.x, y);
-				}
-				column.y = (column.y + column.speed) % (height + rainFontSize * 8);
-			});
-
-			context.font = `${formationFontSize}px Arial, sans-serif`;
-			context.shadowColor = "rgba(124, 255, 107, 0.22)";
-			context.shadowBlur = 4;
-
-			formationParticles.forEach((particle, index) => {
-				if (Math.random() > 0.68) {
-					particle.character = randomSymbol(index + time * 0.02);
-				}
-
-				let x = particle.x;
-				let y = particle.y;
-				let alpha = particle.alpha;
-				const target = particle.target;
-				const sourceColumn = columns[particle.sourceColumnIndex] || columns[index % Math.max(1, columns.length)];
-				const sourceX = sourceColumn?.x ?? particle.x;
-				const sourceY = sourceColumn
-					? (sourceColumn.y - particle.sourceRow * rainFontSize * 1.18 + height) % height
-					: particle.y;
-
-				if (target && loopTime >= formationStart) {
-					const localTime = loopTime - formationStart - particle.delay;
-
-					if (localTime < 0) {
-						x = sourceX;
-						y = sourceY;
-						alpha = 0.12 + Math.sin(time * 0.012 + particle.phase) * 0.03;
-					} else if (localTime < particle.duration) {
-						if (particle.pickupX === null || particle.pickupY === null) {
-							particle.pickupX = sourceX;
-							particle.pickupY = sourceY;
-						}
-
-						const progress = easeInOutCubic(Math.min(1, localTime / particle.duration));
-						const drift = Math.sin(progress * Math.PI) * 14;
-						x = particle.pickupX + (target.x - particle.pickupX) * progress + Math.sin(particle.phase) * drift;
-						y = particle.pickupY + (target.y - particle.pickupY) * progress;
-						particle.lockX = x;
-						particle.lockY = y;
-						alpha = 0.16 + progress * 0.56 + Math.sin(time * 0.013 + particle.phase) * 0.035;
-					} else {
-						x = target.x + Math.sin(time * 0.006 + particle.phase) * 0.12;
-						y = target.y + Math.cos(time * 0.007 + particle.phase) * 0.1;
-						alpha = 0.68 + Math.sin(time * 0.017 + particle.phase) * 0.06;
-					}
-				}
-
-				context.fillStyle = target && loopTime >= formationStart
-					? `rgba(88, 226, 73, ${Math.max(0.26, Math.min(0.82, alpha))})`
-					: `rgba(0, 132, 42, ${Math.max(0.05, Math.min(0.18, alpha))})`;
-				context.fillText(particle.character, x, y);
-
-				if (!target || loopTime < formationStart) {
-					particle.y += particle.speed;
-					if (particle.y > height + rainFontSize * 5) {
-						particle.y = -rainFontSize * (1 + Math.random() * 8);
-						particle.x = columns[index % Math.max(1, columns.length)]?.x ?? Math.random() * width;
-						particle.released = false;
-					}
-				}
-			});
-
-			context.shadowBlur = 0;
-
-			animationFrame = window.requestAnimationFrame(drawFrame);
-		};
-
-		resize();
-		if (reducedMotion) {
-			drawStatic();
-		} else {
-			animationFrame = window.requestAnimationFrame(drawFrame);
-		}
-
-		window.addEventListener("resize", () => {
-			window.cancelAnimationFrame(animationFrame);
-			resize();
-			if (reducedMotion) {
-				drawStatic();
-			} else {
-				animationFrame = window.requestAnimationFrame(drawFrame);
-			}
-		}, { passive: true });
-	}
-
 </script>

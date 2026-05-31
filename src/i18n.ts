@@ -37,7 +37,7 @@ export const siteCopy = {
 			language: "Language switcher",
 		},
 		hero: {
-			caption: ["Shumen", "June 10–12, 2026", "Pilot Edition", "Future Readiness Days"],
+			caption: ["Shumen", "June 26–27, 2026", "Pilot Edition", "Future Readiness Days"],
 			platform: "Future Readiness Challenge",
 			title: "Stop waiting for the future. Start building it.",
 			intro: "A two-day challenge for 15–19-year-olds in Shumen. Pick a real problem facing Bulgaria. Build a solution with your team. Present it to people who can actually do something about it.",
