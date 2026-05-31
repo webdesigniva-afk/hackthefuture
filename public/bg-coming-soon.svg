@@ -1,0 +1,47 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<rect width="1600" height="1000" fill="#07070A"/>
+	<g opacity="0.8">
+		<circle cx="222" cy="164" r="440" fill="url(#glowA)"/>
+		<circle cx="1360" cy="774" r="520" fill="url(#glowB)"/>
+		<circle cx="830" cy="410" r="360" fill="url(#glowC)"/>
+	</g>
+	<g opacity="0.16">
+		<path d="M0 168H1600M0 312H1600M0 456H1600M0 600H1600M0 744H1600M0 888H1600" stroke="white"/>
+		<path d="M128 0V1000M272 0V1000M416 0V1000M560 0V1000M704 0V1000M848 0V1000M992 0V1000M1136 0V1000M1280 0V1000M1424 0V1000" stroke="#A78BFA"/>
+	</g>
+	<g opacity="0.22">
+		<circle cx="800" cy="500" r="268" stroke="#C4B5FD" stroke-width="2"/>
+		<path d="M800 98V262M800 738V902M398 500H562M1038 500H1202" stroke="#C4B5FD" stroke-width="2" stroke-linecap="round"/>
+		<path d="M800 262C757 383 683 457 562 500M800 262C843 383 917 457 1038 500M800 738C757 617 683 543 562 500M800 738C843 617 917 543 1038 500" stroke="#C4B5FD" stroke-width="2" stroke-linecap="round"/>
+		<circle cx="800" cy="500" r="38" fill="#7C3AED"/>
+	</g>
+	<g opacity="0.82">
+		<text x="120" y="146" fill="#C4B5FD" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="8">HACK THE FUTURE</text>
+		<text x="120" y="684" fill="white" font-family="Inter, Arial, sans-serif" font-size="108" font-weight="650" letter-spacing="-4">Българската версия</text>
+		<text x="120" y="808" fill="white" font-family="Inter, Arial, sans-serif" font-size="108" font-weight="650" letter-spacing="-4">скоро ще бъде готова</text>
+		<text x="124" y="878" fill="#C4B5FD" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="7">CATALIZATOR // SHUMEN // FUTURE READINESS DAYS</text>
+	</g>
+	<g opacity="0.36">
+		<path d="M124 918H584" stroke="url(#line)" stroke-width="2"/>
+		<path d="M1018 146H1476" stroke="url(#line)" stroke-width="2"/>
+	</g>
+	<defs>
+		<radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(222 164) rotate(90) scale(440)">
+			<stop stop-color="#7C3AED" stop-opacity="0.42"/>
+			<stop offset="1" stop-color="#7C3AED" stop-opacity="0"/>
+		</radialGradient>
+		<radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1360 774) rotate(90) scale(520)">
+			<stop stop-color="#F04CFF" stop-opacity="0.2"/>
+			<stop offset="1" stop-color="#F04CFF" stop-opacity="0"/>
+		</radialGradient>
+		<radialGradient id="glowC" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(830 410) rotate(90) scale(360)">
+			<stop stop-color="#C4B5FD" stop-opacity="0.16"/>
+			<stop offset="1" stop-color="#C4B5FD" stop-opacity="0"/>
+		</radialGradient>
+		<linearGradient id="line" x1="0" y1="0" x2="460" y2="0" gradientUnits="userSpaceOnUse">
+			<stop stop-color="white" stop-opacity="0.58"/>
+			<stop offset="0.5" stop-color="#A78BFA"/>
+			<stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
+		</linearGradient>
+	</defs>
+</svg>

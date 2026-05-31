@@ -22,18 +22,56 @@ if (!languages.includes(lang)) {
 }
 
 const t = siteCopy[lang];
+const isBgComingSoon = lang === "bg";
 ---
 
-<BaseLayout title={t.meta.homeTitle} description={t.meta.homeDescription} lang={lang} bottomUp>
-	<Header lang={lang} />
-	<main class="bottom-up-page">
-		<Footer lang={lang} />
-		<ClosingSection lang={lang} />
-		<PublicationsSection lang={lang} />
-		<AtmosphericAnchor lang={lang} />
-		<CivicImageSection lang={lang} />
-		<ArenaMoment lang={lang} />
-		<IntroSection lang={lang} />
-		<Hero lang={lang} />
-	</main>
+<BaseLayout title={isBgComingSoon ? "Българската версия скоро ще бъде готова | Hack The Future" : t.meta.homeTitle} description={t.meta.homeDescription} lang={lang} bottomUp={!isBgComingSoon}>
+	{isBgComingSoon ? (
+		<main class="bg-coming-soon-page">
+			<img
+				class="bg-coming-soon-image"
+				src="/bg-coming-soon.svg"
+				alt="Българската версия скоро ще бъде готова"
+				loading="eager"
+				decoding="async"
+			/>
+		</main>
+	) : (
+		<>
+			<Header lang={lang} />
+			<main class="bottom-up-page">
+				<Footer lang={lang} />
+				<ClosingSection lang={lang} />
+				<PublicationsSection lang={lang} />
+				<AtmosphericAnchor lang={lang} />
+				<CivicImageSection lang={lang} />
+				<ArenaMoment lang={lang} />
+				<IntroSection lang={lang} />
+				<Hero lang={lang} />
+			</main>
+		</>
+	)}
 </BaseLayout>
+
+<style>
+	.bg-coming-soon-page {
+		display: grid;
+		min-height: 100svh;
+		place-items: center;
+		padding: clamp(1rem, 3vw, 2.5rem);
+		background:
+			radial-gradient(circle at 18% 12%, rgba(124, 58, 237, 0.11), transparent 32rem),
+			radial-gradient(circle at 82% 80%, rgba(240, 76, 255, 0.08), transparent 34rem),
+			#07070a;
+	}
+
+	.bg-coming-soon-image {
+		display: block;
+		width: min(100%, 90rem);
+		height: auto;
+		border-radius: 9px;
+		box-shadow:
+			0 34px 110px rgba(0, 0, 0, 0.34),
+			0 0 60px rgba(124, 58, 237, 0.16);
+	}
+</style>
