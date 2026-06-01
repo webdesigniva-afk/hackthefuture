@@ -1,0 +1,21 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import PrivacyCookiesPage from "../components/PrivacyCookiesPage.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const lang = "en";
+---
+
+<BaseLayout
+	title="Privacy & Cookies | Hack The Future"
+	description="Privacy and cookie policy for Hack The Future."
+	lang={lang}
+	bottomUp
+>
+	<Header lang={lang} />
+	<main class="bottom-up-page">
+		<Footer lang={lang} />
+		<PrivacyCookiesPage lang={lang} />
+	</main>
+</BaseLayout>

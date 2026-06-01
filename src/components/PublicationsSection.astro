@@ -1,30 +1,70 @@
 ---
-const days = [
-	{
-		number: "03",
-		label: "June 27",
-		title: "Award ceremony.",
-		body: "The strongest teams are recognized in front of the city.",
-		weight: "compact",
+import { getLang, type Lang } from "../i18n";
+
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+const copy = {
+	en: {
+		eyebrow: "SCHEDULE",
+		days: [
+			{
+				number: "03",
+				label: "June 27",
+				title: "Award ceremony.",
+				body: "The strongest teams are recognized in front of the city.",
+				weight: "compact",
+			},
+			{
+				number: "02",
+				label: "June 27",
+				title: "Build and present.",
+				body: "Your team turns your idea into something real you can show. Mentors stay in the room. By the end of the day, every team presents to the jury.",
+				weight: "medium",
+			},
+			{
+				number: "01",
+				label: "June 26",
+				title: "Form, choose, start.",
+				body: "Teams form in the morning. You meet your team, pick your theme, and start working. Mentors are in the room throughout the day to push back on weak ideas, sharpen the strong ones, and connect you to information you don't yet have. Workshops in the afternoon on how to build a pitch.",
+				weight: "dominant",
+			},
+		],
 	},
-	{
-		number: "02",
-		label: "June 27",
-		title: "Build and present.",
-		body: "Your team turns your idea into something real you can show. Mentors stay in the room. By the end of the day, every team presents to the jury.",
-		weight: "medium",
+	bg: {
+		eyebrow: "ПРОГРАМА",
+		days: [
+			{
+				number: "03",
+				label: "27 юни",
+				title: "Церемония по награждаване",
+				body: "Най-силните отбори ще бъдат отличени пред общността и официалните гости на събитието.",
+				weight: "compact",
+			},
+			{
+				number: "02",
+				label: "27 юни",
+				title: "Създаване и представяне",
+				body: "Вашият екип превръща идеята си в нещо реално, което може да покаже и защити. Менторите остават с вас през целия процес. В края на деня всеки отбор представя своя проект пред журито.",
+				weight: "medium",
+			},
+			{
+				number: "01",
+				label: "26 юни",
+				title: "Сформиране на екипи, избор на тема и старт",
+				body: "Отборите се сформират сутринта. Запознавате се със своя екип, избирате предизвикателство и започвате работа. Менторите са на разположение през целия ден, за да ви помогнат да подобрите идеите си, да откриете нови гледни точки и да намерите необходимата информация. Следобед са предвидени практически работилници за това как да разработите и представите убедително своята идея.",
+				weight: "dominant",
+			},
+		],
 	},
-	{
-		number: "01",
-		label: "June 26",
-		title: "Form, choose, start.",
-		body: "Teams form in the morning. You meet your team, pick your theme, and start working. Mentors are in the room throughout the day to push back on weak ideas, sharpen the strong ones, and connect you to information you don't yet have. Workshops in the afternoon on how to build a pitch.",
-		weight: "dominant",
-	},
-];
+}[lang];
+
+const days = copy.days;
 ---
 
-<section id="schedule" class="motion-section civic-grid px-4 py-[4.25rem] sm:px-6 sm:py-[5.25rem] lg:px-8 lg:py-[6.5rem]">
+<section id="schedule" class="motion-section civic-grid px-4 py-[4.25rem] sm:px-6 sm:py-[5.25rem] lg:px-8 lg:py-[6.5rem]" data-schedule-lang={lang}>
 	<div class="mx-auto max-w-7xl">
 		<div class="editorial-timeline" data-schedule-timeline>
 			<div class="timeline-rail" aria-hidden="true">
@@ -53,7 +93,7 @@ const days = [
 		</div>
 
 		<p class="section-kicker schedule-bottom-kicker">
-			SCHEDULE
+			{copy.eyebrow}
 		</p>
 	</div>
 </section>
@@ -217,7 +257,7 @@ const days = [
 		max-width: 46rem;
 		color: var(--color-muted);
 		font-size: 1rem;
-		line-height: 1.85;
+		line-height: 1.58;
 		text-wrap: pretty;
 	}
 
@@ -269,6 +309,68 @@ const days = [
 			transform 240ms ease;
 	}
 
+	#schedule[data-schedule-lang="bg"] .editorial-timeline {
+		--timeline-number-column: clamp(10rem, 14vw, 14rem);
+		gap: clamp(1.75rem, 3.5vw, 3.6rem);
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-content {
+		gap: clamp(4rem, 7vw, 6.6rem);
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-entry--medium {
+		margin-left: clamp(0rem, 2.6vw, 2.2rem);
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-entry--compact {
+		margin-left: clamp(0rem, 5vw, 4.1rem);
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-entry-grid {
+		gap: clamp(2rem, 4vw, 3.65rem);
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-day-label {
+		margin-bottom: 1.15rem;
+		font-size: 0.78rem;
+		letter-spacing: 0.15em;
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-day-number {
+		font-size: clamp(4.3rem, 10.5vw, 8.8rem);
+		letter-spacing: -0.045em;
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-title {
+		max-width: 21ch;
+		letter-spacing: -0.028em;
+		line-height: 1.08;
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-entry--dominant .timeline-title {
+		font-size: clamp(2.25rem, 4.55vw, 4.55rem);
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-entry--medium .timeline-title {
+		font-size: clamp(1.95rem, 3.55vw, 3.6rem);
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-entry--compact .timeline-title {
+		max-width: none;
+		font-size: clamp(1.72rem, 2.7vw, 2.78rem);
+		white-space: nowrap;
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-body {
+		max-width: 50rem;
+		line-height: 1.7;
+	}
+
+	#schedule[data-schedule-lang="bg"] .timeline-entry--dominant .timeline-body {
+		max-width: 55rem;
+		font-size: 1rem;
+	}
+
 	@media (max-width: 767px) {
 		.editorial-timeline {
 			grid-template-columns: 1.5rem minmax(0, 1fr);
@@ -306,6 +408,36 @@ const days = [
 
 		.timeline-day-number {
 			font-size: clamp(4.2rem, 24vw, 7rem);
+		}
+
+		#schedule[data-schedule-lang="bg"] .timeline-content {
+			gap: 3.5rem;
+		}
+
+		#schedule[data-schedule-lang="bg"] .timeline-day-label {
+			margin-bottom: 0.9rem;
+			font-size: 0.7rem;
+			letter-spacing: 0.13em;
+		}
+
+		#schedule[data-schedule-lang="bg"] .timeline-day-number {
+			font-size: clamp(3.65rem, 20vw, 5.8rem);
+		}
+
+		#schedule[data-schedule-lang="bg"] .timeline-title,
+		#schedule[data-schedule-lang="bg"] .timeline-entry--dominant .timeline-title,
+		#schedule[data-schedule-lang="bg"] .timeline-entry--medium .timeline-title,
+		#schedule[data-schedule-lang="bg"] .timeline-entry--compact .timeline-title {
+			max-width: 16ch;
+			font-size: clamp(1.8rem, 9.6vw, 2.7rem);
+			line-height: 1.08;
+			white-space: normal;
+		}
+
+		#schedule[data-schedule-lang="bg"] .timeline-body,
+		#schedule[data-schedule-lang="bg"] .timeline-entry--dominant .timeline-body {
+			font-size: 0.95rem;
+			line-height: 1.6;
 		}
 	}
 

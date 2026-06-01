@@ -1,0 +1,898 @@
+---
+import { getLang, type Lang } from "../i18n";
+
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+const cookieCopy = {
+	en: {
+		kicker: "Cookie Policy",
+		title: "Cookie Policy",
+		updated: "Last updated: June 2026",
+		intro: [
+			"This website uses cookies and similar technologies to help the site function properly and to understand how visitors use it.",
+		],
+		blocks: [
+			{
+				index: "01",
+				title: "What Are Cookies?",
+				paragraphs: [
+					"Cookies are small text files stored on your device when you visit a website.",
+					"They help websites remember information about your visit and improve your browsing experience.",
+				],
+			},
+			{
+				index: "02",
+				title: "How We Use Cookies",
+				paragraphs: ["We may use cookies to:"],
+				list: [
+					"Ensure the website functions correctly",
+					"Improve performance and user experience",
+					"Understand how visitors interact with the website",
+					"Measure website traffic and engagement",
+				],
+			},
+			{
+				index: "03",
+				title: "Analytics",
+				paragraphs: [
+					"We may use analytics tools to understand how people use the website.",
+					"This information helps us improve the experience for future visitors and participants.",
+					"Analytics data is used in aggregate form wherever possible.",
+				],
+			},
+			{
+				index: "04",
+				title: "Managing Cookies",
+				paragraphs: [
+					"Most web browsers allow you to control, block, or delete cookies through your browser settings.",
+					"Please note that disabling certain cookies may affect how some parts of the website function.",
+				],
+			},
+			{
+				index: "05",
+				title: "Contact",
+				paragraphs: ["If you have any questions about this Cookie Policy, please contact:"],
+				email: "social@catalizator.org",
+			},
+		],
+	},
+	bg: {
+		kicker: "ПОЛИТИКА ЗА БИСКВИТКИ",
+		title: "Политика за бисквитки",
+		updated: "Последна актуализация: юни 2026 г.",
+		intro: [
+			"Този уебсайт използва бисквитки и сходни технологии, за да функционира коректно и за да ни помогне да разберем как посетителите го използват.",
+		],
+		blocks: [
+			{
+				index: "01",
+				title: "Какво представляват бисквитките?",
+				paragraphs: [
+					"Бисквитките са малки текстови файлове, които се съхраняват на вашето устройство при посещение на уебсайт.",
+					"Те помагат на сайтовете да запомнят информация за вашето посещение и да подобрят потребителското изживяване.",
+				],
+			},
+			{
+				index: "02",
+				title: "Как използваме бисквитките",
+				paragraphs: ["Можем да използваме бисквитки, за да:"],
+				list: [
+					"Осигурим правилното функциониране на уебсайта",
+					"Подобрим неговата производителност и потребителско изживяване",
+					"Разберем как посетителите взаимодействат със сайта",
+					"Измерваме посещаемостта и ангажираността на потребителите",
+				],
+			},
+			{
+				index: "03",
+				title: "Анализ на използването",
+				paragraphs: [
+					"Можем да използваме инструменти за анализ, за да разберем как хората използват уебсайта.",
+					"Тази информация ни помага да подобряваме изживяването на бъдещите посетители и участници.",
+					"Когато е възможно, данните се използват в обобщен и анонимизиран вид.",
+				],
+			},
+			{
+				index: "04",
+				title: "Управление на бисквитките",
+				paragraphs: [
+					"Повечето интернет браузъри ви позволяват да управлявате, ограничавате или изтривате бисквитките чрез настройките си.",
+					"Моля, имайте предвид, че деактивирането на определени бисквитки може да повлияе на работата на някои части от уебсайта.",
+				],
+			},
+			{
+				index: "05",
+				title: "Контакт",
+				paragraphs: ["Ако имате въпроси относно тази Политика за бисквитките, можете да се свържете с нас на:"],
+				email: "social@catalizator.org",
+			},
+		],
+	},
+}[lang];
+const privacyCopy = {
+	en: {
+		kicker: "Privacy Policy",
+		title: "Privacy Policy",
+		updated: "Last updated: June 2026",
+		intro: [
+			"At Hack The Future, we believe trust matters. This Privacy Policy explains what information we collect, why we collect it, and how we use it.",
+			"By using this website or submitting an application, you agree to the practices described below.",
+		],
+		blocks: [
+			{
+				index: "01",
+				title: "Who We Are",
+				paragraphs: [
+					"Hack The Future is an educational initiative designed to help young people explore real-world challenges, develop practical skills, and connect with mentors, institutions, and future opportunities.",
+					"If you have any questions about this Privacy Policy, you can contact us at:",
+				],
+				emailPrefix: "Email:",
+				email: "social@catalizator.org",
+			},
+			{
+				index: "02",
+				title: "Information We Collect",
+				paragraphs: ["When you submit an application through the website, we may collect:"],
+				list: [
+					"Name",
+					"Email address",
+					"Age",
+					"School",
+					"Your answer to \"Why are you keen to join?\"",
+					"Your selected challenge theme",
+					"Whether you are applying individually or as part of a team",
+				],
+				after: [
+					"We may also collect limited technical information when you visit the website, such as browser type, device information, and general website usage data.",
+				],
+			},
+			{
+				index: "03",
+				title: "How We Use Your Information",
+				paragraphs: ["We use the information you provide to:"],
+				list: [
+					"Review and evaluate applications",
+					"Communicate with applicants and participants",
+					"Organize the event and participant experience",
+					"Create teams where appropriate",
+					"Share important updates related to Hack The Future",
+					"Improve future editions of the programme and website",
+				],
+				after: ["We only collect information that is relevant to running the programme and supporting participants."],
+			},
+			{
+				index: "04",
+				title: "Photography and Event Media",
+				paragraphs: [
+					"During Hack The Future, photographs and video recordings may be taken during event activities.",
+					"These may be used to document the event, celebrate participants, and share the story of the programme through websites, social media, reports, and partner communications.",
+					"Where appropriate, additional consent may be requested before specific media is used.",
+				],
+			},
+			{
+				index: "05",
+				title: "Sharing Information",
+				paragraphs: [
+					"We do not sell personal information.",
+					"Information may be shared with trusted organisers, mentors, partners, and service providers only when necessary to operate and deliver the programme.",
+					"Any such sharing is limited to what is reasonably required for event administration and participant support.",
+				],
+			},
+			{
+				index: "06",
+				title: "Data Retention",
+				paragraphs: [
+					"We keep personal information only for as long as reasonably necessary to manage applications, deliver the programme, communicate with participants, and maintain records related to the initiative.",
+					"When information is no longer needed, it will be securely deleted or anonymised.",
+				],
+			},
+			{
+				index: "07",
+				title: "Your Rights",
+				paragraphs: [
+					"You may request access to the personal information we hold about you, ask for corrections, or request deletion of your information where appropriate.",
+					"To make a request, please contact:",
+				],
+				email: "social@catalizator.org",
+			},
+			{
+				index: "08",
+				title: "Changes to This Policy",
+				paragraphs: [
+					"We may update this Privacy Policy from time to time.",
+					"Any updates will be published on this page together with the revised date shown above.",
+				],
+			},
+		],
+	},
+	bg: {
+		kicker: "ПОЛИТИКА ЗА ПОВЕРИТЕЛНОСТ",
+		title: "Политика за поверителност",
+		updated: "Последна актуализация: юни 2026 г.",
+		intro: [
+			"В Hack The Future вярваме, че доверието е важно. Настоящата Политика за поверителност обяснява каква информация събираме, защо я събираме и как я използваме.",
+			"Използвайки този уебсайт или изпращайки кандидатура, вие се съгласявате с описаните по-долу практики.",
+		],
+		blocks: [
+			{
+				index: "01",
+				title: "Кои сме ние",
+				paragraphs: [
+					"Hack The Future е образователна инициатива, създадена, за да помогне на младите хора да изследват реални обществени предизвикателства, да развиват практически умения и да се свързват с ментори, институции и бъдещи възможности.",
+					"За въпроси относно настоящата политика можете да се свържете с нас на:",
+				],
+				emailPrefix: "Имейл:",
+				email: "social@catalizator.org",
+			},
+			{
+				index: "02",
+				title: "Каква информация събираме",
+				paragraphs: ["При кандидатстване чрез уебсайта можем да събираме:"],
+				list: [
+					"Име",
+					"Имейл адрес",
+					"Възраст",
+					"Училище",
+					"Отговор на въпроса „Защо искаш да участваш?“",
+					"Избрано предизвикателство",
+					"Информация дали кандидатствате самостоятелно или като част от екип",
+				],
+				after: [
+					"При посещение на сайта може да събираме и ограничена техническа информация като тип браузър, информация за устройството и обобщени данни за използването на уебсайта.",
+				],
+			},
+			{
+				index: "03",
+				title: "Как използваме информацията",
+				paragraphs: ["Използваме предоставената информация, за да:"],
+				list: [
+					"Разглеждаме и оценяваме кандидатурите",
+					"Комуникираме с кандидати и участници",
+					"Организираме събитието и участническото преживяване",
+					"Сформираме екипи, когато това е необходимо",
+					"Изпращаме важна информация, свързана с Hack The Future",
+					"Подобряваме бъдещи издания на програмата и уебсайта",
+				],
+				after: ["Събираме единствено информация, необходима за провеждането на инициативата и подкрепата на участниците."],
+			},
+			{
+				index: "04",
+				title: "Снимки и видео по време на събитието",
+				paragraphs: [
+					"По време на Hack The Future могат да бъдат правени снимки и видеозаписи.",
+					"Те могат да бъдат използвани за документиране на събитието, представяне на участниците и разказване на историята на инициативата чрез уебсайтове, социални мрежи, отчети и комуникация с партньори.",
+					"Когато е необходимо, може да бъде поискано допълнително съгласие за използването на конкретни изображения или видеоматериали.",
+				],
+			},
+			{
+				index: "05",
+				title: "Споделяне на информация",
+				paragraphs: [
+					"Ние не продаваме лични данни.",
+					"Информация може да бъде споделяна с организатори, ментори, партньори и доставчици на услуги само когато това е необходимо за организирането и провеждането на програмата.",
+					"Подобно споделяне е ограничено до информацията, която е разумно необходима за администрирането на събитието и подкрепата на участниците.",
+				],
+			},
+			{
+				index: "06",
+				title: "Съхранение на данни",
+				paragraphs: [
+					"Съхраняваме лична информация само толкова дълго, колкото е разумно необходимо за обработката на кандидатурите, провеждането на програмата, комуникацията с участниците и поддържането на архив, свързан с инициативата.",
+					"Когато информацията вече не е необходима, тя се изтрива или анонимизира по сигурен начин.",
+				],
+			},
+			{
+				index: "07",
+				title: "Вашите права",
+				paragraphs: [
+					"Можете да поискате достъп до личната информация, която съхраняваме за вас, да поискате корекция на неточни данни или изтриване на информацията, когато това е приложимо.",
+					"За подобни искания можете да се свържете с нас на:",
+				],
+				email: "social@catalizator.org",
+			},
+			{
+				index: "08",
+				title: "Промени в тази политика",
+				paragraphs: [
+					"Възможно е периодично да актуализираме настоящата Политика за поверителност.",
+					"Всички промени ще бъдат публикувани на тази страница заедно с датата на последната актуализация.",
+				],
+			},
+		],
+	},
+}[lang];
+const heroCopy = {
+	en: {
+		kicker: "Privacy & Cookies",
+		statusStack: ["DATA USE", "CONSENT", "COOKIES"],
+		protocol: "TRANSPARENCY PROTOCOL // JUNE 2026",
+		title: "Trust, data, and cookies.",
+		intro: "How Hack The Future handles application information, event media, website data, and cookies.",
+		linksLabel: "Legal page sections",
+		privacyLink: "Privacy Policy",
+		cookiesLink: "Cookie Policy",
+	},
+	bg: {
+		kicker: "ПОВЕРИТЕЛНОСТ И БИСКВИТКИ",
+		statusStack: ["ИЗПОЛЗВАНЕ НА ДАННИ", "СЪГЛАСИЕ", "БИСКВИТКИ"],
+		protocol: "ПРОТОКОЛ ЗА ПРОЗРАЧНОСТ // ЮНИ 2026",
+		title: "Доверие, данни и бисквитки.",
+		intro: "Как Hack The Future обработва информацията от кандидатурите, съдържанието от събитието, данните за използването на уебсайта и бисквитките.",
+		linksLabel: "Секции на правната страница",
+		privacyLink: "Политика за поверителност",
+		cookiesLink: "Политика за бисквитки",
+	},
+}[lang];
+---
+
+<section id="cookies" class="legal-section legal-section--cookies px-4 py-16 sm:px-6 sm:py-20 lg:px-8" data-legal-lang={lang}>
+	<div class="legal-shell mx-auto max-w-6xl">
+		<div class="legal-section-heading">
+			<h2>{cookieCopy.title}</h2>
+			<p class="legal-updated">{cookieCopy.updated}</p>
+		</div>
+
+		<div class="legal-content">
+			<div class="legal-block">
+				{cookieCopy.intro.map((paragraph) => <p>{paragraph}</p>)}
+			</div>
+
+			{cookieCopy.blocks.map((block) => (
+				<div class="legal-block">
+					<p class="legal-block-index">{block.index}</p>
+					<h3>{block.title}</h3>
+					{block.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+					{"list" in block && block.list && (
+						<ul>
+							{block.list.map((item) => <li>{item}</li>)}
+						</ul>
+					)}
+					{"email" in block && block.email && (
+						<p><a href={`mailto:${block.email}`}><strong>{block.email}</strong></a></p>
+					)}
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<section id="privacy" class="legal-section px-4 py-16 sm:px-6 sm:py-20 lg:px-8" data-legal-lang={lang}>
+	<div class="legal-shell mx-auto max-w-6xl">
+		<div class="legal-section-heading">
+			<h2>{privacyCopy.title}</h2>
+			<p class="legal-updated">{privacyCopy.updated}</p>
+		</div>
+
+		<div class="legal-content">
+			<div class="legal-block">
+				{privacyCopy.intro.map((paragraph) => <p>{paragraph}</p>)}
+			</div>
+
+			{privacyCopy.blocks.map((block) => (
+				<div class="legal-block">
+					<p class="legal-block-index">{block.index}</p>
+					<h3>{block.title}</h3>
+					{block.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+					{"list" in block && block.list && (
+						<ul>
+							{block.list.map((item) => <li>{item}</li>)}
+						</ul>
+					)}
+					{"after" in block && block.after && block.after.map((paragraph) => <p>{paragraph}</p>)}
+					{"email" in block && block.email && (
+						<p>
+							{"emailPrefix" in block && block.emailPrefix && <><strong>{block.emailPrefix}</strong>{" "}</>}
+							<a href={`mailto:${block.email}`}><strong>{block.email}</strong></a>
+						</p>
+					)}
+				</div>
+			))}
+		</div>
+	</div>
+</section>
+
+<section class="legal-hero civic-grid px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28 lg:px-8" data-legal-hero-lang={lang}>
+	<div class="legal-hero-frame mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(10rem,0.26fr)_minmax(0,1fr)]">
+		<span class="legal-corner legal-corner--tl" aria-hidden="true"></span>
+		<span class="legal-corner legal-corner--br" aria-hidden="true"></span>
+		<div class="legal-hero-aside">
+			<p class="section-kicker">{heroCopy.kicker}</p>
+			<div class="legal-status-stack" aria-hidden="true">
+				{heroCopy.statusStack.map((item) => <span>{item}</span>)}
+			</div>
+		</div>
+		<div class="legal-hero-copy">
+			<div class="legal-status-line" aria-hidden="true">
+				<span class="legal-status-dot"></span>
+				<span>{heroCopy.protocol}</span>
+			</div>
+			<h1>{heroCopy.title}</h1>
+			<p class="legal-intro">
+				{heroCopy.intro}
+			</p>
+			<div class="legal-jump-links" aria-label={heroCopy.linksLabel}>
+				<a href="#privacy">{heroCopy.privacyLink}</a>
+				<a href="#cookies">{heroCopy.cookiesLink}</a>
+			</div>
+		</div>
+		<div class="legal-data-seal" aria-hidden="true">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+</section>
+
+<style>
+	.legal-hero {
+		position: relative;
+		overflow: hidden;
+		min-height: min(55rem, 100svh);
+		display: grid;
+		align-items: center;
+		border-top: 1px solid var(--color-line);
+		background:
+			linear-gradient(90deg, rgba(109, 40, 217, 0.055) 1px, transparent 1px),
+			linear-gradient(180deg, rgba(109, 40, 217, 0.04) 1px, transparent 1px);
+		background-size: 5.25rem 5.25rem;
+		background-position: center;
+	}
+
+	.legal-hero::before {
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.78) 48%, rgba(255, 255, 255, 0.96) 100%),
+			radial-gradient(ellipse at 68% 38%, rgba(167, 139, 250, 0.12), transparent 42%);
+		content: "";
+		pointer-events: none;
+	}
+
+	.legal-hero::after {
+		position: absolute;
+		right: 10vw;
+		bottom: clamp(6rem, 12vh, 9rem);
+		width: min(38vw, 30rem);
+		height: 1px;
+		background: linear-gradient(90deg, transparent, rgba(109, 40, 217, 0.32), transparent);
+		content: "";
+		opacity: 0.72;
+		pointer-events: none;
+	}
+
+	.legal-hero-frame {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		border-top: 1px solid color-mix(in srgb, var(--color-line) 68%, transparent);
+		border-bottom: 1px solid color-mix(in srgb, var(--color-line) 68%, transparent);
+		margin-bottom: clamp(1rem, 4vh, 3rem);
+		padding: clamp(2.25rem, 4.5vw, 4.25rem) clamp(0rem, 1vw, 1rem);
+	}
+
+	.legal-corner {
+		position: absolute;
+		width: 2.6rem;
+		height: 2.6rem;
+		border-color: rgba(109, 40, 217, 0.34);
+		pointer-events: none;
+	}
+
+	.legal-corner--tl {
+		top: -1px;
+		left: 0;
+		border-top: 1px solid;
+		border-left: 1px solid;
+	}
+
+	.legal-corner--br {
+		right: 0;
+		bottom: -1px;
+		border-right: 1px solid;
+		border-bottom: 1px solid;
+	}
+
+	.legal-hero-aside {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: clamp(6.5rem, 18vw, 13rem);
+		min-height: 100%;
+		padding-top: 0.35rem;
+	}
+
+	.legal-status-stack {
+		display: grid;
+		gap: 0.38rem;
+		color: color-mix(in srgb, var(--color-muted) 48%, transparent);
+		font-family: var(--font-ui);
+		font-size: 0.62rem;
+		font-weight: 750;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+	}
+
+	.legal-hero-copy {
+		position: relative;
+		z-index: 2;
+		max-width: 55rem;
+		padding-right: clamp(1rem, 9vw, 8rem);
+	}
+
+	.legal-status-line {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.55rem;
+		margin-bottom: 1.25rem;
+		color: color-mix(in srgb, var(--color-muted) 66%, transparent);
+		font-family: var(--font-ui);
+		font-size: 0.68rem;
+		font-weight: 750;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+
+	.legal-status-dot {
+		width: 0.46rem;
+		height: 0.46rem;
+		border-radius: 999px;
+		background: var(--color-purple);
+		box-shadow: 0 0 0 5px rgba(109, 40, 217, 0.09), 0 0 18px rgba(109, 40, 217, 0.34);
+	}
+
+	.legal-hero h1 {
+		margin: 0;
+		max-width: 11.5ch;
+		color: var(--color-ink);
+		font-family: var(--font-ui);
+		font-size: clamp(3.1rem, 7.4vw, 6.75rem);
+		font-weight: 650;
+		letter-spacing: -0.058em;
+		line-height: 0.94;
+		text-wrap: balance;
+	}
+
+	.legal-hero[data-legal-hero-lang="bg"] .legal-hero-frame {
+		grid-template-columns: minmax(11rem, 0.3fr) minmax(0, 1fr);
+		gap: clamp(2rem, 4vw, 4.25rem);
+	}
+
+	.legal-hero[data-legal-hero-lang="bg"] .legal-hero-aside {
+		gap: clamp(4.5rem, 12vw, 9rem);
+	}
+
+	.legal-hero[data-legal-hero-lang="bg"] .legal-hero-aside .section-kicker {
+		max-width: 15rem;
+		font-size: 0.68rem;
+		letter-spacing: 0.18em;
+		line-height: 1.55;
+	}
+
+	.legal-hero[data-legal-hero-lang="bg"] .legal-status-stack {
+		gap: 0.45rem;
+		font-size: 0.58rem;
+		letter-spacing: 0.145em;
+		line-height: 1.55;
+	}
+
+	.legal-hero[data-legal-hero-lang="bg"] .legal-status-line {
+		max-width: 35rem;
+		gap: 0.62rem;
+		font-size: 0.62rem;
+		letter-spacing: 0.13em;
+		line-height: 1.5;
+	}
+
+	.legal-hero[data-legal-hero-lang="bg"] .legal-hero h1,
+	.legal-hero[data-legal-hero-lang="bg"] h1 {
+		max-width: 12.6ch;
+		font-size: clamp(2.75rem, 6.2vw, 5.55rem);
+		letter-spacing: -0.045em;
+		line-height: 0.98;
+	}
+
+	.legal-hero[data-legal-hero-lang="bg"] .legal-intro {
+		max-width: 45rem;
+		font-size: clamp(0.98rem, 1.45vw, 1.12rem);
+		line-height: 1.62;
+	}
+
+	.legal-hero[data-legal-hero-lang="bg"] .legal-jump-links {
+		gap: 0.65rem;
+		margin-top: 2.1rem;
+	}
+
+	.legal-hero[data-legal-hero-lang="bg"] .legal-jump-links a {
+		padding-inline: 0.95rem;
+		font-size: 0.66rem;
+		letter-spacing: 0.105em;
+	}
+
+	.legal-data-seal {
+		position: absolute;
+		right: clamp(1.25rem, 5vw, 4.5rem);
+		top: 50%;
+		width: clamp(4.6rem, 10vw, 7.25rem);
+		aspect-ratio: 1;
+		border: 1px solid rgba(109, 40, 217, 0.18);
+		border-radius: 999px;
+		opacity: 0.72;
+		transform: translateY(-48%);
+	}
+
+	.legal-data-seal::before,
+	.legal-data-seal::after,
+	.legal-data-seal span {
+		position: absolute;
+		inset: 50%;
+		border-radius: 999px;
+		content: "";
+		transform: translate(-50%, -50%);
+	}
+
+	.legal-data-seal::before {
+		width: 66%;
+		aspect-ratio: 1;
+		border: 1px solid rgba(109, 40, 217, 0.2);
+	}
+
+	.legal-data-seal::after {
+		width: 0.42rem;
+		aspect-ratio: 1;
+		background: var(--color-purple);
+		box-shadow: 0 0 22px rgba(109, 40, 217, 0.34);
+	}
+
+	.legal-data-seal span:nth-child(1) {
+		width: 92%;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, rgba(109, 40, 217, 0.4), transparent);
+	}
+
+	.legal-data-seal span:nth-child(2) {
+		width: 1px;
+		height: 92%;
+		background: linear-gradient(180deg, transparent, rgba(109, 40, 217, 0.34), transparent);
+	}
+
+	.legal-data-seal span:nth-child(3) {
+		width: 78%;
+		aspect-ratio: 1;
+		border: 1px dashed rgba(109, 40, 217, 0.22);
+	}
+
+	.legal-intro {
+		max-width: 42rem;
+		margin: 1.35rem 0 0;
+		color: var(--color-muted);
+		font-size: clamp(1.02rem, 1.65vw, 1.18rem);
+		line-height: 1.56;
+	}
+
+	.legal-jump-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 2.35rem;
+	}
+
+	.legal-jump-links a {
+		border: 1px solid var(--color-line);
+		border-radius: 999px;
+		padding: 0.68rem 1.05rem;
+		color: var(--color-ink);
+		font-family: var(--font-ui);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-decoration: none;
+		text-transform: uppercase;
+		box-shadow: 0 10px 24px rgba(10, 10, 10, 0.035);
+		transition:
+			border-color 160ms var(--ease-premium),
+			box-shadow 160ms var(--ease-premium),
+			color 160ms var(--ease-premium),
+			transform 160ms var(--ease-premium);
+	}
+
+	.legal-jump-links a:hover,
+	.legal-jump-links a:focus-visible {
+		border-color: color-mix(in srgb, var(--color-purple) 62%, transparent);
+		color: var(--color-purple);
+		box-shadow: 0 14px 32px rgba(109, 40, 217, 0.09);
+		transform: translateY(-1px);
+	}
+
+	@media (max-width: 768px) {
+		.legal-hero-frame {
+			margin-bottom: 1rem;
+			padding-top: 3.25rem;
+		}
+
+		.legal-status-stack,
+		.legal-data-seal {
+			display: none;
+		}
+
+		.legal-hero-copy {
+			padding-right: 0;
+		}
+
+		.legal-hero h1 {
+			font-size: clamp(3rem, 15vw, 4.8rem);
+		}
+
+		.legal-hero[data-legal-hero-lang="bg"] .legal-hero-frame {
+			gap: 2rem;
+		}
+
+		.legal-hero[data-legal-hero-lang="bg"] .legal-hero-aside .section-kicker {
+			max-width: none;
+			font-size: 0.62rem;
+		}
+
+		.legal-hero[data-legal-hero-lang="bg"] .legal-status-line {
+			font-size: 0.56rem;
+		}
+
+		.legal-hero[data-legal-hero-lang="bg"] h1 {
+			max-width: 10.8ch;
+			font-size: clamp(2.45rem, 12.5vw, 4.15rem);
+			line-height: 1;
+		}
+
+		.legal-hero[data-legal-hero-lang="bg"] .legal-intro {
+			font-size: 0.96rem;
+			line-height: 1.55;
+		}
+
+		.legal-hero[data-legal-hero-lang="bg"] .legal-jump-links a {
+			font-size: 0.62rem;
+		}
+	}
+
+	.legal-section {
+		scroll-margin-top: 6rem;
+		border-top: 1px solid var(--color-line);
+	}
+
+	.legal-section--cookies {
+		padding-bottom: 7rem;
+	}
+
+	.legal-shell {
+		display: grid;
+		gap: clamp(2rem, 5vw, 5rem);
+	}
+
+	.legal-section-heading {
+		max-width: 26rem;
+	}
+
+	.legal-section-heading h2 {
+		margin: 0;
+		color: var(--color-ink);
+		font-family: var(--font-ui);
+		font-size: clamp(2.2rem, 4vw, 3.75rem);
+		font-weight: 650;
+		letter-spacing: -0.04em;
+		line-height: 1;
+		text-wrap: balance;
+	}
+
+	.legal-section[data-legal-lang="bg"] .legal-section-heading {
+		max-width: 22rem;
+	}
+
+	.legal-section[data-legal-lang="bg"] .legal-section-heading h2 {
+		font-size: clamp(2.05rem, 3.25vw, 3.1rem);
+		letter-spacing: -0.028em;
+		line-height: 1.06;
+	}
+
+	.legal-updated {
+		margin: 1.15rem 0 0;
+		color: color-mix(in srgb, var(--color-muted) 72%, transparent);
+		font-family: var(--font-ui);
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+
+	.legal-content {
+		display: flex;
+		flex-direction: column-reverse;
+		gap: 0;
+		max-width: 54rem;
+	}
+
+	.legal-block {
+		position: relative;
+		display: grid;
+		gap: 0.55rem;
+		border-top: 1px solid color-mix(in srgb, var(--color-line) 78%, transparent);
+		padding: 1.45rem 0 1.6rem;
+	}
+
+	.legal-block:first-child {
+		border-top-color: var(--color-line);
+	}
+
+	.legal-block-index {
+		margin: 0;
+		color: color-mix(in srgb, var(--color-purple) 55%, transparent);
+		font-family: var(--font-ui);
+		font-size: 0.68rem;
+		font-weight: 800;
+		letter-spacing: 0.16em;
+	}
+
+	.legal-block h3 {
+		margin: 0;
+		color: var(--color-ink);
+		font-family: var(--font-ui);
+		font-size: clamp(1.22rem, 2vw, 1.58rem);
+		font-weight: 650;
+		letter-spacing: -0.024em;
+		line-height: 1.08;
+	}
+
+	.legal-block p,
+	.legal-block li {
+		color: var(--color-muted);
+		font-size: 1rem;
+		line-height: 1.52;
+	}
+
+	.legal-block p {
+		margin: 0;
+	}
+
+	.legal-block ul {
+		display: grid;
+		gap: 0.4rem;
+		margin: 0.15rem 0 0 1.15rem;
+		padding: 0;
+	}
+
+	.legal-block strong {
+		color: var(--color-ink);
+		font-weight: 650;
+	}
+
+	.legal-block a {
+		color: var(--color-purple);
+		text-decoration: none;
+	}
+
+	.legal-block a:hover,
+	.legal-block a:focus-visible {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	@media (min-width: 1024px) {
+		.legal-shell {
+			grid-template-columns: minmax(18rem, 0.36fr) minmax(0, 1fr);
+			align-items: start;
+			gap: clamp(3.5rem, 6vw, 6rem);
+		}
+
+		.legal-section-heading {
+			position: sticky;
+			top: 6rem;
+		}
+	}
+
+	@media (max-width: 1023px) {
+		.legal-section-heading,
+		.legal-section[data-legal-lang="bg"] .legal-section-heading {
+			max-width: 38rem;
+		}
+	}
+
+</style>

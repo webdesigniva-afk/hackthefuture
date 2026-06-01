@@ -1,89 +1,212 @@
 ---
-const challenges = [
-	{
-		mission: "MISSION_01",
-		number: "01",
-		title: "Future of Work",
-		question: "How does Shumen become a place where young people build their future?",
-		description: "AI, automation, and new industries are changing what jobs exist and what skills matter. What should the path from school to work actually look like in your region?",
-		ideas: [
-			"Youth career platform",
-			"New internship model",
-			"Campaign that surfaces local job opportunities",
-			"Tool that helps young people connect with companies",
+import { getLang, type Lang } from "../i18n";
+
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+
+const copy = {
+	en: {
+		kicker: "PILOT EDITION // SHUMEN 2026",
+		titleA: "FOUR REAL CHALLENGES.",
+		titleB: "ONE",
+		titleAccent: "FUTURE",
+		titleC: "TO BUILD.",
+		introA: "Choose one of four questions Bulgaria is already facing.",
+		introB: "Spend two days building something that could become part of the answer.",
+		indexLabel: "MISSION INDEX",
+		briefActive: "BRIEF ACTIVE",
+		buildWindow: "48H BUILD WINDOW",
+		missionLabel: "MISSION",
+		possibleDirections: "POSSIBLE DIRECTIONS",
+		expectedOutcomes: "EXPECTED OUTCOMES",
+		transitionCue: "[ 01 FUTURE / 04 MISSIONS ]",
+		visualOne: ["SCHOOL", "SKILLS", "AI", "INTERNSHIP", "WORK", "STARTUP", "CAREER PATHWAY MAP"],
+		challenges: [
+			{
+				mission: "MISSION_01",
+				number: "01",
+				title: "Future of Work",
+				question: "How does Shumen become a place where young people build their future?",
+				description: "AI, automation, and new industries are changing what jobs exist and what skills matter. The path from school to work needs to make sense for your region, not someone else's.",
+				ideas: [
+					"Youth career platform",
+					"New internship model",
+					"Local jobs campaign",
+					"Tool connecting young people with companies",
+				],
+				outcomes: ["Career pathway prototype", "Skills-to-jobs map", "Employer partnership model"],
+			},
+			{
+				mission: "MISSION_02",
+				number: "02",
+				title: "Environment & Crisis Response",
+				question: "How does Bulgaria react faster to fires, floods, and emergencies?",
+				description: "Climate is hitting harder and faster. Communities need better tools to prepare, respond, and protect each other before disaster happens.",
+				ideas: [
+					"Digital volunteer system",
+					"Crisis communication plan",
+					"Early-warning sensor concept",
+					"Emergency map",
+					"Public-readiness campaign",
+				],
+				outcomes: ["Response coordination prototype", "Early-warning concept", "Community readiness plan"],
+			},
+			{
+				mission: "MISSION_03",
+				number: "03",
+				title: "Mental Health & Youth Wellbeing",
+				question: "How does a city actually take care of the mental health of its young people?",
+				description: "Anxiety, isolation, pressure, and burnout are hitting your generation harder than any before it, and most of the systems that should be helping are absent or behind. You are the experts on this.",
+				ideas: [
+					"Peer-support platform",
+					"School-based program",
+					"Anti-stigma campaign",
+					"Digital wellbeing tool",
+					"Proposal for how the municipality should serve young people's mental health",
+				],
+				outcomes: ["Support system prototype", "Service proposal for the municipality", "Anti-stigma campaign"],
+			},
+			{
+				mission: "MISSION_04",
+				number: "04",
+				title: "Local Products, Food & Future Business",
+				question: "How does Bulgaria turn local strengths into future opportunities?",
+				description: "Bulgaria has serious local products, food traditions, and creative people, but many producers struggle to reach younger consumers or new markets.",
+				ideas: [
+					"Digital marketplace",
+					"Brand campaign",
+					"Tourism-food experience",
+					"Packaging concept",
+					"Platform connecting producers with schools, restaurants, and customers",
+				],
+				outcomes: ["Market access prototype", "Local brand system", "Distribution partnership map"],
+			},
 		],
-		outcomes: ["Career pathway prototype", "Employer connection model", "Youth skills roadmap"],
 	},
-	{
-		mission: "MISSION_02",
-		number: "02",
-		title: "Environment & Crisis Response",
-		question: "How does Bulgaria react faster to fires, floods, and emergencies?",
-		description: "Climate is hitting harder and faster. Communities need better tools to prepare, respond, and protect each other.",
-		ideas: [
-			"Digital volunteer system",
-			"Crisis communication plan",
-			"Early-warning sensor concept",
-			"Emergency map",
-			"Campaign that helps citizens know what to do before disaster happens",
+	bg: {
+		kicker: "ПИЛОТНО ИЗДАНИЕ // ШУМЕН 2026",
+		titleA: "ЧЕТИРИ РЕАЛНИ ПРЕДИЗВИКАТЕЛСТВА.",
+		titleB: "ЕДНО",
+		titleAccent: "БЪДЕЩЕ",
+		titleC: "ЗА СЪЗДАВАНЕ.",
+		introA: "Избери едно от четирите предизвикателства, пред които България е изправена днес.",
+		introB: "Превърни два дни работа в идея, която може да стане част от отговора.",
+		indexLabel: "ИНДЕКС НА ПРЕДИЗВИКАТЕЛСТВАТА",
+		briefActive: "АКТИВНО ПРЕДИЗВИКАТЕЛСТВО",
+		buildWindow: "48 ЧАСА ЗА СЪЗДАВАНЕ",
+		missionLabel: "ПРЕДИЗВИКАТЕЛСТВО",
+		possibleDirections: "ВЪЗМОЖНИ ПОСОКИ",
+		expectedOutcomes: "ОЧАКВАНИ РЕЗУЛТАТИ",
+		transitionCue: "[ 01 БЪДЕЩЕ / 04 ПРЕДИЗВИКАТЕЛСТВА ]",
+		visualOne: ["УЧИЛИЩЕ", "УМЕНИЯ", "AI", "СТАЖ", "РАБОТА", "СТАРТЪП", "КАРТА НА КАРИЕРНИЯ ПЪТ"],
+		challenges: [
+			{
+				mission: "ПРЕДИЗВИКАТЕЛСТВО_01",
+				number: "01",
+				title: "Бъдещето на труда",
+				question: "Как Шумен може да се превърне в място, където младите хора изграждат своето бъдеще?",
+				description: "Изкуственият интелект, автоматизацията и новите индустрии променят професиите на бъдещето и уменията, които ще бъдат най-ценни. Как трябва да изглежда пътят от училището до професионалната реализация във вашия регион?",
+				ideas: [
+					"Платформа за кариерно развитие на млади хора",
+					"Нов модел за стажантски програми",
+					"Кампания, която показва възможностите за работа в региона",
+					"Инструмент, който свързва младите хора с компании",
+				],
+				outcomes: [
+					"Прототип на кариерен път",
+					"Модел за връзка между работодатели и млади хора",
+					"Пътна карта за развитие на уменията",
+				],
+			},
+			{
+				mission: "ПРЕДИЗВИКАТЕЛСТВО_02",
+				number: "02",
+				title: "Околна среда и реакция при кризи",
+				question: "Как България може да реагира по-бързо при пожари, наводнения и извънредни ситуации?",
+				description: "Климатичните промени се усещат все по-силно и все по-често. Общностите се нуждаят от по-добри инструменти, с които да се подготвят, да реагират навреме и да се подкрепят взаимно още преди бедствието да се случи.",
+				ideas: [
+					"Дигитална система за доброволци",
+					"План за комуникация при кризи",
+					"Концепция за система за ранно предупреждение",
+					"Карта за действие при извънредни ситуации",
+					"Кампания за обществена готовност",
+				],
+				outcomes: [
+					"Прототип за координация при кризисни ситуации",
+					"Концепция за ранно предупреждение",
+					"План за готовност на общността",
+				],
+			},
+			{
+				mission: "ПРЕДИЗВИКАТЕЛСТВО_03",
+				number: "03",
+				title: "Психично здраве и благополучие на младите хора",
+				question: "Как един град може реално да се грижи за психичното здраве на своите млади хора?",
+				description: "Тревожността, изолацията, напрежението и прегарянето се отразяват на вашето поколение повече от всяко предишно. В същото време много от системите и услугите, които би трябвало да помагат, липсват или не успяват да отговорят на съвременните нужди. Вие сте хората, които познават тези предизвикателства най-добре.",
+				ideas: [
+					"Платформа за взаимна подкрепа между млади хора",
+					"Програма за подкрепа в училище",
+					"Кампания срещу стигмата към психичното здраве",
+					"Дигитален инструмент за психично благополучие",
+					"Предложение към общината за подобряване на услугите за психично здраве на младите хора",
+				],
+				outcomes: [
+					"Прототип на система за подкрепа",
+					"Предложение за общинска услуга",
+					"Кампания за преодоляване на стигмата",
+				],
+			},
+			{
+				mission: "ПРЕДИЗВИКАТЕЛСТВО_04",
+				number: "04",
+				title: "Местни продукти, храни и бизнес на бъдещето",
+				question: "Как България може да превърне своите местни предимства във възможности за бъдещето?",
+				description: "България разполага с качествени местни продукти, богати кулинарни традиции и предприемчиви хора. Въпреки това много производители срещат трудности да достигнат до по-младите поколения и до нови пазари. Как можем да помогнем местното да стане по-видимо, по-достъпно и по-конкурентоспособно?",
+				ideas: [
+					"Дигитален пазар за местни продукти",
+					"Кампания за популяризиране на местна марка",
+					"Преживяване, свързващо туризъм и местна храна",
+					"Концепция за опаковка и визуална идентичност",
+					"Платформа, която свързва производители с училища, ресторанти и потребители",
+				],
+				outcomes: [
+					"Прототип за достъп до нови пазари",
+					"Система за изграждане на местна марка",
+					"Карта на партньорства и канали за дистрибуция",
+				],
+			},
 		],
-		outcomes: ["Response system concept", "Citizen readiness flow", "Emergency data map"],
 	},
-	{
-		mission: "MISSION_03",
-		number: "03",
-		title: "Mental Health & Youth Wellbeing",
-		question: "How does a city actually take care of young people's mental health?",
-		description: "Anxiety, isolation, pressure, and burnout are hitting young people harder than ever, and many of the systems that should help are absent or behind. Young people are the experts on this.",
-		ideas: [
-			"Peer-support platform",
-			"School-based program",
-			"Anti-stigma campaign",
-			"Digital wellbeing tool",
-			"Proposal for how municipalities should serve young people's mental health",
-		],
-		outcomes: ["Support touchpoint model", "Youth wellbeing service proposal", "Anti-stigma launch concept"],
-	},
-	{
-		mission: "MISSION_04",
-		number: "04",
-		title: "Local Products, Food & Future Business",
-		question: "How does Bulgaria turn local strengths into future opportunities?",
-		description: "Bulgaria has serious local products, food traditions, and creative people, but many producers struggle to reach younger consumers or new markets.",
-		ideas: [
-			"Digital marketplace",
-			"Brand campaign",
-			"Tourism-food experience",
-			"Packaging concept",
-			"Platform connecting producers with schools, restaurants, and customers",
-		],
-		outcomes: ["Market access prototype", "Local brand system", "Distribution partnership map"],
-	},
-];
+}[lang];
+
+const challenges = copy.challenges;
 ---
 
 <section id="challenges" class="motion-section arena-moment civic-grid px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
 	<div class="mx-auto max-w-7xl">
 		<div class="mission-heading mx-auto mb-5 max-w-[1100px] text-center sm:mb-6">
-			<p class="arena-kicker">PILOT EDITION // SHUMEN 2026</p>
+			<p class="arena-kicker">{copy.kicker}</p>
 			<h2 class="mission-heading-title mt-2.5">
-				<span>FOUR REAL CHALLENGES.</span>
-				<span>ONE <span class="mission-heading-accent">FUTURE</span> TO BUILD.</span>
+				<span>{copy.titleA}</span>
+				<span>{copy.titleB} <span class="mission-heading-accent">{copy.titleAccent}</span> {copy.titleC}</span>
 			</h2>
-			<p class="mx-auto mt-3.5 max-w-2xl text-base leading-8 text-[var(--color-muted)] sm:mt-4">
-				Choose one of four questions Bulgaria is already facing.
+			<p class="mx-auto mt-3.5 max-w-2xl text-base leading-7 text-[var(--color-muted)] sm:mt-4">
+				{copy.introA}
 				<br class="hidden sm:block" />
-				Spend two days building something that could become part of the answer.
+				{copy.introB}
 			</p>
 		</div>
 
 		<div class="mission-terminal" data-mission-terminal data-active-mission="1">
 			<span class="mission-reveal-sweep" aria-hidden="true"></span>
 			<div class="mission-terminal-grid">
-				<nav class="mission-nav" aria-label="Mission selection">
+				<nav class="mission-nav" aria-label={copy.indexLabel}>
 					<div class="mission-nav-header">
 						<span class="mission-live-dot" aria-hidden="true"></span>
-						<span>MISSION INDEX</span>
+						<span>{copy.indexLabel}</span>
 					</div>
 					<div class="mission-tabs" role="tablist" aria-label="Challenge missions">
 						{challenges.map((challenge, index) => (
@@ -139,27 +262,27 @@ const challenges = [
 										<g class="career-nodes labelled-nodes">
 											<g>
 												<circle cx="72" cy="162" r="11" />
-												<text x="48" y="194">SCHOOL</text>
+												<text x="48" y="194">{copy.visualOne[0]}</text>
 											</g>
 											<g>
 												<circle cx="164" cy="162" r="11" />
-												<text x="140" y="194">SKILLS</text>
+												<text x="140" y="194">{copy.visualOne[1]}</text>
 											</g>
 											<g>
 												<circle cx="240" cy="162" r="11" />
-												<text x="232" y="194">AI</text>
+												<text x="232" y="194">{copy.visualOne[2]}</text>
 											</g>
 											<g>
 												<circle cx="316" cy="162" r="11" />
-												<text x="280" y="194">INTERNSHIP</text>
+												<text x="280" y="194">{copy.visualOne[3]}</text>
 											</g>
 											<g>
 												<circle cx="392" cy="162" r="11" />
-												<text x="374" y="194">WORK</text>
+												<text x="374" y="194">{copy.visualOne[4]}</text>
 											</g>
 											<g>
 												<circle cx="462" cy="162" r="12" />
-												<text x="434" y="194">STARTUP</text>
+												<text x="434" y="194">{copy.visualOne[5]}</text>
 											</g>
 											<g class="career-branch-node">
 												<circle cx="240" cy="108" r="7" />
@@ -172,7 +295,7 @@ const challenges = [
 											</g>
 										</g>
 										<circle class="career-status-point" cx="462" cy="162" r="4" />
-										<text class="visual-label" x="64" y="48">CAREER PATHWAY MAP</text>
+										<text class="visual-label" x="64" y="48">{copy.visualOne[6]}</text>
 									</svg>
 								)}
 								{index === 1 && (
@@ -316,17 +439,17 @@ const challenges = [
 							<div class="mission-briefing">
 								<div class="mission-briefing-topline">
 									<span class="mission-live-dot" aria-hidden="true"></span>
-									<span>BRIEF ACTIVE</span>
-									<span>48H BUILD WINDOW</span>
+									<span>{copy.briefActive}</span>
+									<span>{copy.buildWindow}</span>
 								</div>
-								<p class="mission-number">MISSION {challenge.number}</p>
+								<p class="mission-number">{copy.missionLabel} {challenge.number}</p>
 								<h3>{challenge.title}</h3>
 								<p class="mission-question">{challenge.question}</p>
 								<p class="mission-description">{challenge.description}</p>
 
 								<div class="mission-briefing-grid">
 									<div>
-										<p class="mission-list-label">POSSIBLE DIRECTIONS</p>
+										<p class="mission-list-label">{copy.possibleDirections}</p>
 										<ul>
 											{challenge.ideas.map((idea) => (
 												<li>{idea}</li>
@@ -334,7 +457,7 @@ const challenges = [
 										</ul>
 									</div>
 									<div>
-										<p class="mission-list-label">EXPECTED OUTCOMES</p>
+										<p class="mission-list-label">{copy.expectedOutcomes}</p>
 										<ul>
 											{challenge.outcomes.map((outcome) => (
 												<li>{outcome}</li>
@@ -349,7 +472,7 @@ const challenges = [
 			</div>
 		</div>
 
-		<p class="mission-transition-cue mt-4">[ 01 FUTURE / 04 MISSIONS ]</p>
+		<p class="mission-transition-cue mt-4">{copy.transitionCue}</p>
 	</div>
 </section>
 
@@ -1173,7 +1296,7 @@ const challenges = [
 		margin-top: 0.45rem;
 		max-width: 54rem;
 		font-size: 0.9rem;
-		line-height: 1.62;
+		line-height: 1.5;
 	}
 
 	.mission-briefing-grid {

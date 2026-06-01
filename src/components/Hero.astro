@@ -7,9 +7,19 @@ interface Props {
 
 const lang = getLang(Astro.props.lang);
 const t = siteCopy[lang].hero;
+const positionCue = {
+	en: {
+		here: "NOW: YOU ARE HERE DOWN",
+		future: "SCROLL UP TO THE FUTURE",
+	},
+	bg: {
+		here: "ТИ СИ ТУК",
+		future: "КЪМ БЪДЕЩЕТО",
+	},
+}[lang];
 ---
 
-<section class="hero-section gradient-rule atmospheric-section civic-grid relative px-4 pb-14 pt-5 sm:px-6 sm:pb-16 lg:px-8" data-future-hero>
+<section class="hero-section gradient-rule atmospheric-section civic-grid relative px-4 pb-14 pt-5 sm:px-6 sm:pb-16 lg:px-8" data-future-hero data-hero-lang={lang}>
 	<div class="hero-compass-watermark" aria-hidden="true">
 		<img src="/htf-compass-watermark-clean.png" alt="" loading="eager" decoding="async" />
 	</div>
@@ -21,7 +31,7 @@ const t = siteCopy[lang].hero;
 					{t.title}
 				</h1>
 
-				<p class="hero-copy mt-8 max-w-3xl text-base leading-8 text-[var(--color-muted)]/94 sm:text-[1rem]">
+				<p class="hero-copy mt-8 max-w-3xl text-base leading-7 text-[var(--color-muted)]/94 sm:text-[1rem]">
 					{t.intro}
 				</p>
 
@@ -55,13 +65,13 @@ const t = siteCopy[lang].hero;
 	</div>
 
 	<div class="hero-position-cue" aria-hidden="true">
-		<span>NOW: YOU ARE HERE DOWN</span>
+		<span>{positionCue.here}</span>
 		<span class="hero-position-arrow">
 			<svg viewBox="0 0 24 24" aria-hidden="true">
 				<path d="M12 19V5M7.5 9.5 12 5l4.5 4.5" />
 			</svg>
 		</span>
-		<span>SCROLL UP TO THE FUTURE</span>
+		<span>{positionCue.future}</span>
 	</div>
 </section>
 

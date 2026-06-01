@@ -8,6 +8,18 @@ interface Props {
 const lang = getLang(Astro.props.lang);
 const t = siteCopy[lang];
 const currentPath = Astro.url.pathname.replace(/^\/(en|bg)/, "") || "/";
+const footerCopy = {
+	en: {
+		tagline: ["You bring the energy. We bring the challenge.", "Together, we hack the future."],
+		credit: "Website by IT-S",
+		accessibility: "This website is developed with a dyslexia-friendly font.",
+	},
+	bg: {
+		tagline: ["Ти носиш енергията. Ние даваме предизвикателството.", "Заедно създаваме бъдещето."],
+		credit: "Уебсайт от IT-S",
+		accessibility: "Този уебсайт използва шрифт, съобразен с нуждите на хора с дислексия.",
+	},
+}[lang];
 
 const partners = [
 	{
@@ -47,8 +59,9 @@ const year = new Date().getFullYear();
 	<div class="mx-auto grid max-w-7xl gap-10 md:grid-cols-[minmax(0,1fr)_auto]">
 		<div>
 			<p class="footer-tagline max-w-5xl text-xl leading-tight text-[var(--color-ink)]/88 sm:text-2xl lg:text-3xl">
-				<span class="block">You bring the energy. We bring the challenge.</span>
-				<span class="block">Together, we hack the future.</span>
+				{footerCopy.tagline.map((line) => (
+					<span class="block">{line}</span>
+				))}
 			</p>
 
 			<div class="footer-partners mt-10" aria-labelledby="founding-partners-title">
@@ -97,7 +110,7 @@ const year = new Date().getFullYear();
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				Website by IT-S
+				{footerCopy.credit}
 			</a>
 
 			<a
@@ -107,7 +120,7 @@ const year = new Date().getFullYear();
 				rel="noopener noreferrer"
 			>
 				<img src="/adys-logo.svg" alt="" loading="lazy" decoding="async" />
-				<span>This website is developed with a dyslexia-friendly font.</span>
+				<span>{footerCopy.accessibility}</span>
 			</a>
 		</div>
 	</div>

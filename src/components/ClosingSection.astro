@@ -1,52 +1,139 @@
 ---
 import ApplicationForm from "./ApplicationForm.astro";
+import { getLang, type Lang } from "../i18n";
 
-const checklist = [
-	{
-		title: "Students aged 15–19",
-		icon: "M12 3v18M5 8h14M7 16h10",
-		size: "tall",
-	},
-	{
-		title: "From Shumen or anywhere in Bulgaria",
-		icon: "M12 21s7-5.1 7-11a7 7 0 0 0-14 0c0 5.9 7 11 7 11Z M12 10.5h.01",
-		size: "short",
-	},
-	{
-		title: "Apply alone or with a team",
-		icon: "M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM16 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3 21a5 5 0 0 1 10 0M13.5 20.5a4.5 4.5 0 0 1 7.5 0",
-		size: "short",
-	},
-	{
-		title: "Schools can nominate students",
-		icon: "M4 10l8-5 8 5-8 5-8-5ZM6 12v5c1.5 1.4 3.5 2 6 2s4.5-.6 6-2v-5",
-		size: "tall",
-	},
-	{
-		title: "No experience required",
-		icon: "M20 6 9 17l-5-5",
-		size: "wide",
-	},
-];
+interface Props {
+	lang?: Lang;
+}
 
-const partners = [
-	{
-		name: "Municipality of Shumen",
-		subtitle: "Host institution",
-	},
-	{
-		name: "Sofia Tech Park",
-		subtitle: "Innovation partner",
-	},
-	{
-		name: "Shumen Institute of Technology",
-		subtitle: "Academic partner",
-	},
-	{
-		name: "Visoko Darvo",
-		subtitle: "Strategic partner",
-	},
+const lang = getLang(Astro.props.lang);
+const checklistBase = [
+	{ icon: "M12 3v18M5 8h14M7 16h10", size: "tall" },
+	{ icon: "M12 21s7-5.1 7-11a7 7 0 0 0-14 0c0 5.9 7 11 7 11Z M12 10.5h.01", size: "short" },
+	{ icon: "M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM16 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3 21a5 5 0 0 1 10 0M13.5 20.5a4.5 4.5 0 0 1 7.5 0", size: "short" },
+	{ icon: "M4 10l8-5 8 5-8 5-8-5ZM6 12v5c1.5 1.4 3.5 2 6 2s4.5-.6 6-2v-5", size: "tall" },
+	{ icon: "M20 6 9 17l-5-5", size: "wide" },
 ];
+const participationCopy = {
+	en: {
+		title: "Who can join",
+		kicker: "PARTICIPATION",
+		items: [
+			"Students aged 15 to 19",
+			"From Shumen or anywhere in Bulgaria",
+			"Apply alone or with a team",
+			"Schools can nominate students",
+			"No experience required",
+		],
+	},
+	bg: {
+		title: "Кой може да участва",
+		kicker: "УЧАСТИЕ",
+		items: [
+			"Младежи на възраст между 15 и 19 години",
+			"От Шумен или от всяка друга точка на България",
+			"Кандидатствай самостоятелно или като част от екип",
+			"Училищата могат да номинират ученици",
+			"Не е необходим предишен опит",
+		],
+	},
+}[lang];
+const applicationCopy = {
+	en: {
+		title: "Apply for Hack The Future",
+		kicker: "APPLICATION",
+	},
+	bg: {
+		title: "Кандидатствай за Hack The Future",
+		kicker: "КАНДИДАТСТВАНЕ",
+	},
+}[lang];
+const aboutCopy = {
+	en: {
+		title: "Who's behind it",
+		kicker: "ABOUT",
+		partners: [
+			{
+				name: "Municipality of Shumen",
+				subtitle: "Host institution",
+			},
+			{
+				name: "Sofia Tech Park",
+				subtitle: "Innovation partner",
+			},
+			{
+				name: "Shumen Institute of Technology",
+				subtitle: "Academic partner",
+			},
+			{
+				name: "Visoko Darvo",
+				subtitle: "Strategic partner",
+			},
+		],
+		body: [
+			"Hack The Future is part of CATALIZATOR, the leadership and governance platform hosted by the Municipality of Shumen.",
+			"CATALIZATOR brings together mayors, business leaders, and academics to work on the future of cities.",
+			"Hack The Future brings the same questions to the people who will live with the answers longest. That's you.",
+		],
+	},
+	bg: {
+		title: "Кой стои зад инициативата",
+		kicker: "ЗА ИНИЦИАТИВАТА",
+		partners: [
+			{
+				name: "Община Шумен",
+				subtitle: "Домакин на инициативата",
+			},
+			{
+				name: "Sofia Tech Park",
+				subtitle: "Партньор за иновации",
+			},
+			{
+				name: "Шуменски технологичен институт",
+				subtitle: "Академичен партньор",
+			},
+			{
+				name: "Високо дърво",
+				subtitle: "Стратегически партньор",
+			},
+		],
+		body: [
+			"Hack The Future е част от CATALIZATOR - платформа за лидерство и добро управление, създадена с подкрепата на Община Шумен.",
+			"CATALIZATOR събира на едно място кметове, представители на бизнеса и академичната общност, за да работят заедно по бъдещето на градовете.",
+			"Hack The Future поставя същите въпроси пред хората, които ще живеят най-дълго с техните отговори. Това сте вие.",
+		],
+	},
+}[lang];
+const whyCopy = {
+	en: {
+		title: "The country you're about to inherit is changing faster than the systems built to run it.",
+		lead: "Work, climate, technology, your city, your own mental health, the economy. None of it looks the way it did even ten years ago, and none of it is going to slow down.",
+		kicker: "WHY THIS EXISTS",
+		intro: "The country you're about to inherit is changing faster than the systems built to run it. Work, climate, technology, your city, your own mental health, the economy. None of it looks the way it did even ten years ago, and none of it is going to slow down.",
+		noPlaybook: "No one has the full playbook for what comes next. Not your teachers. Not your parents. Not the mayors. Not us.",
+		truth: "The honest truth is this. The people who will live longest with the decisions being made right now are the ones with the least say in them.",
+		statement: "Hack The Future exists to change that.",
+		work: "The work you do in these two days is not symbolic.",
+		serious: ["Mentors take it seriously.", "The jury takes it seriously.", "Partners take it seriously."],
+		outcome: "The strongest ideas become the starting point for real conversations with institutions that can act on them.",
+	},
+	bg: {
+		title: "Държавата, която предстои да наследите, се променя по-бързо от системите, създадени да я управляват.",
+		lead: "Работата. Климатът. Технологиите. Вашият град. Вашето психично здраве. Икономиката. Нищо от това не изглежда така, както изглеждаше преди десет години. И промяната няма да се забави.",
+		kicker: "ЗАЩО СЪЩЕСТВУВА ТАЗИ ИНИЦИАТИВА",
+		intro: "Държавата, която предстои да наследите, се променя по-бързо от системите, създадени да я управляват. Работата. Климатът. Технологиите. Вашият град. Вашето психично здраве. Икономиката. Нищо от това не изглежда така, както изглеждаше преди десет години. И промяната няма да се забави.",
+		noPlaybook: "Никой не разполага с готов отговор за това какво предстои. Нито вашите учители. Нито вашите родители. Нито кметовете. Нито ние.",
+		truth: "Истината е проста. Хората, които ще живеят най-дълго с последствията от решенията, които се вземат днес, често имат най-малък глас при вземането им.",
+		statement: "Hack The Future съществува, за да промени това.",
+		work: "Работата, която ще свършите през тези два дни, не е символична.",
+		serious: ["Менторите ще я приемат сериозно.", "Журито ще я приеме сериозно.", "Партньорите ще я приемат сериозно."],
+		outcome: "Най-силните идеи могат да се превърнат в началото на реални разговори с институции и организации, които имат възможност да ги превърнат в реалност.",
+	},
+}[lang];
+const checklist = checklistBase.map((item, index) => ({
+	...item,
+	title: participationCopy.items[index],
+}));
 
 ---
 
@@ -55,7 +142,7 @@ const partners = [
 	<div class="participation-layout relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[minmax(17rem,0.44fr)_minmax(0,1fr)] lg:items-start lg:gap-8 xl:gap-10">
 		<div class="participation-heading">
 			<h2 class="max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
-				Who can join
+				{participationCopy.title}
 			</h2>
 		</div>
 
@@ -80,7 +167,7 @@ const partners = [
 		</div>
 
 		<p class="section-kicker participation-kicker">
-			PARTICIPATION
+			{participationCopy.kicker}
 		</p>
 	</div>
 </section>
@@ -135,16 +222,16 @@ const partners = [
 	<div class="application-layout mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(18rem,0.72fr)_minmax(0,48rem)] lg:items-start lg:gap-14 xl:gap-20">
 		<div class="application-copy">
 			<h2 class="max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
-				Apply for Hack The Future
+				{applicationCopy.title}
 			</h2>
 		</div>
 
 		<div class="w-full">
-			<ApplicationForm />
+			<ApplicationForm lang={lang} />
 		</div>
 
 		<p class="section-kicker application-kicker">
-			APPLICATION
+			{applicationCopy.kicker}
 		</p>
 	</div>
 </section>
@@ -154,12 +241,12 @@ const partners = [
 		<div class="about-main grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
 			<div class="about-heading">
 				<h2 class="max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
-					Who's behind it
+					{aboutCopy.title}
 				</h2>
 			</div>
 			<div class="about-content">
 				<div class="partner-index">
-					{partners.map((partner) => (
+					{aboutCopy.partners.map((partner) => (
 						<article class="partner-row group">
 							<h3 class="partner-name">
 								{partner.name}
@@ -171,54 +258,53 @@ const partners = [
 					))}
 				</div>
 
-				<div class="about-copy text-base leading-8 text-[var(--color-muted)]">
-					<p>Hack the Future is part of CATALIZATOR, the leadership and governance platform hosted by the Municipality of Shumen.</p>
-					<p>CATALIZATOR brings together mayors, business leaders and academics to work on the future of cities.</p>
-					<p>Hack the Future brings the same questions to the people who will live with the answers longest.</p>
-					<p class="font-semibold text-[var(--color-ink)]">That's you.</p>
+				<div class="about-copy text-base leading-7 text-[var(--color-muted)]">
+					{aboutCopy.body.map((paragraph) => (
+						<p>{paragraph}</p>
+					))}
 				</div>
 			</div>
 
 			<p class="section-kicker about-bottom-kicker">
-				ABOUT
+				{aboutCopy.kicker}
 			</p>
 		</div>
 	</div>
 </section>
 
-<section class="closing-bottom-up-item closing-bottom-up-item--why motion-section cinematic-dark px-4 py-16 text-[var(--color-paper)] sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-	<div class="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-stretch">
+<section class="closing-bottom-up-item closing-bottom-up-item--why motion-section cinematic-dark px-4 py-16 text-[var(--color-paper)] sm:px-6 sm:py-20 lg:px-8 lg:py-24" data-why-lang={lang}>
+	<div class="why-exists-layout relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-stretch">
 		<div class="why-exists-heading flex h-full flex-col gap-8">
 			<h2 class="why-exists-title mt-1 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl">
-				The country you're about to inherit is changing faster than the systems built to run&nbsp;it.
+				{whyCopy.title}
 			</h2>
-			<p class="max-w-xl text-base leading-8 text-[var(--color-paper)]/72">
-				Work, climate, technology, your city, your own mental health, the economy - none of it looks the way it did even ten years ago, and none of it is going to slow down.
+			<p class="max-w-xl text-base leading-7 text-[var(--color-paper)]/72">
+				{whyCopy.lead}
 			</p>
 			<p class="section-kicker why-exists-kicker">
-				WHY THIS EXISTS
+				{whyCopy.kicker}
 			</p>
 		</div>
 
 		<div class="why-exists-copy">
-			<div class="why-exists-copy-flow mt-1 text-base leading-8 text-[var(--color-paper)]/72">
+			<div class="why-exists-copy-flow mt-1 text-base leading-7 text-[var(--color-paper)]/72">
 				<div class="why-copy-column">
 				<div class="why-copy-group">
-					<p>The country you are about to inherit is changing faster than the systems built to run it. Work, climate, technology, your city, your own mental health, the economy — none of it looks the way it did even ten years ago, and none of it is going to slow down.</p>
+					<p>{whyCopy.intro}</p>
 				</div>
 
 				<div class="why-copy-group">
-					<p>No one has the full playbook for what comes next. Not your teachers. Not your parents. Not the mayors. Not us.</p>
-					<p class="mt-5">The honest truth is that the people who will live longest with the decisions being made right now are the ones with the least say in them.</p>
+					<p>{whyCopy.noPlaybook}</p>
+					<p class="mt-5">{whyCopy.truth}</p>
 				</div>
 				</div>
 
 				<div class="why-copy-column">
 				<div class="why-copy-group">
-					<p class="text-xl font-semibold leading-8 text-[rgba(196,181,253,0.9)] sm:text-2xl sm:leading-9">Hack the Future exists to change that.</p>
-					<p class="mt-6">The work you do in these two days is not symbolic.</p>
-					<p class="mt-5 border-l border-[rgba(196,181,253,0.78)] py-1 pl-7">Mentors take it seriously.<br />The jury takes it seriously.<br />Partners take it seriously.</p>
-					<p class="mt-6">The strongest ideas become the starting point for real conversations with institutions that can act on them.</p>
+					<p class="text-xl font-semibold leading-7 text-[rgba(196,181,253,0.9)] sm:text-2xl sm:leading-8">{whyCopy.statement}</p>
+					<p class="mt-6">{whyCopy.work}</p>
+					<p class="mt-5 border-l border-[rgba(196,181,253,0.78)] py-1 pl-7">{whyCopy.serious.map((line) => <>{line}<br /></>)}</p>
+					<p class="mt-6">{whyCopy.outcome}</p>
 				</div>
 				</div>
 			</div>
@@ -269,6 +355,82 @@ const partners = [
 		display: grid;
 		align-content: start;
 		gap: 2rem;
+	}
+
+	.closing-bottom-up-item--why[data-why-lang="bg"] .why-exists-layout {
+		gap: clamp(3rem, 5.2vw, 5.5rem);
+	}
+
+	.closing-bottom-up-item--why[data-why-lang="bg"] .why-exists-heading {
+		gap: clamp(1.7rem, 3vw, 2.35rem);
+	}
+
+	.closing-bottom-up-item--why[data-why-lang="bg"] .why-exists-title {
+		max-width: 12.6em;
+		font-size: clamp(2.25rem, 3.35vw, 3.9rem);
+		font-weight: 600;
+		letter-spacing: -0.022em;
+		line-height: 1.08;
+	}
+
+	.closing-bottom-up-item--why[data-why-lang="bg"] .why-exists-heading > p:not(.section-kicker) {
+		max-width: 38rem;
+		font-size: 0.98rem;
+		letter-spacing: 0.004em;
+		line-height: 1.72;
+	}
+
+	.closing-bottom-up-item--why[data-why-lang="bg"] .why-exists-copy-flow {
+		max-width: 58rem;
+		gap: clamp(2rem, 3vw, 2.5rem);
+		font-size: 0.98rem;
+		letter-spacing: 0.003em;
+		line-height: 1.76;
+	}
+
+	.closing-bottom-up-item--why[data-why-lang="bg"] .why-copy-group {
+		max-width: 54rem;
+	}
+
+	.closing-bottom-up-item--why[data-why-lang="bg"] .why-copy-group p {
+		text-wrap: pretty;
+	}
+
+	.closing-bottom-up-item--why[data-why-lang="bg"] .why-copy-group p.text-xl {
+		font-size: clamp(1.34rem, 1.72vw, 1.84rem);
+		letter-spacing: -0.014em;
+		line-height: 1.34;
+	}
+
+	.closing-bottom-up-item--why[data-why-lang="bg"] .why-copy-group p.border-l {
+		padding-left: 2rem;
+		line-height: 1.78;
+	}
+
+	.closing-bottom-up-item--why[data-why-lang="bg"] .why-exists-kicker {
+		max-width: 24rem;
+		letter-spacing: 0.2em;
+		line-height: 1.6;
+	}
+
+	@media (min-width: 1024px) {
+		.closing-bottom-up-item--why[data-why-lang="bg"] .why-exists-layout {
+			grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+			align-items: center;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.closing-bottom-up-item--why[data-why-lang="bg"] .why-exists-title {
+			max-width: 11em;
+			font-size: clamp(2rem, 9vw, 2.95rem);
+			line-height: 1.12;
+		}
+
+		.closing-bottom-up-item--why[data-why-lang="bg"] .why-exists-copy-flow {
+			font-size: 0.95rem;
+			line-height: 1.64;
+		}
 	}
 
 	@media (min-width: 768px) {

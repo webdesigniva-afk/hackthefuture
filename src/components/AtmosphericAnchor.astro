@@ -1,4 +1,27 @@
 ---
+import { getLang, type Lang } from "../i18n";
+
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+const copy = {
+	en: {
+		title: "The future is changing faster than the systems built around it.",
+		body: "The people who will live longest with today's decisions usually have the smallest voice in making them.",
+		alt: "Young people collaborating with technology in a city setting",
+		location: "SHUMEN // BULGARIA",
+		status: "FUTURE READINESS ACTIVE",
+	},
+	bg: {
+		title: "Бъдещето се променя по-бързо от системите, създадени да го посрещнат.",
+		body: "А хората, които ще живеят най-дълго с последствията от днешните решения, често имат най-малък глас при вземането им.",
+		alt: "Млади хора работят с технологии в градска среда",
+		location: "ШУМЕН // БЪЛГАРИЯ",
+		status: "ГОТОВНОСТ ЗА БЪДЕЩЕТО",
+	},
+}[lang];
 ---
 
 <section id="why" class="motion-section cinematic-dark px-4 py-20 text-[var(--color-paper)] sm:px-6 sm:py-24 lg:px-8 lg:py-32">
@@ -6,10 +29,10 @@
 		<div class="why-brief-card premium-hover flex min-h-[28rem] flex-col justify-center rounded-[9px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:justify-start">
 			<div class="why-brief-copy">
 				<h2 class="max-w-2xl text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl">
-					The <span class="why-accent">future</span> is changing faster than the systems built around it.
+					{lang === "en" ? <>The <span class="why-accent">future</span> is changing faster than the systems built around it.</> : copy.title}
 				</h2>
-				<p class="mt-6 max-w-xl text-base leading-8 text-[var(--color-paper)]/66">
-					The people who will live longest with today's decisions usually have the smallest voice in making them.
+				<p class="mt-6 max-w-xl text-base leading-7 text-[var(--color-paper)]/66">
+					{copy.body}
 				</p>
 			</div>
 		</div>
@@ -20,13 +43,13 @@
 			<img
 				class="media-photo"
 				src="/hack-future-shumen-team-plaza.png"
-				alt="Young people collaborating with technology in a city setting"
+				alt={copy.alt}
 				loading="lazy"
 				decoding="async"
 			/>
 			<div class="why-photo-overlay" aria-hidden="true">
-				<span class="why-photo-label why-photo-location">SHUMEN // BULGARIA</span>
-				<span class="why-photo-label why-photo-status">FUTURE READINESS ACTIVE</span>
+				<span class="why-photo-label why-photo-location">{copy.location}</span>
+				<span class="why-photo-label why-photo-status">{copy.status}</span>
 			</div>
 		</div>
 	</div>

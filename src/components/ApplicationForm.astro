@@ -1,12 +1,74 @@
 ---
-const themes = [
-	"Future of Work",
-	"Environment & Crisis Response",
-	"Mental Health & Youth Wellbeing",
-	"Local Products, Food & Future Business",
-];
+import { getLang, type Lang } from "../i18n";
 
-const applicationTypes = ["Applying alone", "Applying with a team"];
+interface Props {
+	lang?: Lang;
+}
+
+const lang = getLang(Astro.props.lang);
+const copy = {
+	en: {
+		labels: {
+			name: "Name",
+			email: "Email",
+			age: "Age",
+			school: "School",
+			motivation: "Why are you keen to join?",
+			themeSelection: "Theme selection",
+			applicationType: "Application type",
+			teamName: "Team name",
+		},
+		submit: "REGISTER INTEREST",
+		sending: "Sending...",
+		status: {
+			missingEndpoint: "Applications are not connected yet. Please try again later.",
+			sending: "Sending your application...",
+			success: "Thanks. Your application has been received.",
+			themeRequired: "Please select at least one theme.",
+		},
+		themes: [
+			{ value: "Future of Work", label: "Future of Work" },
+			{ value: "Environment & Crisis Response", label: "Environment & Crisis Response" },
+			{ value: "Mental Health & Youth Wellbeing", label: "Mental Health & Youth Wellbeing" },
+			{ value: "Local Products, Food & Future Business", label: "Local Products, Food & Future Business" },
+		],
+		applicationTypes: [
+			{ value: "Applying alone", label: "Applying alone" },
+			{ value: "Applying with a team", label: "Applying with a team" },
+		],
+	},
+	bg: {
+		labels: {
+			name: "Име",
+			email: "Имейл",
+			age: "Възраст",
+			school: "Училище",
+			motivation: "Защо искаш да участваш?",
+			themeSelection: "Избор на предизвикателство",
+			applicationType: "Начин на кандидатстване",
+			teamName: "Име на екипа",
+		},
+		submit: "ИЗПРАТИ КАНДИДАТУРА",
+		sending: "Изпращане...",
+		status: {
+			missingEndpoint: "Кандидатстването все още не е свързано. Моля, опитай отново по-късно.",
+			sending: "Изпращаме твоята кандидатура...",
+			success: "Благодарим ти. Кандидатурата е получена.",
+			themeRequired: "Моля, избери поне едно предизвикателство.",
+		},
+		themes: [
+			{ value: "Future of Work", label: "Бъдещето на труда" },
+			{ value: "Environment & Crisis Response", label: "Околна среда и реакция при кризи" },
+			{ value: "Mental Health & Youth Wellbeing", label: "Психично здраве и благополучие на младите хора" },
+			{ value: "Local Products, Food & Future Business", label: "Местни продукти, храни и бизнес на бъдещето" },
+		],
+		applicationTypes: [
+			{ value: "Applying alone", label: "Кандидатствам самостоятелно" },
+			{ value: "Applying with a team", label: "Кандидатствам с екип" },
+		],
+	},
+}[lang];
+
 const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ?? "";
 ---
 
@@ -14,6 +76,10 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 	class="application-form grid gap-6"
 	data-application-form
 	data-google-sheets-endpoint={googleSheetsEndpoint}
+	data-status-missing-endpoint={copy.status.missingEndpoint}
+	data-status-sending={copy.status.sending}
+	data-status-success={copy.status.success}
+	data-status-theme-required={copy.status.themeRequired}
 >
 	<input name="submit_application" type="hidden" value="1" />
 	<input name="submitted_at" type="hidden" data-submitted-at-input />
@@ -21,63 +87,68 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 
 	<div class="application-fields-grid grid gap-x-5 gap-y-5 md:grid-cols-2">
 		<label class="application-field">
-			<span>Name</span>
+			<span>{copy.labels.name}</span>
 			<input name="name" type="text" required autocomplete="name" />
 		</label>
 
 		<label class="application-field">
-			<span>Email</span>
+			<span>{copy.labels.email}</span>
 			<input name="email" type="email" required autocomplete="email" />
 		</label>
 
 		<label class="application-field">
-			<span>Age</span>
+			<span>{copy.labels.age}</span>
 			<input name="age" type="number" required min="15" max="19" inputmode="numeric" />
 		</label>
 
 		<label class="application-field">
-			<span>School</span>
+			<span>{copy.labels.school}</span>
 			<input name="school" type="text" required autocomplete="organization" />
 		</label>
 
 		<label class="application-field md:col-span-2">
-			<span>Why are you keen to join?</span>
+			<span>{copy.labels.motivation}</span>
 			<textarea name="motivation" required minlength="140" rows="4"></textarea>
 		</label>
 	</div>
 
 	<fieldset class="application-fieldset" data-theme-fieldset>
-		<legend>Theme selection</legend>
+		<legend>{copy.labels.themeSelection}</legend>
 		<div class="application-options mt-3 grid gap-2 sm:grid-cols-2">
-			{themes.map((theme) => (
+			{copy.themes.map((theme) => (
 				<label class="application-choice">
-					<input name="themes" type="checkbox" value={theme} data-theme-input />
-					<span>{theme}</span>
+					<input name="themes" type="checkbox" value={theme.value} data-theme-input />
+					<span>{theme.label}</span>
 				</label>
 			))}
 		</div>
 	</fieldset>
 
 	<fieldset class="application-fieldset">
-		<legend>Application type</legend>
+		<legend>{copy.labels.applicationType}</legend>
 		<div class="application-options mt-3 grid gap-2 sm:grid-cols-2">
-			{applicationTypes.map((type) => (
+			{copy.applicationTypes.map((type) => (
 				<label class="application-radio">
-					<input name="application_type" type="radio" value={type} required />
-					<span>{type}</span>
+					<input name="application_type" type="radio" value={type.value} required />
+					<span>{type.label}</span>
 				</label>
 			))}
 		</div>
 	</fieldset>
 
 	<label class="application-field application-team-name" data-team-name-field hidden>
-		<span>Team name</span>
+		<span>{copy.labels.teamName}</span>
 		<input name="team_name" type="text" autocomplete="organization" data-team-name-input />
 	</label>
 
 	<div class="pt-1.5">
-		<button type="submit" class="application-submit inline-flex min-h-12 items-center justify-center rounded-[9px] px-6 text-sm font-semibold uppercase tracking-[0.12em] text-white transition duration-200">
-			Register Interest
+		<button
+			type="submit"
+			class="application-submit inline-flex min-h-12 items-center justify-center rounded-[9px] px-6 text-sm font-semibold uppercase tracking-[0.12em] text-white transition duration-200"
+			data-submit-label={copy.submit}
+			data-sending-label={copy.sending}
+		>
+			{copy.submit}
 		</button>
 	</div>
 
@@ -122,7 +193,7 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 
 		const endpoint = form.dataset.googleSheetsEndpoint;
 		if (!endpoint) {
-			setApplicationStatus(form, "Applications are not connected yet. Please try again later.", "error");
+			setApplicationStatus(form, form.dataset.statusMissingEndpoint || "Applications are not connected yet. Please try again later.", "error");
 			return;
 		}
 
@@ -139,20 +210,20 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 		const submitButton = form.querySelector("button[type='submit']");
 		if (submitButton instanceof HTMLButtonElement) {
 			submitButton.disabled = true;
-			submitButton.textContent = "Sending...";
+			submitButton.textContent = submitButton.dataset.sendingLabel || "Sending...";
 		}
 
-		setApplicationStatus(form, "Sending your application...", "default");
+		setApplicationStatus(form, form.dataset.statusSending || "Sending your application...", "default");
 
 		submitApplicationToGoogleSheets(endpoint, params).then(() => {
 			form.reset();
 			syncTeamNameField(form);
 			syncThemeSelectionValidity(form);
-			setApplicationStatus(form, "Thanks. Your application has been received.", "success");
+			setApplicationStatus(form, form.dataset.statusSuccess || "Thanks. Your application has been received.", "success");
 
 			if (submitButton instanceof HTMLButtonElement) {
 				submitButton.disabled = false;
-				submitButton.textContent = "Register Interest";
+				submitButton.textContent = submitButton.dataset.submitLabel || "REGISTER INTEREST";
 			}
 		});
 	}
@@ -184,7 +255,7 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 		}
 
 		const hasThemeSelection = themeInputs.some((input) => input instanceof HTMLInputElement && input.checked);
-		firstThemeInput.setCustomValidity(hasThemeSelection ? "" : "Please select at least one theme.");
+		firstThemeInput.setCustomValidity(hasThemeSelection ? "" : form.dataset.statusThemeRequired || "Please select at least one theme.");
 	}
 
 	document.querySelectorAll("[data-application-form]").forEach((form) => {
