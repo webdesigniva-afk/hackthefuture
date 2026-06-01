@@ -1,35 +1,42 @@
 ---
-import ArenaMoment from "../components/ArenaMoment.astro";
-import AtmosphericAnchor from "../components/AtmosphericAnchor.astro";
-import ClosingSection from "../components/ClosingSection.astro";
-import CivicImageSection from "../components/CivicImageSection.astro";
-import Hero from "../components/Hero.astro";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import IntroSection from "../components/IntroSection.astro";
-import PublicationsSection from "../components/PublicationsSection.astro";
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { siteCopy } from "../i18n";
-
-const lang = "en";
-const t = siteCopy[lang];
 ---
 
-<BaseLayout
-	title={t.meta.homeTitle}
-	description={t.meta.homeDescription}
-	lang={lang}
-	bottomUp
->
-	<Header lang={lang} />
-	<main class="bottom-up-page">
-		<Footer lang={lang} />
-		<ClosingSection lang={lang} />
-		<PublicationsSection lang={lang} />
-		<AtmosphericAnchor lang={lang} />
-		<CivicImageSection lang={lang} />
-		<ArenaMoment lang={lang} />
-		<IntroSection lang={lang} />
-		<Hero lang={lang} />
-	</main>
-</BaseLayout>
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="index, follow" />
+		<meta name="theme-color" content="#FFFFFF" />
+		<title>HTF | CHALLENGE</title>
+		<script is:inline>
+			(() => {
+				const supportedLanguages = ["en", "bg"];
+				const storageKey = "site-language";
+
+				const getSavedLanguage = () => {
+					try {
+						const savedLanguage = localStorage.getItem(storageKey);
+						return supportedLanguages.includes(savedLanguage) ? savedLanguage : null;
+					} catch {
+						return null;
+					}
+				};
+
+				const getBrowserDefaultLanguage = () => {
+					const browserLanguages = navigator.languages?.length ? navigator.languages : [navigator.language].filter(Boolean);
+					const prefersBulgarian = browserLanguages.some((language) => language.toLowerCase().startsWith("bg"));
+
+					return prefersBulgarian ? "bg" : "en";
+				};
+
+				const initialLanguage = getSavedLanguage() ?? getBrowserDefaultLanguage();
+				window.location.replace(`/${initialLanguage}${window.location.search}${window.location.hash}`);
+			})();
+		</script>
+	</head>
+	<body>
+		<a href="/en">English</a>
+		<a href="/bg">Bulgarian</a>
+	</body>
+</html>

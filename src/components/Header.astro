@@ -76,9 +76,9 @@ const pageLinks = [
 		</nav>
 
 		<div class="site-language flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-muted)]" aria-label={t.nav.language}>
-			<a class={`${lang === "en" ? "text-[var(--color-ink)]" : "hover:text-[var(--color-purple)]"} no-underline`} href={langPath("en", currentPath)} aria-current={lang === "en" ? "true" : undefined}>EN</a>
+			<a class={`${lang === "en" ? "text-[var(--color-ink)]" : "hover:text-[var(--color-purple)]"} no-underline`} href={langPath("en", currentPath)} aria-current={lang === "en" ? "true" : undefined} data-language-option="en">EN</a>
 			<span class="h-3 w-px bg-[var(--color-line)]" aria-hidden="true"></span>
-			<a class={`${lang === "bg" ? "text-[var(--color-ink)]" : "hover:text-[var(--color-purple)]"} no-underline`} href={langPath("bg", currentPath)} aria-current={lang === "bg" ? "true" : undefined}>BG</a>
+			<a class={`${lang === "bg" ? "text-[var(--color-ink)]" : "hover:text-[var(--color-purple)]"} no-underline`} href={langPath("bg", currentPath)} aria-current={lang === "bg" ? "true" : undefined} data-language-option="bg">BG</a>
 		</div>
 	</div>
 </header>
