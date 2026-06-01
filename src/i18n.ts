@@ -22,7 +22,7 @@ export function translateRecord<T>(record: Record<Lang, T>, lang: Lang): T {
 export const siteCopy = {
 	en: {
 		meta: {
-			homeTitle: "CATALIZATOR | Leadership Platform",
+			homeTitle: "HTF | CHALLENGE",
 			homeDescription: "CATALIZATOR is a leadership platform for institutional decision-makers.",
 			publicationsTitle: "Publications | CATALIZATOR",
 			publicationsDescription: "Articles, video, image essays, and partner thinking from CATALIZATOR.",
@@ -221,7 +221,7 @@ export const siteCopy = {
 	},
 	bg: {
 		meta: {
-			homeTitle: "CATALIZATOR | Платформа за лидерство",
+			homeTitle: "HTF | CHALLENGE",
 			homeDescription: "CATALIZATOR е платформа за лидерство, създадена за институционални ръководители и лица, които вземат стратегически решения.",
 			publicationsTitle: "Публикации | CATALIZATOR",
 			publicationsDescription: "Статии, видео съдържание, визуални есета и партньорски анализи от CATALIZATOR.",

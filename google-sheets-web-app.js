@@ -92,6 +92,7 @@ function appendApplicationRow(sheet, params) {
 		params.team_name || "",
 		params.page_url || "",
 	]);
+	formatApplicationSheet(sheet);
 }
 
 function ensureHeaders(sheet) {
@@ -101,8 +102,59 @@ function ensureHeaders(sheet) {
 
 	if (!hasHeaders) {
 		headerRange.setValues([HEADERS]);
-		sheet.setFrozenRows(1);
-		sheet.autoResizeColumns(1, HEADERS.length);
+	}
+
+	formatApplicationSheet(sheet);
+}
+
+function formatApplicationSheet(sheet) {
+	const lastRow = Math.max(sheet.getLastRow(), 1);
+	const lastColumn = HEADERS.length;
+	const fullRange = sheet.getRange(1, 1, lastRow, lastColumn);
+	const headerRange = sheet.getRange(1, 1, 1, lastColumn);
+
+	sheet.setFrozenRows(1);
+
+	headerRange
+		.setBackground("#4f2f90")
+		.setFontColor("#ffffff")
+		.setFontWeight("bold")
+		.setFontSize(11)
+		.setHorizontalAlignment("center")
+		.setVerticalAlignment("middle");
+
+	fullRange
+		.setFontFamily("Arial")
+		.setFontSize(10)
+		.setVerticalAlignment("top")
+		.setBorder(true, true, true, true, true, true, "#e6e1f2", SpreadsheetApp.BorderStyle.SOLID);
+
+	if (lastRow > 1) {
+		sheet.getRange(2, 1, lastRow - 1, lastColumn)
+			.setBackground("#ffffff")
+			.setFontColor("#171717")
+			.setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
+
+		sheet.getRange(2, 6, lastRow - 1, 1)
+			.setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP);
+
+		sheet.getRange(2, 1, lastRow - 1, 1)
+			.setNumberFormat("yyyy-mm-dd hh:mm");
+	}
+
+	sheet.setColumnWidths(1, 1, 155);
+	sheet.setColumnWidths(2, 1, 150);
+	sheet.setColumnWidths(3, 1, 190);
+	sheet.setColumnWidths(4, 1, 60);
+	sheet.setColumnWidths(5, 1, 170);
+	sheet.setColumnWidths(6, 1, 360);
+	sheet.setColumnWidths(7, 1, 230);
+	sheet.setColumnWidths(8, 1, 160);
+	sheet.setColumnWidths(9, 1, 150);
+	sheet.setColumnWidths(10, 1, 230);
+
+	if (!sheet.getFilter()) {
+		fullRange.createFilter();
 	}
 }
 
