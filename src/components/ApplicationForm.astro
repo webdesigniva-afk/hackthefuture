@@ -7,9 +7,10 @@ const themes = [
 ];
 
 const applicationTypes = ["Applying alone", "Applying with a team"];
+const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ?? "";
 ---
 
-<form class="application-form grid gap-6" data-application-form>
+<form class="application-form grid gap-6" data-application-form data-google-sheets-endpoint={googleSheetsEndpoint}>
 	<div class="application-fields-grid grid gap-x-5 gap-y-5 md:grid-cols-2">
 		<label class="application-field">
 			<span>Name</span>
@@ -76,7 +77,17 @@ const applicationTypes = ["Applying alone", "Applying with a team"];
 </form>
 
 <script>
-	function handleHackTheFutureApplicationSubmit(event) {
+	function setApplicationStatus(form, message, type = "default") {
+		const status = form.querySelector("[data-application-status]");
+		if (!(status instanceof HTMLElement)) {
+			return;
+		}
+
+		status.textContent = message;
+		status.dataset.statusType = type;
+	}
+
+	async function handleHackTheFutureApplicationSubmit(event) {
 		event.preventDefault();
 
 		const form = event.currentTarget;
@@ -84,18 +95,51 @@ const applicationTypes = ["Applying alone", "Applying with a team"];
 			return;
 		}
 
+		const endpoint = form.dataset.googleSheetsEndpoint;
+		if (!endpoint) {
+			setApplicationStatus(form, "Applications are not connected yet. Please try again later.", "error");
+			return;
+		}
+
 		const formData = new FormData(form);
-		const payload = {
-			...Object.fromEntries(formData.entries()),
-			themes: formData.getAll("themes"),
-		};
+		const body = new URLSearchParams();
+		body.set("submitted_at", new Date().toISOString());
+		body.set("name", String(formData.get("name") ?? ""));
+		body.set("email", String(formData.get("email") ?? ""));
+		body.set("age", String(formData.get("age") ?? ""));
+		body.set("school", String(formData.get("school") ?? ""));
+		body.set("motivation", String(formData.get("motivation") ?? ""));
+		body.set("themes", formData.getAll("themes").map(String).join(", "));
+		body.set("application_type", String(formData.get("application_type") ?? ""));
+		body.set("team_name", String(formData.get("team_name") ?? ""));
+		body.set("page_url", window.location.href);
 
-		// Placeholder for future Google Sheets integration.
-		console.info("Hack The Future application interest:", payload);
+		const submitButton = form.querySelector("button[type='submit']");
+		if (submitButton instanceof HTMLButtonElement) {
+			submitButton.disabled = true;
+			submitButton.textContent = "Sending...";
+		}
 
-		const status = form.querySelector("[data-application-status]");
-		if (status instanceof HTMLElement) {
-			status.textContent = "Thanks. Your interest has been noted locally for now.";
+		setApplicationStatus(form, "Sending your application...", "default");
+
+		try {
+			await fetch(endpoint, {
+				method: "POST",
+				mode: "no-cors",
+				body,
+			});
+
+			form.reset();
+			syncTeamNameField(form);
+			syncThemeSelectionValidity(form);
+			setApplicationStatus(form, "Thanks. Your application has been received.", "success");
+		} catch {
+			setApplicationStatus(form, "Something went wrong. Please try again in a minute.", "error");
+		} finally {
+			if (submitButton instanceof HTMLButtonElement) {
+				submitButton.disabled = false;
+				submitButton.textContent = "Register Interest";
+			}
 		}
 	}
 
@@ -283,5 +327,19 @@ const applicationTypes = ["Applying alone", "Applying with a team"];
 		transform: translateY(-2px);
 		border-color: var(--color-accent);
 		box-shadow: 0 16px 42px rgba(10, 10, 10, 0.18), 0 0 20px rgba(124, 58, 237, 0.16);
+	}
+
+	.application-submit:disabled {
+		cursor: wait;
+		opacity: 0.72;
+		transform: none;
+	}
+
+	.application-status[data-status-type="success"] {
+		color: color-mix(in srgb, #047857 82%, var(--color-ink));
+	}
+
+	.application-status[data-status-type="error"] {
+		color: color-mix(in srgb, #b91c1c 86%, var(--color-ink));
 	}
 </style>
