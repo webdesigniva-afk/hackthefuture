@@ -36,7 +36,7 @@ const pageLinks = [
 ];
 ---
 
-<header class="site-header sticky top-0 z-40 border-b border-[rgba(10,10,10,0.1)] bg-[rgba(255,255,255,0.92)] px-6 py-3.5 shadow-[0_1px_0_rgba(255,255,255,0.75)_inset] backdrop-blur-md sm:px-10 lg:px-16" data-site-header>
+<header class="site-header sticky top-0 z-40 border-b border-[rgba(10,10,10,0.1)] bg-[rgba(255,255,255,0.92)] px-6 py-3.5 shadow-[0_1px_0_rgba(255,255,255,0.75)_inset] backdrop-blur-md sm:px-10 lg:px-16" data-site-header data-mobile-menu-open="false">
 	<div class="site-header-inner mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-x-8 gap-y-4 lg:grid-cols-[1fr_auto_auto]">
 		<a
 			href={langPath(lang)}
@@ -53,7 +53,16 @@ const pageLinks = [
 			Hack The Future
 		</a>
 
-		<nav class="site-nav order-3 col-span-2 flex flex-wrap items-center gap-x-5 gap-y-3 text-[0.82rem] text-[var(--color-muted)] lg:order-none lg:col-span-1" aria-label={t.nav.primary}>
+		<button class="site-menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false" data-site-menu-toggle>
+			<span class="site-menu-toggle-label">Menu</span>
+			<span class="site-menu-toggle-icon" aria-hidden="true">
+				<span></span>
+				<span></span>
+				<span></span>
+			</span>
+		</button>
+
+		<nav id="site-menu" class="site-nav order-3 col-span-2 flex flex-wrap items-center gap-x-5 gap-y-3 text-[0.82rem] text-[var(--color-muted)] lg:order-none lg:col-span-1" aria-label={t.nav.primary} data-site-menu>
 			<div class="site-nav-page-links flex flex-wrap items-center gap-x-5 gap-y-3 text-[0.74rem] uppercase tracking-[0.12em] text-[var(--color-muted)]/78">
 				{pageLinks.map((link) => (
 					<a class="site-nav-link" href={link.href}>{link.label}</a>

@@ -68,6 +68,7 @@ const lang = getLang(langProp);
 			const sectionCandidates = document.querySelectorAll("main > section, article > section, body > section");
 			const cardCandidates = document.querySelectorAll(".quiet-card, .premium-hover, .publication-entry");
 			const motionTargets = new Set();
+			let requestHeaderThemeUpdate = () => {};
 
 			sectionCandidates.forEach((section) => {
 				if (!section.classList.contains("hero-section")) {
@@ -150,6 +151,45 @@ const lang = getLang(langProp);
 			}
 
 			if (siteHeader instanceof HTMLElement) {
+				const menuToggle = siteHeader.querySelector("[data-site-menu-toggle]");
+				const siteMenu = siteHeader.querySelector("[data-site-menu]");
+				const closeMobileMenu = () => {
+					siteHeader.dataset.mobileMenuOpen = "false";
+					if (menuToggle instanceof HTMLButtonElement) {
+						menuToggle.setAttribute("aria-expanded", "false");
+					}
+				};
+
+				if (menuToggle instanceof HTMLButtonElement && siteMenu instanceof HTMLElement) {
+					menuToggle.addEventListener("click", () => {
+						const isOpen = siteHeader.dataset.mobileMenuOpen === "true";
+						siteHeader.dataset.mobileMenuOpen = isOpen ? "false" : "true";
+						menuToggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
+					});
+
+					siteMenu.querySelectorAll("a").forEach((link) => {
+						link.addEventListener("click", closeMobileMenu);
+					});
+
+					document.addEventListener("click", (event) => {
+						if (siteHeader.dataset.mobileMenuOpen !== "true") return;
+						if (event.target instanceof Node && siteHeader.contains(event.target)) return;
+						closeMobileMenu();
+					});
+
+					document.addEventListener("keydown", (event) => {
+						if (event.key === "Escape") {
+							closeMobileMenu();
+						}
+					});
+
+					window.addEventListener("resize", () => {
+						if (window.innerWidth >= 768) {
+							closeMobileMenu();
+						}
+					});
+				}
+
 				let headerThemeTicking = false;
 				const updateHeaderTheme = () => {
 					const rect = siteHeader.getBoundingClientRect();
@@ -170,6 +210,7 @@ const lang = getLang(langProp);
 						headerThemeTicking = true;
 					}
 				};
+				requestHeaderThemeUpdate = requestHeaderTheme;
 
 				updateHeaderTheme();
 				window.addEventListener("scroll", requestHeaderTheme, { passive: true });
@@ -184,6 +225,7 @@ const lang = getLang(langProp);
 				const pinToBottomStart = () => {
 					if (!userMovedAfterRelease) {
 						window.scrollTo({ top: getBottomStart(), behavior: "auto" });
+						requestHeaderThemeUpdate();
 					}
 				};
 				const scrollToBottomStart = () => {
