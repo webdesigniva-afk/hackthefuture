@@ -34,6 +34,10 @@ function doGet(event) {
 		});
 	}
 
+	if (String((event && event.parameter && event.parameter.submit_application) || "") === "1") {
+		appendApplicationRow(sheet, event.parameter || {});
+	}
+
 	return jsonResponse({
 		ok: true,
 		message: "HTF application sheet is connected.",

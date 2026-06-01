@@ -111,7 +111,7 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 			}, { once: true });
 
 			proxyForm.action = endpoint;
-			proxyForm.method = "POST";
+			proxyForm.method = "GET";
 			proxyForm.target = iframeName;
 			proxyForm.hidden = true;
 
@@ -144,6 +144,7 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 
 		const formData = new FormData(form);
 		const body = new URLSearchParams();
+		body.set("submit_application", "1");
 		body.set("submitted_at", new Date().toISOString());
 		body.set("name", String(formData.get("name") ?? ""));
 		body.set("email", String(formData.get("email") ?? ""));
