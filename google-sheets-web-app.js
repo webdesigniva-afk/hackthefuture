@@ -16,10 +16,11 @@ const HEADERS = [
 function doGet(event) {
 	const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
 	const sheet = getOrCreateSheet(spreadsheet);
+	const params = normalizeParams(event);
 
 	ensureHeaders(sheet);
 
-	if (String((event && event.parameter && event.parameter.test_row) || "") === "1") {
+	if (String(params.test_row || "") === "1") {
 		appendApplicationRow(sheet, {
 			submitted_at: new Date().toISOString(),
 			name: "Apps Script test",
@@ -34,8 +35,8 @@ function doGet(event) {
 		});
 	}
 
-	if (String((event && event.parameter && event.parameter.submit_application) || "") === "1") {
-		appendApplicationRow(sheet, event.parameter || {});
+	if (String(params.submit_application || "") === "1") {
+		appendApplicationRow(sheet, params);
 	}
 
 	return jsonResponse({
@@ -49,7 +50,7 @@ function doGet(event) {
 function doPost(event) {
 	const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
 	const sheet = getOrCreateSheet(spreadsheet);
-	const params = event.parameter || {};
+	const params = normalizeParams(event);
 	const lock = LockService.getScriptLock();
 
 	lock.waitLock(10000);
@@ -65,6 +66,16 @@ function doPost(event) {
 
 function getOrCreateSheet(spreadsheet) {
 	return spreadsheet.getSheetByName(SHEET_NAME) || spreadsheet.insertSheet(SHEET_NAME);
+}
+
+function normalizeParams(event) {
+	const params = (event && event.parameter) || {};
+	const allParams = (event && event.parameters) || {};
+
+	return {
+		...params,
+		themes: allParams.themes ? allParams.themes.join(", ") : params.themes,
+	};
 }
 
 function appendApplicationRow(sheet, params) {

@@ -10,7 +10,18 @@ const applicationTypes = ["Applying alone", "Applying with a team"];
 const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ?? "";
 ---
 
-<form class="application-form grid gap-6" data-application-form data-google-sheets-endpoint={googleSheetsEndpoint}>
+<form
+	class="application-form grid gap-6"
+	action={googleSheetsEndpoint}
+	method="get"
+	target="htf-application-submit-frame"
+	data-application-form
+	data-google-sheets-endpoint={googleSheetsEndpoint}
+>
+	<input name="submit_application" type="hidden" value="1" />
+	<input name="submitted_at" type="hidden" data-submitted-at-input />
+	<input name="page_url" type="hidden" data-page-url-input />
+
 	<div class="application-fields-grid grid gap-x-5 gap-y-5 md:grid-cols-2">
 		<label class="application-field">
 			<span>Name</span>
@@ -75,8 +86,12 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 
 	<p class="application-status text-sm leading-6 text-[var(--color-muted)]" data-application-status aria-live="polite"></p>
 </form>
+<iframe name="htf-application-submit-frame" data-application-submit-frame hidden></iframe>
 
 <script>
+	let applicationSubmitTimeout;
+	let applicationSubmitInProgress = false;
+
 	function setApplicationStatus(form, message, type = "default") {
 		const status = form.querySelector("[data-application-status]");
 		if (!(status instanceof HTMLElement)) {
@@ -87,50 +102,7 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 		status.dataset.statusType = type;
 	}
 
-	function submitApplicationToGoogleSheets(endpoint, body) {
-		return new Promise((resolve, reject) => {
-			const iframeName = `application-submit-${Date.now()}`;
-			const iframe = document.createElement("iframe");
-			const proxyForm = document.createElement("form");
-			const timeout = window.setTimeout(() => {
-				cleanup();
-				reject();
-			}, 12000);
-
-			function cleanup() {
-				window.clearTimeout(timeout);
-				iframe.remove();
-				proxyForm.remove();
-			}
-
-			iframe.name = iframeName;
-			iframe.hidden = true;
-			iframe.addEventListener("load", () => {
-				cleanup();
-				resolve();
-			}, { once: true });
-
-			proxyForm.action = endpoint;
-			proxyForm.method = "GET";
-			proxyForm.target = iframeName;
-			proxyForm.hidden = true;
-
-			body.forEach((value, key) => {
-				const input = document.createElement("input");
-				input.type = "hidden";
-				input.name = key;
-				input.value = value;
-				proxyForm.append(input);
-			});
-
-			document.body.append(iframe, proxyForm);
-			proxyForm.submit();
-		});
-	}
-
-	async function handleHackTheFutureApplicationSubmit(event) {
-		event.preventDefault();
-
+	function handleHackTheFutureApplicationSubmit(event) {
 		const form = event.currentTarget;
 		if (!(form instanceof HTMLFormElement)) {
 			return;
@@ -138,23 +110,21 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 
 		const endpoint = form.dataset.googleSheetsEndpoint;
 		if (!endpoint) {
+			event.preventDefault();
 			setApplicationStatus(form, "Applications are not connected yet. Please try again later.", "error");
 			return;
 		}
 
-		const formData = new FormData(form);
-		const body = new URLSearchParams();
-		body.set("submit_application", "1");
-		body.set("submitted_at", new Date().toISOString());
-		body.set("name", String(formData.get("name") ?? ""));
-		body.set("email", String(formData.get("email") ?? ""));
-		body.set("age", String(formData.get("age") ?? ""));
-		body.set("school", String(formData.get("school") ?? ""));
-		body.set("motivation", String(formData.get("motivation") ?? ""));
-		body.set("themes", formData.getAll("themes").map(String).join(", "));
-		body.set("application_type", String(formData.get("application_type") ?? ""));
-		body.set("team_name", String(formData.get("team_name") ?? ""));
-		body.set("page_url", window.location.href);
+		const submittedAtInput = form.querySelector("[data-submitted-at-input]");
+		const pageUrlInput = form.querySelector("[data-page-url-input]");
+
+		if (submittedAtInput instanceof HTMLInputElement) {
+			submittedAtInput.value = new Date().toISOString();
+		}
+
+		if (pageUrlInput instanceof HTMLInputElement) {
+			pageUrlInput.value = window.location.href;
+		}
 
 		const submitButton = form.querySelector("button[type='submit']");
 		if (submitButton instanceof HTMLButtonElement) {
@@ -163,22 +133,17 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 		}
 
 		setApplicationStatus(form, "Sending your application...", "default");
-
-		try {
-			await submitApplicationToGoogleSheets(endpoint, body);
-
-			form.reset();
-			syncTeamNameField(form);
-			syncThemeSelectionValidity(form);
-			setApplicationStatus(form, "Thanks. Your application has been received.", "success");
-		} catch {
+		applicationSubmitInProgress = true;
+		window.clearTimeout(applicationSubmitTimeout);
+		applicationSubmitTimeout = window.setTimeout(() => {
+			applicationSubmitInProgress = false;
 			setApplicationStatus(form, "Something went wrong. Please try again in a minute.", "error");
-		} finally {
+
 			if (submitButton instanceof HTMLButtonElement) {
 				submitButton.disabled = false;
 				submitButton.textContent = "Register Interest";
 			}
-		}
+		}, 12000);
 	}
 
 	function syncTeamNameField(form) {
@@ -230,6 +195,32 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 			syncTeamNameField(form);
 			syncThemeSelectionValidity(form);
 		}
+	});
+
+	document.querySelectorAll("[data-application-submit-frame]").forEach((frame) => {
+		frame.addEventListener("load", () => {
+			if (!applicationSubmitInProgress) {
+				return;
+			}
+
+			const form = document.querySelector("[data-application-form]");
+			if (!(form instanceof HTMLFormElement)) {
+				return;
+			}
+
+			const submitButton = form.querySelector("button[type='submit']");
+			applicationSubmitInProgress = false;
+			window.clearTimeout(applicationSubmitTimeout);
+			form.reset();
+			syncTeamNameField(form);
+			syncThemeSelectionValidity(form);
+			setApplicationStatus(form, "Thanks. Your application has been received.", "success");
+
+			if (submitButton instanceof HTMLButtonElement) {
+				submitButton.disabled = false;
+				submitButton.textContent = "Register Interest";
+			}
+		});
 	});
 </script>
 
