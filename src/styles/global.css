@@ -1539,6 +1539,13 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 		display: inline-flex;
 		grid-column: 2;
 		grid-row: 1;
+		min-width: 2.75rem;
+		justify-content: center;
+		padding-inline: 0.78rem;
+	}
+
+	.site-menu-toggle-label {
+		display: none;
 	}
 
 	.site-language {
@@ -1649,7 +1656,7 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 	.hero-section {
 		min-height: 100svh;
 		padding-top: 1rem;
-		padding-bottom: 6.4rem;
+		padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
 	}
 
 	.hero-caption {
@@ -1757,9 +1764,10 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 	}
 
 	.hero-position-cue {
-		right: 0.9rem;
-		bottom: calc(9.7rem + env(safe-area-inset-bottom));
-		left: 0.9rem;
+		position: relative;
+		inset: auto;
+		width: calc(100% - 1.8rem);
+		margin: 4.15rem auto 0;
 		gap: 0.5rem;
 		font-size: 0.52rem;
 		letter-spacing: 0.13em;
@@ -1889,10 +1897,6 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 		padding-inline: 0.72rem;
 	}
 
-	.site-menu-toggle-label {
-		display: none;
-	}
-
 	.site-nav {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
@@ -1914,7 +1918,7 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 		gap: 0.58rem;
 		font-size: 0.54rem;
 		letter-spacing: 0.14em;
-		bottom: calc(9.35rem + env(safe-area-inset-bottom));
+		margin-top: 3.9rem;
 	}
 }
 

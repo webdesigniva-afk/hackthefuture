@@ -88,22 +88,22 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 	<div class="application-fields-grid grid gap-x-5 gap-y-5 md:grid-cols-2">
 		<label class="application-field">
 			<span>{copy.labels.name}</span>
-			<input name="name" type="text" required autocomplete="name" />
+			<input name="name" type="text" required autocomplete="name" enterkeyhint="next" />
 		</label>
 
 		<label class="application-field">
 			<span>{copy.labels.email}</span>
-			<input name="email" type="email" required autocomplete="email" />
+			<input name="email" type="email" required autocomplete="email" inputmode="email" enterkeyhint="next" />
 		</label>
 
 		<label class="application-field">
 			<span>{copy.labels.age}</span>
-			<input name="age" type="number" required min="15" max="19" inputmode="numeric" />
+			<input name="age" type="number" required min="15" max="19" inputmode="numeric" enterkeyhint="next" />
 		</label>
 
 		<label class="application-field">
 			<span>{copy.labels.school}</span>
-			<input name="school" type="text" required autocomplete="organization" />
+			<input name="school" type="text" required autocomplete="organization" enterkeyhint="next" />
 		</label>
 
 		<label class="application-field md:col-span-2">
@@ -426,5 +426,93 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 
 	.application-status[data-status-type="error"] {
 		color: color-mix(in srgb, #b91c1c 86%, var(--color-ink));
+	}
+
+	@media (max-width: 640px) {
+		.application-form {
+			gap: 1.15rem;
+			padding-top: 0;
+		}
+
+		.application-form::before {
+			margin-bottom: 0.9rem;
+		}
+
+		.application-fields-grid {
+			gap: 0.95rem;
+		}
+
+		.application-field,
+		.application-fieldset {
+			gap: 0.48rem;
+		}
+
+		.application-field span,
+		.application-fieldset legend {
+			font-size: 0.62rem;
+			letter-spacing: 0.14em;
+			line-height: 1.35;
+		}
+
+		.application-field input,
+		.application-field textarea,
+		.application-field select {
+			min-height: 3.18rem;
+			border-radius: 9px;
+			background: rgba(255, 255, 255, 0.9);
+			font-size: 16px;
+			padding: 0.88rem 0.92rem;
+		}
+
+		.application-field textarea {
+			min-height: 9.5rem;
+			line-height: 1.55;
+		}
+
+		.application-fieldset {
+			padding-top: 0.95rem;
+		}
+
+		.application-options {
+			gap: 0.6rem;
+		}
+
+		.application-radio,
+		.application-choice {
+			align-items: flex-start;
+			min-height: 3.75rem;
+			gap: 0.78rem;
+			border-radius: 9px;
+			background: rgba(255, 255, 255, 0.66);
+			font-size: 0.94rem;
+			line-height: 1.38;
+			padding: 0.9rem 0.92rem;
+		}
+
+		.application-radio:hover,
+		.application-choice:hover {
+			transform: none;
+		}
+
+		.application-radio input,
+		.application-choice input {
+			width: 1.14rem;
+			height: 1.14rem;
+			margin-top: 0.1rem;
+		}
+
+		.application-submit {
+			width: 100%;
+			min-height: 3.35rem;
+			padding-inline: 1rem;
+			font-size: 0.78rem;
+			letter-spacing: 0.1em;
+		}
+
+		.application-status {
+			margin-top: -0.35rem;
+			font-size: 0.92rem;
+			line-height: 1.55;
+		}
 	}
 </style>

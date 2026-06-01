@@ -1336,12 +1336,17 @@ const challenges = copy.challenges;
 		}
 
 		.mission-nav {
+			order: 2;
 			border-right: 0;
-			border-bottom: 1px solid rgba(196, 181, 253, 0.14);
+			border-top: 1px solid rgba(196, 181, 253, 0.14);
 		}
 
 		.mission-tabs {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.mission-display {
+			order: 1;
 		}
 
 		.mission-tab:hover,
@@ -1686,6 +1691,9 @@ const challenges = copy.challenges;
 
 		const tabs = Array.from(terminal.querySelectorAll("[data-mission-tab]"));
 		const panels = Array.from(terminal.querySelectorAll("[data-mission-panel]"));
+		const display = terminal.querySelector(".mission-display");
+		const mobileMissionLayout = window.matchMedia("(max-width: 920px)");
+		const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 		tabs.forEach((tab) => {
 			if (!(tab instanceof HTMLButtonElement)) return;
@@ -1707,6 +1715,13 @@ const challenges = copy.challenges;
 					if (!(panel instanceof HTMLElement)) return;
 					panel.classList.toggle("is-active", panel.dataset.missionPanel === targetMission);
 				});
+
+				if (display instanceof HTMLElement && mobileMissionLayout.matches) {
+					display.scrollIntoView({
+						behavior: reducedMotion.matches ? "auto" : "smooth",
+						block: "start",
+					});
+				}
 			});
 		});
 	}
