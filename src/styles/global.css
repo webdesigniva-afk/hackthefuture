@@ -624,7 +624,7 @@ a:hover {
 
 .footer-accessibility-credit {
 	display: inline-flex;
-	max-width: 18rem;
+	max-width: 32rem;
 	align-items: center;
 	gap: 0.55rem;
 	color: color-mix(in srgb, var(--color-muted) 76%, transparent);
@@ -633,6 +633,12 @@ a:hover {
 	line-height: 1.5;
 	opacity: 0.76;
 	transition: color 170ms var(--ease-premium), opacity 170ms var(--ease-premium);
+}
+
+@media (min-width: 640px) {
+	.footer-accessibility-credit span {
+		white-space: nowrap;
+	}
 }
 
 .footer-accessibility-credit:hover {

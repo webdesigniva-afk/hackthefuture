@@ -388,6 +388,8 @@ const checklist = checklistBase.map((item, index) => ({
 	}
 
 	.why-exists-title {
+		font-size: clamp(2rem, 3.05vw, 3.45rem);
+		line-height: 1.08;
 		text-wrap: balance;
 	}
 
@@ -422,7 +424,7 @@ const checklist = checklistBase.map((item, index) => ({
 
 	.closing-bottom-up-item--why[data-why-lang="bg"] .why-exists-title {
 		max-width: 12.6em;
-		font-size: clamp(2.25rem, 3.35vw, 3.9rem);
+		font-size: clamp(2.05rem, 3.05vw, 3.55rem);
 		font-weight: 600;
 		letter-spacing: -0.022em;
 		line-height: 1.08;
@@ -650,7 +652,7 @@ const checklist = checklistBase.map((item, index) => ({
 		display: block;
 		width: 100%;
 		height: 1px;
-		background: var(--color-line);
+		background: linear-gradient(90deg, var(--color-line), rgba(10, 10, 10, 0.08) 72%, transparent);
 		opacity: 0.7;
 	}
 
@@ -665,15 +667,15 @@ const checklist = checklistBase.map((item, index) => ({
 	}
 
 	@media (min-width: 640px) {
-		#who-can-join[data-participation-lang="bg"] .participation-timeline {
+		.participation-timeline {
 			max-width: none;
 		}
 
-		#who-can-join[data-participation-lang="bg"] .participation-timeline-item {
+		.participation-timeline-item {
 			grid-template-columns: minmax(0, 0.22fr) 1.5rem minmax(max-content, 1fr);
 		}
 
-		#who-can-join[data-participation-lang="bg"] .participation-timeline-copy h3 {
+		.participation-timeline-copy h3 {
 			white-space: nowrap;
 		}
 	}
