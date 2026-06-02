@@ -1,1 +1,9 @@
-[31m[1m10:46:43[22m [ERROR] [vite][39m [31mError: EPERM: operation not permitted, rmdir 'C:\Users\iivan\hackthefuture\node_modules\.vite\deps'[39m
+spawn EPERM
+  [1mLocation:[22m
+    [4mC:\Users\iivan\hackthefuture\node_modules\vite\dist\node\chunks\config.js:2230:2[24m
+  [1mStack trace:[22m
+[2m    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at Object.execFile (node:child_process:349:17)
+    at optimizeSafeRealPathSync (file:///C:/Users/iivan/hackthefuture/node_modules/vite/dist/node/chunks/config.js:2230:2)
+    at getRealPath (file:///C:/Users/iivan/hackthefuture/node_modules/vite/dist/node/chunks/config.js:32953:36)
+    at tryCleanFsResolve (file:///C:/Users/iivan/hackthefuture/node_modules/vite/dist/node/chunks/config.js:32671:21)[22m

@@ -1685,9 +1685,9 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 	}
 
 	.hero-section {
-		min-height: 100svh;
+		min-height: max(100svh, 41.5rem);
 		padding-top: 1rem;
-		padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+		padding-bottom: calc(8.65rem + env(safe-area-inset-bottom));
 	}
 
 	.hero-caption {
@@ -1791,14 +1791,16 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 	}
 
 	.hero-section .media-placeholder {
-		min-height: clamp(18rem, 52svh, 25rem);
+		min-height: clamp(13.5rem, 36svh, 19rem);
 	}
 
 	.hero-position-cue {
-		position: relative;
-		inset: auto;
+		position: absolute;
+		inset-inline: 0.6rem;
+		top: auto;
+		bottom: calc(5.65rem + env(safe-area-inset-bottom));
 		width: calc(100% - 1.2rem);
-		margin: 4.15rem auto 0;
+		margin: 0 auto;
 		gap: 0.52rem;
 		color: rgba(255, 255, 255, 0.94);
 		font-size: 0.54rem;
@@ -1807,6 +1809,11 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 		text-shadow:
 			0 0 1rem rgba(167, 139, 250, 0.72),
 			0 1px 16px rgba(0, 0, 0, 0.9);
+	}
+
+	body[data-scroll-flow="bottom-up"] .hero-position-cue {
+		top: auto;
+		bottom: calc(5.65rem + env(safe-area-inset-bottom));
 	}
 
 	.hero-position-cue::before,
@@ -1966,7 +1973,6 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 		gap: 0.58rem;
 		font-size: 0.54rem;
 		letter-spacing: 0.14em;
-		margin-top: 3.9rem;
 	}
 }
 
