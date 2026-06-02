@@ -1839,23 +1839,33 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 	}
 
 	.hero-section[data-hero-lang="bg"] .hero-title {
-		max-width: 11.6em;
-		font-size: clamp(1.72rem, 8.3vw, 2.36rem);
+		max-width: 100%;
+		font-size: clamp(1.62rem, 7.65vw, 2.2rem);
 		line-height: 1.13;
 		letter-spacing: -0.018em;
 	}
 
 	.hero-section[data-hero-lang="bg"] .hero-copy {
+		max-width: 100%;
 		margin-top: 1.12rem;
-		font-size: 0.9rem;
+		font-size: 0.86rem;
 		line-height: 1.5;
+		overflow-wrap: break-word;
 	}
 
 	.hero-section[data-hero-lang="bg"] .hero-event-meta {
+		max-width: 100%;
+		flex-wrap: wrap;
 		margin-top: 1.08rem;
-		font-size: 0.59rem;
-		letter-spacing: 0.12em;
+		gap: 0.32rem 0.48rem;
+		font-size: 0.55rem;
+		letter-spacing: 0.1em;
 		line-height: 1.48;
+		white-space: normal;
+	}
+
+	.hero-section[data-hero-lang="bg"] .hero-event-meta span {
+		min-width: 0;
 	}
 
 	main > section,
@@ -1966,8 +1976,8 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 	}
 
 	.hero-section[data-hero-lang="bg"] .hero-title {
-		max-width: 11.2em;
-		font-size: clamp(1.82rem, 9.1vw, 2.34rem);
+		max-width: 100%;
+		font-size: clamp(1.56rem, 7.45vw, 2.08rem);
 	}
 
 	.hero-section[data-hero-lang="bg"] .hero-position-cue {
