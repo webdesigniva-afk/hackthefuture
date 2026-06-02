@@ -1761,7 +1761,7 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 
 	.hero-intro-panel {
 		min-height: auto;
-		padding: 0.45rem 1.18rem 1.35rem;
+		padding: 0.45rem 0.5rem 1.35rem;
 	}
 
 	.hero-compass-watermark {
@@ -1799,6 +1799,7 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 		inset-inline: 0.6rem;
 		top: auto;
 		bottom: calc(5.65rem + env(safe-area-inset-bottom));
+		z-index: 14;
 		width: calc(100% - 1.2rem);
 		margin: 0 auto;
 		gap: 0.52rem;
@@ -1834,7 +1835,7 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 	}
 
 	.hero-section[data-hero-lang="bg"] .hero-intro-panel {
-		padding-inline: 1.18rem;
+		padding-inline: 0.5rem;
 	}
 
 	.hero-section[data-hero-lang="bg"] .hero-title {
