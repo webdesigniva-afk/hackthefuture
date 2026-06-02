@@ -38,10 +38,10 @@ const copy = {
 }[lang];
 ---
 
-<section class="motion-section civic-grid px-4 py-10 sm:px-6 lg:px-8">
+<section class="outcomes-cinematic motion-section cinematic-dark px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
 	<div class="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[1.08fr_0.92fr]">
 		<div
-			class="media-placeholder cinematic-frame image-card plain-photo-frame min-h-[24rem] rounded-[9px] lg:min-h-[36rem]"
+			class="outcomes-image media-placeholder cinematic-frame image-card plain-photo-frame min-h-[24rem] rounded-[9px] lg:min-h-[36rem]"
 		>
 			<img
 				class="media-photo"
@@ -51,7 +51,7 @@ const copy = {
 				decoding="async"
 			/>
 		</div>
-		<div class="cinematic-dark flex min-h-[24rem] flex-col rounded-[9px] border border-white/10 p-6 text-[var(--color-paper)] sm:p-8 lg:min-h-[36rem] lg:p-10">
+		<div class="outcomes-panel cinematic-dark flex min-h-[24rem] flex-col rounded-[9px] border border-white/10 p-6 text-[var(--color-paper)] sm:p-8 lg:min-h-[36rem] lg:p-10">
 			<div>
 				<p class="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/54">
 					{copy.eyebrow}
@@ -76,3 +76,61 @@ const copy = {
 		</div>
 	</div>
 </section>
+
+<style>
+	.outcomes-cinematic {
+		position: relative;
+		overflow: hidden;
+		background:
+			radial-gradient(circle at 20% 28%, rgba(167, 139, 250, 0.17), transparent 31rem),
+			radial-gradient(circle at 78% 60%, rgba(124, 58, 237, 0.14), transparent 36rem),
+			linear-gradient(135deg, #0a0a0a 0%, #111111 52%, #141414 100%);
+	}
+
+	.outcomes-cinematic::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+		background:
+			linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+		background-size: 7rem 7rem;
+		opacity: 0.14;
+		mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
+	}
+
+	.outcomes-cinematic > div {
+		position: relative;
+		z-index: 1;
+	}
+
+	.outcomes-image,
+	.outcomes-panel {
+		border: 1px solid rgba(196, 181, 253, 0.14);
+		box-shadow:
+			0 30px 100px rgba(0, 0, 0, 0.3),
+			0 0 54px rgba(124, 58, 237, 0.13);
+	}
+
+	.outcomes-image::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		background:
+			linear-gradient(180deg, rgba(10, 10, 10, 0.04), rgba(10, 10, 10, 0.18)),
+			radial-gradient(circle at 50% 18%, rgba(167, 139, 250, 0.1), transparent 36rem);
+		mix-blend-mode: soft-light;
+		opacity: 0.72;
+		pointer-events: none;
+	}
+
+	.outcomes-panel {
+		background:
+			linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
+			radial-gradient(circle at 52% 18%, rgba(167, 139, 250, 0.14), transparent 44%),
+			#0d0d0f;
+	}
+</style>

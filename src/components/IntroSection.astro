@@ -12,7 +12,7 @@ const t = siteCopy[lang].intro;
 <section id="introduction" class="motion-section scroll-mt-28 civic-grid px-4 sm:px-6 lg:px-8">
 	<div class="introduction-layout relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(14rem,0.32fr)_minmax(0,1fr)] lg:items-start">
 		<div class="introduction-heading">
-			<h2 class="introduction-title max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
+			<h2 class={`introduction-title max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl ${lang === "bg" ? "introduction-title--bg" : ""}`}>
 				{t.title}
 			</h2>
 		</div>
@@ -32,7 +32,7 @@ const t = siteCopy[lang].intro;
 			</div>
 
 			<div class="mt-12 border-l-2 border-[var(--color-purple)] pl-6">
-				<p class="max-w-3xl text-2xl font-semibold leading-tight tracking-[-0.03em] text-[var(--color-purple)] sm:text-3xl">
+				<p class="introduction-statement max-w-3xl text-2xl font-semibold leading-tight tracking-[-0.03em] text-[var(--color-purple)] sm:text-3xl" style="font-family: var(--font-ui);">
 					{t.statement}
 				</p>
 			</div>
@@ -48,6 +48,16 @@ const t = siteCopy[lang].intro;
 	#introduction {
 		padding-top: clamp(0.75rem, 2vw, 1.5rem);
 		padding-bottom: clamp(5rem, 7vw, 6.5rem);
+	}
+
+	.introduction-statement {
+		font-family: var(--font-ui);
+	}
+
+	.introduction-title.introduction-title--bg {
+		font-size: clamp(1.68rem, 3.9vw, 2.58rem);
+		line-height: 1.12;
+		letter-spacing: -0.026em;
 	}
 
 	@media (min-width: 1024px) {

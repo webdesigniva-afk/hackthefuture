@@ -24,14 +24,14 @@ const copy = {
 }[lang];
 ---
 
-<section id="why" class="motion-section cinematic-dark px-4 py-20 text-[var(--color-paper)] sm:px-6 sm:py-24 lg:px-8 lg:py-32">
+<section id="why" class="motion-section cinematic-dark px-4 py-20 text-[var(--color-paper)] sm:px-6 sm:py-24 lg:px-8 lg:py-32" data-why-lang={lang}>
 	<div class="relative z-10 mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.8fr_1.2fr]">
 		<div class="why-brief-card premium-hover flex min-h-[28rem] flex-col justify-center rounded-[9px] border border-white/10 bg-white/[0.045] p-6 sm:p-8 lg:justify-start">
 			<div class="why-brief-copy">
-				<h2 class="max-w-2xl text-3xl font-semibold leading-tight tracking-[-0.04em] sm:text-4xl lg:text-5xl">
-					{lang === "en" ? <>The <span class="why-accent">future</span> is changing faster than the systems built around it.</> : copy.title}
+				<h2 class={`why-title ${lang === "bg" ? "why-title--bg" : ""}`}>
+					{lang === "en" ? <>The <span class="why-accent">future</span> is changing faster than the systems built around it.</> : <><span class="why-accent">Бъдещето</span> се променя по-бързо от системите, създадени да го посрещнат.</>}
 				</h2>
-				<p class="mt-6 max-w-xl text-base leading-7 text-[var(--color-paper)]/66">
+				<p class="why-body">
 					{copy.body}
 				</p>
 			</div>
@@ -83,6 +83,36 @@ const copy = {
 
 	.why-brief-copy {
 		padding-block: clamp(1.25rem, 5vw, 4.5rem);
+	}
+
+	.why-title {
+		max-width: 42rem;
+		color: var(--color-paper);
+		font-size: clamp(2rem, 3.4vw, 3rem);
+		font-weight: 600;
+		letter-spacing: -0.035em;
+		line-height: 1.08;
+		text-wrap: balance;
+	}
+
+	.why-title--bg {
+		font-size: clamp(1.7rem, 2.65vw, 2.42rem);
+		letter-spacing: -0.018em;
+		line-height: 1.16;
+	}
+
+	.why-body {
+		max-width: 36rem;
+		margin-top: 1.5rem;
+		color: rgba(255, 255, 255, 0.66);
+		font-size: 1rem;
+		line-height: 1.64;
+	}
+
+	[data-why-lang="bg"] .why-body {
+		max-width: 34rem;
+		font-size: 0.9rem;
+		line-height: 1.58;
 	}
 
 	.why-accent {

@@ -126,6 +126,15 @@ button,
 	font-family: var(--font-ui);
 }
 
+p.leading-7 {
+	line-height: 1.62rem;
+}
+
+p.leading-6,
+li.leading-6 {
+	line-height: 1.4rem;
+}
+
 body::after {
 	content: none;
 }
@@ -547,6 +556,10 @@ a:hover {
 	margin-bottom: 1.35rem;
 }
 
+.publication-body {
+	line-height: 1.62rem;
+}
+
 .publication-body h2,
 .publication-body h3 {
 	margin: 2.75rem 0 1.15rem;
@@ -570,7 +583,7 @@ a:hover {
 	border-left: 2px solid var(--color-gold);
 	color: var(--color-muted);
 	font-size: 1.2rem;
-	line-height: 1.58;
+	line-height: 1.5;
 }
 
 .publication-body ul,
@@ -638,6 +651,16 @@ a:hover {
 	font-family: var(--font-ui);
 	font-weight: 450;
 	letter-spacing: -0.018em;
+}
+
+.benefit-row {
+	line-height: 1.4rem;
+}
+
+@media (min-width: 640px) {
+	.benefit-row {
+		line-height: 1.62rem;
+	}
 }
 
 .quiet-card {
@@ -1034,17 +1057,19 @@ body[data-scroll-flow="bottom-up"] .hero-position-cue {
 	margin-top: clamp(1.85rem, 3vw, 2.35rem);
 	font-size: 0.98rem;
 	letter-spacing: 0.005em;
-	line-height: 1.78;
+	line-height: 1.64;
 	text-wrap: pretty;
 }
 
 .hero-section[data-hero-lang="bg"] .hero-event-meta {
-	max-width: 40rem;
-	gap: 0.42rem 0.72rem;
+	max-width: none;
+	flex-wrap: nowrap;
+	gap: 0.42rem;
 	margin-top: 1.75rem;
-	font-size: 0.7rem;
-	letter-spacing: 0.17em;
-	line-height: 1.62;
+	font-size: 0.66rem;
+	letter-spacing: 0.15em;
+	line-height: 1.5;
+	white-space: nowrap;
 }
 
 .hero-section[data-hero-lang="bg"] .hero-position-cue {
@@ -1666,7 +1691,7 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 		margin-bottom: 2.25rem;
 		padding-block: 1.05rem;
 		font-size: 0.6rem;
-		line-height: 1.55;
+		line-height: 1.48;
 		letter-spacing: 0.08em;
 	}
 
@@ -1750,7 +1775,7 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 	.hero-copy {
 		margin-top: 1.2rem;
 		font-size: 0.93rem;
-		line-height: 1.54;
+		line-height: 1.48;
 	}
 
 	.hero-event-meta {
@@ -1806,14 +1831,14 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 	.hero-section[data-hero-lang="bg"] .hero-copy {
 		margin-top: 1.12rem;
 		font-size: 0.9rem;
-		line-height: 1.58;
+		line-height: 1.5;
 	}
 
 	.hero-section[data-hero-lang="bg"] .hero-event-meta {
 		margin-top: 1.08rem;
 		font-size: 0.59rem;
 		letter-spacing: 0.12em;
-		line-height: 1.56;
+		line-height: 1.48;
 	}
 
 	main > section,
@@ -1852,7 +1877,7 @@ body[data-scroll-flow="bottom-up"] .scroll-to-top svg {
 	.why-exists-heading > p:not(.section-kicker),
 	.timeline-body {
 		font-size: 0.94rem;
-		line-height: 1.62;
+		line-height: 1.54;
 	}
 
 	.media-placeholder,

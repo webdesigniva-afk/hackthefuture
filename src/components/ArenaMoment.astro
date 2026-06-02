@@ -185,7 +185,7 @@ const copy = {
 const challenges = copy.challenges;
 ---
 
-<section id="challenges" class="motion-section arena-moment civic-grid px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+<section id="challenges" class="motion-section arena-moment civic-grid px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20" data-arena-lang={lang}>
 	<div class="mx-auto max-w-7xl">
 		<div class="mission-heading mx-auto mb-5 max-w-[1100px] text-center sm:mb-6">
 			<p class="arena-kicker">{copy.kicker}</p>
@@ -486,6 +486,10 @@ const challenges = copy.challenges;
 		text-wrap: balance;
 	}
 
+	.arena-moment[data-arena-lang="bg"] .mission-heading-title {
+		font-size: clamp(32px, 4.05vw, 55px);
+	}
+
 	.mission-heading-title > span {
 		display: block;
 	}
@@ -737,11 +741,16 @@ const challenges = copy.challenges;
 	}
 
 	.mission-display {
+		--mission-panel-height: clamp(37.5rem, 45vw, 40rem);
 		position: relative;
 		background:
 			radial-gradient(circle at 68% 22%, rgba(124, 58, 237, 0.16), transparent 32%),
 			linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
 		padding-bottom: 0.25rem;
+	}
+
+	.arena-moment[data-arena-lang="bg"] .mission-display {
+		--mission-panel-height: clamp(40.5rem, 48vw, 43rem);
 	}
 
 	.mission-display-frame span {
@@ -782,7 +791,8 @@ const challenges = copy.challenges;
 
 	.mission-panel {
 		display: none;
-		grid-template-rows: 14.5rem auto;
+		height: var(--mission-panel-height);
+		grid-template-rows: 14.5rem minmax(0, 1fr);
 		gap: 0.8rem;
 		padding: 1.05rem 1.05rem 1.25rem;
 		opacity: 0;
@@ -1289,14 +1299,14 @@ const challenges = copy.challenges;
 		max-width: 48rem;
 		font-size: 0.95rem;
 		font-weight: 650;
-		line-height: 1.55;
+		line-height: 1.48;
 	}
 
 	.mission-description {
 		margin-top: 0.45rem;
 		max-width: 54rem;
 		font-size: 0.9rem;
-		line-height: 1.5;
+		line-height: 1.44;
 	}
 
 	.mission-briefing-grid {
@@ -1316,7 +1326,7 @@ const challenges = copy.challenges;
 		position: relative;
 		padding-left: 1rem;
 		font-size: 0.84rem;
-		line-height: 1.42;
+		line-height: 1.36;
 	}
 
 	.mission-briefing li::before {
@@ -1347,6 +1357,7 @@ const challenges = copy.challenges;
 
 		.mission-display {
 			order: 1;
+			--mission-panel-height: auto;
 		}
 
 		.mission-tab:hover,
@@ -1366,6 +1377,8 @@ const challenges = copy.challenges;
 
 		.mission-panel {
 			grid-template-rows: 13.5rem auto;
+			height: auto;
+			min-height: 0;
 			padding: 1rem;
 		}
 	}
