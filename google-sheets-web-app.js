@@ -1,4 +1,5 @@
 const SHEET_NAME = "Applications";
+const NOTIFICATION_EMAIL = "i.nikolova@it-s.org";
 
 const HEADERS = [
 	"Submitted at",
@@ -37,6 +38,7 @@ function doGet(event) {
 
 	if (String(params.submit_application || "") === "1") {
 		appendApplicationRow(sheet, params);
+		sendApplicationNotification(params, spreadsheet);
 	}
 
 	return jsonResponse({
@@ -60,6 +62,8 @@ function doPost(event) {
 	} finally {
 		lock.releaseLock();
 	}
+
+	sendApplicationNotification(params, spreadsheet);
 
 	return jsonResponse({ ok: true });
 }
@@ -93,6 +97,124 @@ function appendApplicationRow(sheet, params) {
 		params.page_url || "",
 	]);
 	formatApplicationSheet(sheet);
+}
+
+function sendApplicationNotification(params, spreadsheet) {
+	const application = buildApplicationSummary(params, spreadsheet);
+	const subject = "Нова кандидатура за Hack the Future: " + (application.name || "без име");
+	const emailOptions = {
+		to: NOTIFICATION_EMAIL,
+		subject: subject,
+		name: "Hack the Future",
+		body: buildPlainTextEmail(application),
+		htmlBody: buildHtmlEmail(application),
+	};
+
+	if (application.email) {
+		emailOptions.replyTo = application.email;
+	}
+
+	MailApp.sendEmail(emailOptions);
+}
+
+function buildApplicationSummary(params, spreadsheet) {
+	return {
+		submittedAt: formatSubmittedAt(params.submitted_at),
+		name: params.name || "",
+		email: params.email || "",
+		age: params.age || "",
+		school: params.school || "",
+		motivation: params.motivation || "",
+		themes: params.themes || "",
+		applicationType: params.application_type || "",
+		teamName: params.team_name || "",
+		pageUrl: params.page_url || "",
+		spreadsheetUrl: spreadsheet.getUrl(),
+	};
+}
+
+function formatSubmittedAt(value) {
+	const date = value ? new Date(value) : new Date();
+
+	if (isNaN(date.getTime())) {
+		return value || "";
+	}
+
+	return Utilities.formatDate(date, Session.getScriptTimeZone(), "dd.MM.yyyy HH:mm");
+}
+
+function buildPlainTextEmail(application) {
+	return [
+		"Нова кандидатура за Hack the Future",
+		"",
+		"Подадена на: " + application.submittedAt,
+		"Име: " + application.name,
+		"Имейл: " + application.email,
+		"Възраст: " + application.age,
+		"Училище: " + application.school,
+		"Теми: " + application.themes,
+		"Начин на кандидатстване: " + application.applicationType,
+		"Име на отбор: " + (application.teamName || "-"),
+		"",
+		"Мотивация:",
+		application.motivation,
+		"",
+		"Страница: " + application.pageUrl,
+		"Таблица: " + application.spreadsheetUrl,
+	].join("\n");
+}
+
+function buildHtmlEmail(application) {
+	const rows = [
+		["Подадена на", application.submittedAt],
+		["Име", application.name],
+		["Имейл", application.email],
+		["Възраст", application.age],
+		["Училище", application.school],
+		["Теми", application.themes],
+		["Начин на кандидатстване", application.applicationType],
+		["Име на отбор", application.teamName || "-"],
+	];
+	const detailRows = rows.map(function(row) {
+		return '<tr><td style="padding: 12px 16px; color: #6a6078; font-size: 13px; border-bottom: 1px solid #ece7f6; width: 34%;">' +
+			escapeHtml(row[0]) +
+			'</td><td style="padding: 12px 16px; color: #171717; font-size: 15px; border-bottom: 1px solid #ece7f6; font-weight: 600;">' +
+			escapeHtml(row[1]) +
+			"</td></tr>";
+	}).join("");
+
+	return '<div style="margin: 0; padding: 28px; background: #f7f4fb; font-family: Arial, sans-serif; color: #171717;">' +
+		'<div style="max-width: 680px; margin: 0 auto; background: #ffffff; border: 1px solid #e7def5; border-radius: 14px; overflow: hidden;">' +
+			'<div style="padding: 28px 32px; background: #4f2f90; color: #ffffff;">' +
+				'<div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.82;">Hack the Future</div>' +
+				'<h1 style="margin: 10px 0 0; font-size: 24px; line-height: 1.25;">Нова кандидатура</h1>' +
+			'</div>' +
+			'<div style="padding: 26px 32px;">' +
+				'<table role="presentation" cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; border: 1px solid #ece7f6; border-radius: 10px; overflow: hidden;">' +
+					detailRows +
+				'</table>' +
+				'<div style="margin-top: 24px;">' +
+					'<h2 style="margin: 0 0 10px; color: #4f2f90; font-size: 16px;">Мотивация</h2>' +
+					'<div style="padding: 16px; background: #fbf9fe; border: 1px solid #ece7f6; border-radius: 10px; color: #26202f; font-size: 15px; line-height: 1.65; white-space: pre-wrap;">' +
+						escapeHtml(application.motivation || "-") +
+					'</div>' +
+				'</div>' +
+				'<div style="margin-top: 24px; color: #6a6078; font-size: 13px; line-height: 1.6;">' +
+					(application.pageUrl ? '<div>Страница: <a href="' + escapeHtml(application.pageUrl) + '" style="color: #4f2f90;">' + escapeHtml(application.pageUrl) + "</a></div>" : "") +
+					'<div>Таблица: <a href="' + escapeHtml(application.spreadsheetUrl) + '" style="color: #4f2f90;">отвори Google Sheet</a></div>' +
+				'</div>' +
+			'</div>' +
+		'</div>' +
+	'</div>';
+}
+
+function escapeHtml(value) {
+	return String(value || "")
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#39;");
 }
 
 function ensureHeaders(sheet) {
