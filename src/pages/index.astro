@@ -11,18 +11,6 @@
 		<title>HTF | CHALLENGE</title>
 		<script is:inline>
 			(() => {
-				const supportedLanguages = ["en", "bg"];
-				const storageKey = "site-language";
-
-				const getSavedLanguage = () => {
-					try {
-						const savedLanguage = localStorage.getItem(storageKey);
-						return supportedLanguages.includes(savedLanguage) ? savedLanguage : null;
-					} catch {
-						return null;
-					}
-				};
-
 				const getBrowserDefaultLanguage = () => {
 					const browserLanguages = navigator.languages?.length ? navigator.languages : [navigator.language].filter(Boolean);
 					const prefersBulgarian = browserLanguages.some((language) => language.toLowerCase().startsWith("bg"));
@@ -30,7 +18,7 @@
 					return prefersBulgarian ? "bg" : "en";
 				};
 
-				const initialLanguage = getSavedLanguage() ?? getBrowserDefaultLanguage();
+				const initialLanguage = getBrowserDefaultLanguage();
 				window.location.replace(`/${initialLanguage}${window.location.search}${window.location.hash}`);
 			})();
 		</script>

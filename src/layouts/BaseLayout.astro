@@ -46,26 +46,7 @@ const lang = getLang(langProp);
 		<title>{title}</title>
 		<script is:inline>
 			(() => {
-				const supportedLanguages = ["en", "bg"];
-				const storageKey = "site-language";
 				const pathLanguageMatch = window.location.pathname.match(/^\/(en|bg)(?=\/|$)/);
-
-				const getSavedLanguage = () => {
-					try {
-						const savedLanguage = localStorage.getItem(storageKey);
-						return supportedLanguages.includes(savedLanguage) ? savedLanguage : null;
-					} catch {
-						return null;
-					}
-				};
-
-				const saveLanguage = (language) => {
-					try {
-						localStorage.setItem(storageKey, language);
-					} catch {
-						// Storage can be unavailable in private or restricted browsing contexts.
-					}
-				};
 
 				const getBrowserDefaultLanguage = () => {
 					const browserLanguages = navigator.languages?.length ? navigator.languages : [navigator.language].filter(Boolean);
@@ -74,24 +55,11 @@ const lang = getLang(langProp);
 					return prefersBulgarian ? "bg" : "en";
 				};
 
-				window.addEventListener("DOMContentLoaded", () => {
-					document.querySelectorAll("[data-language-option]").forEach((link) => {
-						link.addEventListener("click", () => {
-							const language = link.getAttribute("data-language-option");
-
-							if (language && supportedLanguages.includes(language)) {
-								saveLanguage(language);
-							}
-						});
-					});
-				});
-
 				if (pathLanguageMatch) {
 					return;
 				}
 
-				const savedLanguage = getSavedLanguage();
-				const initialLanguage = savedLanguage ?? getBrowserDefaultLanguage();
+				const initialLanguage = getBrowserDefaultLanguage();
 				const targetPath = `/${initialLanguage}${window.location.pathname === "/" ? "" : window.location.pathname}`;
 				window.location.replace(`${targetPath}${window.location.search}${window.location.hash}`);
 			})();
