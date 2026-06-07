@@ -208,7 +208,6 @@ export const siteCopy = {
 			partnerLabel: "Partner institutions",
 			links: [
 				{ label: "Privacy & Cookies", href: "/privacy" },
-				{ label: "Contact", href: "/contact" },
 				{ label: "Instagram", href: "https://www.instagram.com" },
 				{ label: "TikTok", href: "https://www.tiktok.com" },
 			],
@@ -407,7 +406,6 @@ export const siteCopy = {
 			partnerLabel: "Партньорски организации",
 			links: [
 				{ label: "Поверителност и бисквитки", href: "/privacy" },
-				{ label: "Контакти", href: "/contact" },
 				{ label: "Instagram", href: "https://www.instagram.com" },
 				{ label: "TikTok", href: "https://www.tiktok.com" },
 			],

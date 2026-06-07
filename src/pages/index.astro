@@ -1,7 +1,7 @@
 ---
 const title = "Hack The Future | Future Readiness Challenge";
 const description = "Два дни. Един реален проблем. Един екип. Възможност да превърнеш идея в решение и да я представиш пред хора, които могат да я реализират.";
-const image = "/catalizator-logo.png";
+const image = "https://hackthefuture.catalizator.org/hack-the-future-og.png";
 ---
 
 <!doctype html>
@@ -17,9 +17,12 @@ const image = "/catalizator-logo.png";
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={image} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={image} />
 		<title>{title}</title>
 		<script is:inline>
 			(() => {
