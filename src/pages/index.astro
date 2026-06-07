@@ -1,14 +1,26 @@
 ---
+const title = "Hack The Future | Future Readiness Challenge";
+const description = "Два дни. Един реален проблем. Един екип. Възможност да превърнеш идея в решение и да я представиш пред хора, които могат да я реализират.";
+const image = "/catalizator-logo.png";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="bg">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
 		<meta name="robots" content="index, follow" />
 		<meta name="theme-color" content="#FFFFFF" />
-		<title>HTF | CHALLENGE</title>
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Hack The Future" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={image} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<title>{title}</title>
 		<script is:inline>
 			(() => {
 				window.location.replace(`/bg${window.location.search}${window.location.hash}`);

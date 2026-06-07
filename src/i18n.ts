@@ -22,8 +22,8 @@ export function translateRecord<T>(record: Record<Lang, T>, lang: Lang): T {
 export const siteCopy = {
 	en: {
 		meta: {
-			homeTitle: "HTF | CHALLENGE",
-			homeDescription: "CATALIZATOR is a leadership platform for institutional decision-makers.",
+			homeTitle: "Hack The Future | Future Readiness Challenge",
+			homeDescription: "Два дни. Един реален проблем. Един екип. Възможност да превърнеш идея в решение и да я представиш пред хора, които могат да я реализират.",
 			publicationsTitle: "Publications | CATALIZATOR",
 			publicationsDescription: "Articles, video, image essays, and partner thinking from CATALIZATOR.",
 			defaultDescription: "A leadership platform for institutional decision-makers.",
@@ -221,8 +221,8 @@ export const siteCopy = {
 	},
 	bg: {
 		meta: {
-			homeTitle: "HTF | CHALLENGE",
-			homeDescription: "CATALIZATOR е платформа за лидерство, създадена за институционални ръководители и лица, които вземат стратегически решения.",
+			homeTitle: "Hack The Future | Future Readiness Challenge",
+			homeDescription: "Два дни. Един реален проблем. Един екип. Възможност да превърнеш идея в решение и да я представиш пред хора, които могат да я реализират.",
 			publicationsTitle: "Публикации | CATALIZATOR",
 			publicationsDescription: "Статии, видео съдържание, визуални есета и партньорски анализи от CATALIZATOR.",
 			defaultDescription: "Платформа за лидерство за институционални ръководители и лица, които вземат стратегически решения.",
