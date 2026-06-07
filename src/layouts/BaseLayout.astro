@@ -48,19 +48,11 @@ const lang = getLang(langProp);
 			(() => {
 				const pathLanguageMatch = window.location.pathname.match(/^\/(en|bg)(?=\/|$)/);
 
-				const getBrowserDefaultLanguage = () => {
-					const browserLanguages = navigator.languages?.length ? navigator.languages : [navigator.language].filter(Boolean);
-					const prefersBulgarian = browserLanguages.some((language) => language.toLowerCase().startsWith("bg"));
-
-					return prefersBulgarian ? "bg" : "en";
-				};
-
 				if (pathLanguageMatch) {
 					return;
 				}
 
-				const initialLanguage = getBrowserDefaultLanguage();
-				const targetPath = `/${initialLanguage}${window.location.pathname === "/" ? "" : window.location.pathname}`;
+				const targetPath = `/bg${window.location.pathname === "/" ? "" : window.location.pathname}`;
 				window.location.replace(`${targetPath}${window.location.search}${window.location.hash}`);
 			})();
 		</script>
