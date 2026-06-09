@@ -76,6 +76,7 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 	class="application-form grid gap-6"
 	data-application-form
 	data-google-sheets-endpoint={googleSheetsEndpoint}
+	data-email-endpoint="/api/send-application-email"
 	data-status-missing-endpoint={copy.status.missingEndpoint}
 	data-status-sending={copy.status.sending}
 	data-status-success={copy.status.success}
@@ -183,6 +184,37 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 		});
 	}
 
+	function getApplicationPayload(formData) {
+		const payload = {};
+		formData.forEach((value, key) => {
+			if (key === "themes") {
+				if (!Array.isArray(payload.themes)) {
+					payload.themes = [];
+				}
+				payload.themes.push(String(value));
+				return;
+			}
+
+			payload[key] = String(value);
+		});
+
+		return payload;
+	}
+
+	function submitApplicationEmail(endpoint, payload) {
+		return fetch(endpoint, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(payload),
+		}).then((response) => {
+			if (!response.ok) {
+				throw new Error("Application email could not be sent.");
+			}
+		});
+	}
+
 	function handleHackTheFutureApplicationSubmit(event) {
 		event.preventDefault();
 
@@ -192,7 +224,8 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 		}
 
 		const endpoint = form.dataset.googleSheetsEndpoint;
-		if (!endpoint) {
+		const emailEndpoint = form.dataset.emailEndpoint;
+		if (!endpoint || !emailEndpoint) {
 			setApplicationStatus(form, form.dataset.statusMissingEndpoint || "Applications are not connected yet. Please try again later.", "error");
 			return;
 		}
@@ -201,6 +234,7 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 		formData.set("submit_application", "1");
 		formData.set("submitted_at", new Date().toISOString());
 		formData.set("page_url", window.location.href);
+		const emailPayload = getApplicationPayload(formData);
 
 		const params = new URLSearchParams();
 		formData.forEach((value, key) => {
@@ -215,12 +249,17 @@ const googleSheetsEndpoint = import.meta.env.PUBLIC_GOOGLE_SHEETS_WEB_APP_URL ??
 
 		setApplicationStatus(form, form.dataset.statusSending || "Sending your application...", "default");
 
-		submitApplicationToGoogleSheets(endpoint, params).then(() => {
+		Promise.all([
+			submitApplicationToGoogleSheets(endpoint, params),
+			submitApplicationEmail(emailEndpoint, emailPayload),
+		]).then(() => {
 			form.reset();
 			syncTeamNameField(form);
 			syncThemeSelectionValidity(form);
 			setApplicationStatus(form, form.dataset.statusSuccess || "Thanks. Your application has been received.", "success");
-
+		}).catch(() => {
+			setApplicationStatus(form, "Your application was saved, but the email notification could not be sent. Please try again or contact us directly.", "error");
+		}).finally(() => {
 			if (submitButton instanceof HTMLButtonElement) {
 				submitButton.disabled = false;
 				submitButton.textContent = submitButton.dataset.submitLabel || "REGISTER INTEREST";
