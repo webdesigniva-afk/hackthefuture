@@ -11,11 +11,13 @@ const currentPath = Astro.url.pathname.replace(/^\/(en|bg)/, "") || "/";
 const footerCopy = {
 	en: {
 		tagline: ["You bring the energy. We bring the challenge.", "Together, we hack the future."],
+		contactLabel: "Contact",
 		credit: "Website by IT-S",
 		accessibility: "This website is developed with a dyslexia-friendly font.",
 	},
 	bg: {
 		tagline: ["Ти носиш енергията. Ние даваме предизвикателството.", "Заедно създаваме бъдещето."],
+		contactLabel: "Контакт",
 		credit: "Уебсайт от IT-S",
 		accessibility: "Този уебсайт използва шрифт, съобразен с нуждите на хора с дислексия.",
 	},
@@ -88,10 +90,18 @@ const year = new Date().getFullYear();
 		</div>
 
 		<div class="flex flex-col gap-6 text-[0.82rem] md:items-end">
-			<nav class="flex flex-wrap gap-x-6 gap-y-3" aria-label={t.nav.footer}>
+			<nav class="flex flex-wrap items-center gap-x-6 gap-y-3" aria-label={t.nav.footer}>
 				{t.footer.links.map((link) => (
 					<a class="no-underline hover:text-[var(--color-purple)]" href={link.href.startsWith("http") ? link.href : langPath(lang, link.href)}>{link.label}</a>
 				))}
+				<a class="footer-contact-link no-underline" href="mailto:social@catalizator.org">
+					<svg viewBox="0 0 24 24" class="footer-contact-icon" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<rect x="3" y="5" width="18" height="14" rx="2"></rect>
+						<path d="m3.5 7 8.5 6 8.5-6"></path>
+					</svg>
+					<span class="footer-contact-label">{footerCopy.contactLabel}:</span>
+					<span class="footer-contact-email">social@catalizator.org</span>
+				</a>
 			</nav>
 
 			<div class="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em]" aria-label={t.nav.language}>

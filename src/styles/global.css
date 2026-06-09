@@ -616,6 +616,44 @@ a:hover {
 	height: auto;
 }
 
+.footer-contact-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	max-width: 100%;
+	font-family: var(--font-ui);
+	color: color-mix(in srgb, var(--color-muted) 82%, transparent);
+	transition: color 170ms var(--ease-premium), opacity 170ms var(--ease-premium);
+}
+
+.footer-contact-link:hover {
+	color: var(--color-purple);
+	opacity: 0.9;
+}
+
+.footer-contact-icon {
+	width: 0.98rem;
+	height: 0.98rem;
+	flex: 0 0 auto;
+	opacity: 0.72;
+}
+
+.footer-contact-label {
+	color: color-mix(in srgb, currentColor 72%, transparent);
+	font-size: 0.78rem;
+	font-weight: 500;
+	letter-spacing: 0;
+	line-height: 1;
+}
+
+.footer-contact-email {
+	overflow-wrap: anywhere;
+	font-size: 0.78rem;
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	line-height: 1.25;
+}
+
 .footer-credit {
 	color: color-mix(in srgb, var(--color-muted) 70%, transparent);
 	letter-spacing: 0.04em;
