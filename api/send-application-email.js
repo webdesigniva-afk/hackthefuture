@@ -8,9 +8,9 @@ function getSmtpConfig() {
 	const user = process.env.SMTP_USER;
 	const pass = process.env.SMTP_PASSWORD;
 	const from = process.env.SMTP_FROM || user;
-	const to = process.env.NOTIFICATION_TO_EMAIL;
+	const to = parseEmailList(process.env.NOTIFICATION_TO_EMAIL);
 
-	if (!host || !user || !pass || !from || !to) {
+	if (!host || !user || !pass || !from || to.length === 0) {
 		throw new Error("Missing SMTP environment variables.");
 	}
 
@@ -22,6 +22,13 @@ function getSmtpConfig() {
 		from,
 		to,
 	};
+}
+
+function parseEmailList(value) {
+	return String(value || "")
+		.split(",")
+		.map((email) => email.trim())
+		.filter(Boolean);
 }
 
 function normalizeApplication(body) {
