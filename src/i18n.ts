@@ -37,7 +37,7 @@ export const siteCopy = {
 			language: "Language switcher",
 		},
 		hero: {
-			caption: ["Shumen", "June 26 to 28, 2026", "Pilot Edition", "Future Readiness Days"],
+			caption: ["Shumen", "June 26-27, 2026", "Pilot Edition", "Future Readiness Days"],
 			platform: "Future Readiness Challenge",
 			title: "Stop waiting for the future. Start building it.",
 			intro: "A two-day challenge for 15 to 19-year-olds in Shumen. Pick a real problem facing Bulgaria. Build a solution with your team. Present it to people who can actually do something about it.",
@@ -208,8 +208,8 @@ export const siteCopy = {
 			partnerLabel: "Partner institutions",
 			links: [
 				{ label: "Privacy & Cookies", href: "/privacy" },
-				{ label: "Instagram", href: "https://www.instagram.com" },
-				{ label: "TikTok", href: "https://www.tiktok.com" },
+				{ label: "Instagram", href: "https://www.instagram.com/shumenit" },
+				{ label: "TikTok", href: "https://www.tiktok.com/@shumenit" },
 			],
 			website: "website",
 		},
@@ -235,7 +235,7 @@ export const siteCopy = {
 			language: "Избор на език",
 		},
 		hero: {
-			caption: ["Шумен", "26–28 юни 2026 г.", "Пилотно издание", "Future Readiness Days"],
+			caption: ["Шумен", "26-27 юни 2026 г.", "Пилотно издание", "Future Readiness Days"],
 			platform: "Future Readiness Challenge",
 			title: "Не чакай бъдещето. Започни да го създаваш.",
 			intro: "Двудневно предизвикателство за младежи на възраст между 15 и 19 години в Шумен. Избери реален проблем, пред който е изправена България. Разработи решение заедно със своя екип. Представи идеята си пред хора, които могат да я превърнат в реалност.",
@@ -406,8 +406,8 @@ export const siteCopy = {
 			partnerLabel: "Партньорски организации",
 			links: [
 				{ label: "Поверителност и бисквитки", href: "/privacy" },
-				{ label: "Instagram", href: "https://www.instagram.com" },
-				{ label: "TikTok", href: "https://www.tiktok.com" },
+				{ label: "Instagram", href: "https://www.instagram.com/shumenit" },
+				{ label: "TikTok", href: "https://www.tiktok.com/@shumenit" },
 			],
 			website: "уебсайт",
 		},
