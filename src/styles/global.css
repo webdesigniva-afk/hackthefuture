@@ -1688,35 +1688,17 @@ button.rounded-full:hover::after {
 		mask-image: none;
 	}
 
-	.initiative-partner-marquee::after {
-		position: absolute;
-		right: 0;
-		top: 50%;
-		z-index: 1;
-		display: grid;
-		width: 2rem;
-		height: 2rem;
-		place-items: center;
-		border: 1px solid rgba(17, 17, 17, 0.1);
-		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.94);
-		color: rgba(124, 58, 237, 0.72);
-		content: "→";
-		font-size: 1.1rem;
-		line-height: 1;
-		pointer-events: none;
-		transform: translateY(-50%);
-		box-shadow: 0 10px 26px rgba(17, 17, 17, 0.1);
-	}
-
 	.initiative-partner-logos {
 		overflow-x: auto;
 		overflow-y: visible;
-		scroll-padding-inline: 1rem 3rem;
+		width: 100%;
+		min-width: 0;
+		max-width: 100%;
+		scroll-padding-inline: 1rem;
 		scroll-snap-type: x mandatory;
 		-webkit-overflow-scrolling: touch;
 		animation: none;
-		padding-right: 4rem;
+		padding: 0 1rem 0.25rem;
 		scrollbar-width: none;
 	}
 
