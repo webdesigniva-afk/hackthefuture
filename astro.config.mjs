@@ -10,6 +10,7 @@ const astroPrerenderEntrypoint = fileURLToPath(
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://hackthefuture.shumen-it.com',
   vite: {
     plugins: [
       {

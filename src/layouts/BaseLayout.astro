@@ -21,8 +21,9 @@ const {
 } = Astro.props;
 
 const lang = getLang(langProp);
-const siteOrigin = "https://hackthefuture.catalizator.org";
+const siteOrigin = Astro.site?.origin ?? "https://hackthefuture.shumen-it.com";
 const socialImage = image.startsWith("http") ? image : `${siteOrigin}${image}`;
+const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 ---
 
 <!doctype html>
@@ -37,14 +38,16 @@ const socialImage = image.startsWith("http") ? image : `${siteOrigin}${image}`;
 		<meta name="robots" content="index, follow" />
 		<meta name="theme-color" content="#FFFFFF" />
 		<meta name="generator" content={Astro.generator} />
+		<link rel="canonical" href={canonicalUrl} />
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="CATALIZATOR" />
+		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={socialImage} />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
-		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={socialImage} />

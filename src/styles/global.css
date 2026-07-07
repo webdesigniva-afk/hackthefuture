@@ -1491,37 +1491,115 @@ button.rounded-full:hover::after {
 	text-decoration: none;
 }
 
+.main-partner-logos {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1.55rem 2.35rem;
+	max-width: min(100%, 72rem);
+	padding: 0;
+	list-style: none;
+}
+
 .partner-logo {
 	display: block;
 	width: auto;
 	max-width: 9.75rem;
 	object-fit: contain;
-	filter: grayscale(1) saturate(0) contrast(1.18) brightness(0.58);
-	mix-blend-mode: multiply;
-	opacity: 0.56;
+	filter: saturate(0.92) contrast(1.03);
+	opacity: 0.82;
 	transition: opacity 180ms var(--ease-premium), filter 180ms var(--ease-premium), transform 180ms var(--ease-premium);
 }
 
 .partner-logo:hover {
-	opacity: 0.76;
-	filter: grayscale(1) saturate(0) contrast(1.28) brightness(0.52);
+	opacity: 1;
+	filter: saturate(1.04) contrast(1.06);
 	transform: translateY(-1px);
 }
 
 .partner-logo--shumen {
-	height: 2.05rem;
+	height: 2.25rem;
 }
 
 .partner-logo--sofia-tech {
-	height: 1.76rem;
+	height: 1.92rem;
 }
 
 .partner-logo--shumen-it {
-	height: 1.48rem;
+	height: 1.62rem;
 }
 
-.partner-logo--visoko-darvo {
-	height: 1.9rem;
+.initiative-partner-logos {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	align-items: center;
+	justify-items: start;
+	gap: 1.1rem 1.8rem;
+	width: 100%;
+	max-width: min(100%, 72rem);
+	padding: 0;
+	list-style: none;
+}
+
+.initiative-partner-logo-item {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	min-width: 0;
+	min-height: 3.1rem;
+}
+
+.initiative-partner-logo {
+	display: block;
+	width: auto;
+	height: 1.85rem;
+	max-width: min(8.8rem, 100%);
+	object-fit: contain;
+	opacity: 0.76;
+	transition: opacity 180ms var(--ease-premium), transform 180ms var(--ease-premium);
+}
+
+.initiative-partner-logo:hover {
+	opacity: 1;
+	transform: translateY(-1px);
+}
+
+.initiative-partner-logo--wide {
+	max-width: min(10rem, 100%);
+}
+
+.initiative-partner-logo--square {
+	height: 2.7rem;
+	max-width: min(4rem, 100%);
+}
+
+.initiative-partner-logo--tall {
+	height: 2.85rem;
+	max-width: min(5rem, 100%);
+}
+
+.initiative-partner-logo--compact {
+	height: 2.15rem;
+	max-width: min(6.4rem, 100%);
+}
+
+.initiative-partner-logo--badge {
+	height: 2rem;
+	max-width: min(6.6rem, 100%);
+	border-radius: 0.25rem;
+}
+
+@media (min-width: 640px) {
+	.initiative-partner-logos {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+	}
+}
+
+@media (min-width: 1024px) {
+	.initiative-partner-logos {
+		grid-template-columns: repeat(8, minmax(0, 1fr));
+		gap: 1.15rem 2.15rem;
+	}
 }
 
 .scroll-to-top svg {

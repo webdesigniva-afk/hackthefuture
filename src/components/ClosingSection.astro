@@ -66,10 +66,6 @@ const aboutCopy = {
 				name: "Shumen Institute of Technology",
 				subtitle: "Academic partner",
 			},
-			{
-				name: "Visoko Darvo",
-				subtitle: "Strategic partner",
-			},
 		],
 		body: [
 			"Hack The Future is part of CATALIZATOR, the leadership and governance platform hosted by the Municipality of Shumen.",
@@ -92,10 +88,6 @@ const aboutCopy = {
 			{
 				name: "Шуменски технологичен институт",
 				subtitle: "Академичен партньор",
-			},
-			{
-				name: "Високо дърво",
-				subtitle: "Стратегически партньор",
 			},
 		],
 		body: [
@@ -135,6 +127,29 @@ const checklist = checklistBase.map((item, index) => ({
 	...item,
 	title: participationCopy.items[index],
 }));
+const brandDividerItems = [
+	"CATALIZATOR",
+	"HACK THE FUTURE",
+	...(lang === "bg"
+		? ["ОБЩИНА ШУМЕН", "СОФИЯ ТЕХ ПАРК", "ШУМЕНСКИ ТЕХНОЛОГИЧЕН ИНСТИТУТ"]
+		: ["SHUMEN MUNICIPALITY", "SOFIA TECH PARK", "SHUMEN INSTITUTE OF TECHNOLOGY"]),
+	"FUTURE READINESS CHALLENGE",
+	...(lang === "bg"
+		? [
+				"МЛАДИ ХОРА",
+				"Бъдещето на труда",
+				"Околна среда и реакция при кризи",
+				"Емоционална устойчивост и благополучие на младите хора",
+				"Местни продукти, храни и бизнес на бъдещето",
+			]
+		: [
+				"FUTURE OF WORK",
+				"ENVIRONMENT & CRISIS RESPONSE",
+				"MENTAL HEALTH & YOUTH WELLBEING",
+				"LOCAL PRODUCTS, FOOD & FUTURE BUSINESS",
+				"YOUNG PEOPLE",
+			]),
+];
 
 ---
 
@@ -178,90 +193,17 @@ const checklist = checklistBase.map((item, index) => ({
 		<div class="brand-divider-track flex items-center gap-5 text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-paper)]/76">
 			{Array.from({ length: 4 }).map(() => (
 				<div class="brand-divider-sequence flex items-center gap-5 pr-5">
-					<span>CATALIZATOR</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
-					<span>HACK THE FUTURE</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
-					<span>SHUMEN MUNICIPALITY</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
-					<span>SOFIA TECH PARK</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
-					<span>SHUMEN INSTITUTE OF TECHNOLOGY</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
-					<span>VISOKO DARVO</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
-					<span>FUTURE READINESS CHALLENGE</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
-					<span>FUTURE OF WORK</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
-					<span>ENVIRONMENT & CRISIS RESPONSE</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
-					<span>MENTAL HEALTH & YOUTH WELLBEING</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
-					<span>LOCAL PRODUCTS, FOOD & FUTURE BUSINESS</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
-					<span>YOUNG PEOPLE</span>
-					<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
-						<circle cx="64" cy="64" r="42" />
-						<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
-						<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
-						<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
-					</svg>
+					{brandDividerItems.map((item) => (
+						<>
+							<span>{item}</span>
+							<svg viewBox="0 0 128 128" class="brand-divider-mark" fill="none" aria-hidden="true">
+								<circle cx="64" cy="64" r="42" />
+								<path d="M64 8V31M64 97v23M8 64h23M97 64h23" />
+								<path d="M64 31C58 48 48 58 31 64M64 31c6 17 16 27 33 33M64 97C58 80 48 70 31 64M64 97c6-17 16-27 33-33" />
+								<circle cx="64" cy="64" r="9" class="brand-divider-mark-dot" />
+							</svg>
+						</>
+					))}
 				</div>
 			))}
 		</div>

@@ -14,12 +14,14 @@ const footerCopy = {
 		contactLabel: "Contact",
 		credit: "Website by IT-S",
 		accessibility: "This website is developed with a dyslexia-friendly font.",
+		initiativePartnersLabel: "Initiative partners",
 	},
 	bg: {
 		tagline: ["Ти носиш енергията. Ние даваме предизвикателството.", "Заедно създаваме бъдещето."],
 		contactLabel: "Контакт",
 		credit: "Уебсайт от IT-S",
 		accessibility: "Този уебсайт използва шрифт, съобразен с нуждите на хора с дислексия.",
+		initiativePartnersLabel: "Партньори на инициативата",
 	},
 }[lang];
 
@@ -34,7 +36,7 @@ const partners = [
 	{
 		name: "Sofia Tech Park BIC",
 		localizedName: t.about.partners[1].name,
-		logo: "https://kt.cern/sites/default/files/images/bic/image/sofia-tech-park-bic.png",
+		logo: "https://sofiatech.bg/wp-content/uploads/2023/10/logo-stp.svg",
 		href: "https://sofiatech.bg/",
 		className: "partner-logo--sofia-tech",
 	},
@@ -45,13 +47,25 @@ const partners = [
 		href: "https://shumen-it.com/",
 		className: "partner-logo--shumen-it",
 	},
-	{
-		name: "Visoko Darvo",
-		localizedName: t.about.partners[3].name,
-		logo: "https://visokodarvo.org/wp-content/uploads/2026/02/Visoko-Darvo-logo-2.svg",
-		href: "https://visokodarvo.org/",
-		className: "partner-logo--visoko-darvo",
-	},
+];
+
+const initiativePartners = [
+	{ name: "Alcomet", logo: "/initiative-partners/alcomet.jpeg", size: "wide" },
+	{ name: "ITS", logo: "/initiative-partners/its.png", size: "badge" },
+	{ name: "Love 2 Design", logo: "/initiative-partners/love-2-design.jpg", size: "square" },
+	{ name: "Zarra Coffee", logo: "/initiative-partners/zarra-coffee.webp", size: "compact" },
+	{ name: "Avtomagistrali - Cherno More", logo: "/initiative-partners/avtomagistrali-cherno-more.png", size: "tall" },
+	{ name: "BulMag", logo: "/initiative-partners/bulmag.png", size: "wide" },
+	{ name: "Contessa", logo: "/initiative-partners/contessa.png", size: "wide" },
+	{ name: "Enola", logo: "/initiative-partners/enola.jpg", size: "wide" },
+	{ name: "Vivacom", logo: "/initiative-partners/vivacom.png", size: "wide" },
+	{ name: "BGRobots", logo: "/initiative-partners/bg-robots-tight.png", size: "wide" },
+	{ name: "National Military University Vasil Levski", logo: "/initiative-partners/nvu-vasil-levski.png", size: "wide" },
+	{ name: "Sark Bulgaria", logo: "/initiative-partners/sark-bulgaria.jpg", size: "wide" },
+	{ name: "Telepol", logo: "/initiative-partners/telepol.png", size: "tall" },
+	{ name: "TESY", logo: "/initiative-partners/tesy-logo.png", size: "wide" },
+	{ name: "TV Shumen", logo: "/initiative-partners/tv-shumen.webp", size: "compact" },
+	{ name: "Kinse Media", logo: "/initiative-partners/kinse-media.png", size: "tall" },
 ];
 
 const year = new Date().getFullYear();
@@ -65,28 +79,6 @@ const year = new Date().getFullYear();
 					<span class="block">{line}</span>
 				))}
 			</p>
-
-			<div class="footer-partners mt-10" aria-labelledby="founding-partners-title">
-				<p id="founding-partners-title" class="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-muted)]/64">
-					{t.footer.founders}
-				</p>
-
-				<ul class="mt-6 flex flex-wrap items-center gap-x-9 gap-y-6" aria-label={t.footer.partnerLabel}>
-					{partners.map((partner) => (
-						<li class="flex h-10 items-center">
-							<a class="partner-logo-link" href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`${partner.localizedName} ${t.footer.website}`}>
-								<img
-									class={`partner-logo ${partner.className}`}
-									src={partner.logo}
-									alt={partner.localizedName}
-									loading="lazy"
-									decoding="async"
-								/>
-							</a>
-						</li>
-					))}
-				</ul>
-			</div>
 		</div>
 
 		<div class="flex flex-col gap-6 text-[0.82rem] md:items-end">
@@ -132,6 +124,42 @@ const year = new Date().getFullYear();
 				<img src="/adys-logo.svg" alt="" loading="lazy" decoding="async" />
 				<span>{footerCopy.accessibility}</span>
 			</a>
+		</div>
+
+		<div class="footer-partners md:col-span-2" aria-labelledby="founding-partners-title">
+			<p id="founding-partners-title" class="text-[0.66rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-muted)]/64">
+				{t.footer.founders}
+			</p>
+
+			<ul class="main-partner-logos mt-6" aria-label={t.footer.partnerLabel}>
+				{partners.map((partner) => (
+					<li class="flex h-10 items-center">
+						<a class="partner-logo-link" href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`${partner.localizedName} ${t.footer.website}`}>
+							<img
+								class={`partner-logo ${partner.className}`}
+								src={partner.logo}
+								alt={partner.localizedName}
+								loading="lazy"
+								decoding="async"
+							/>
+						</a>
+					</li>
+				))}
+			</ul>
+
+			<ul class="initiative-partner-logos mt-8" aria-label={footerCopy.initiativePartnersLabel}>
+				{initiativePartners.map((partner) => (
+					<li class="initiative-partner-logo-item">
+						<img
+							class={`initiative-partner-logo initiative-partner-logo--${partner.size}`}
+							src={partner.logo}
+							alt={partner.name}
+							loading="lazy"
+							decoding="async"
+						/>
+					</li>
+				))}
+			</ul>
 		</div>
 	</div>
 </footer>
