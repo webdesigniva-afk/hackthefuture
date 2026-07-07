@@ -1549,6 +1549,12 @@ button.rounded-full:hover::after {
 	min-height: 3.1rem;
 }
 
+.initiative-partner-logo-link {
+	display: inline-flex;
+	align-items: center;
+	text-decoration: none;
+}
+
 .initiative-partner-logo {
 	display: block;
 	width: auto;

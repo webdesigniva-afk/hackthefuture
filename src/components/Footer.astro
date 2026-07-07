@@ -50,22 +50,22 @@ const partners = [
 ];
 
 const initiativePartners = [
-	{ name: "Alcomet", logo: "/initiative-partners/alcomet.jpeg", size: "wide" },
-	{ name: "ITS", logo: "/initiative-partners/its.png", size: "badge" },
-	{ name: "Love 2 Design", logo: "/initiative-partners/love-2-design.jpg", size: "square" },
-	{ name: "Zarra Coffee", logo: "/initiative-partners/zarra-coffee.webp", size: "compact" },
-	{ name: "Avtomagistrali - Cherno More", logo: "/initiative-partners/avtomagistrali-cherno-more.png", size: "tall" },
-	{ name: "BulMag", logo: "/initiative-partners/bulmag.png", size: "wide" },
-	{ name: "Contessa", logo: "/initiative-partners/contessa.png", size: "wide" },
-	{ name: "Enola", logo: "/initiative-partners/enola.jpg", size: "wide" },
-	{ name: "Vivacom", logo: "/initiative-partners/vivacom.png", size: "wide" },
-	{ name: "BGRobots", logo: "/initiative-partners/bg-robots-tight.png", size: "wide" },
-	{ name: "National Military University Vasil Levski", logo: "/initiative-partners/nvu-vasil-levski.png", size: "wide" },
-	{ name: "Sark Bulgaria", logo: "/initiative-partners/sark-bulgaria.jpg", size: "wide" },
-	{ name: "Telepol", logo: "/initiative-partners/telepol.png", size: "tall" },
-	{ name: "TESY", logo: "/initiative-partners/tesy-logo.png", size: "wide" },
-	{ name: "TV Shumen", logo: "/initiative-partners/tv-shumen.webp", size: "compact" },
-	{ name: "Kinse Media", logo: "/initiative-partners/kinse-media.png", size: "tall" },
+	{ name: "Alcomet", logo: "/initiative-partners/alcomet.jpeg", size: "wide", href: "https://www.alcomet.bg/" },
+	{ name: "ITS", logo: "/initiative-partners/its.png", size: "badge", href: "https://www.it-s.org" },
+	{ name: "Love 2 Design", logo: "/initiative-partners/love-2-design.jpg", size: "square", href: "https://love2design.org" },
+	{ name: "Zarra Coffee", logo: "/initiative-partners/zarra-coffee.webp", size: "compact", href: "https://www.zarra-coffee.eu/#!/" },
+	{ name: "Avtomagistrali - Cherno More", logo: "/initiative-partners/avtomagistrali-cherno-more.png", size: "tall", href: "https://amshumen.com/bg/" },
+	{ name: "BulMag", logo: "/initiative-partners/bulmag.png", size: "wide", href: "https://bulmag.org/" },
+	{ name: "Contessa", logo: "/initiative-partners/contessa.png", size: "wide", href: "https://contessa-bg.com/" },
+	{ name: "Enola", logo: "/initiative-partners/enola.jpg", size: "wide", href: "https://enola.bg/" },
+	{ name: "Vivacom", logo: "/initiative-partners/vivacom.png", size: "wide", href: "https://www.vivacom.bg/" },
+	{ name: "BGRobots", logo: "/initiative-partners/bg-robots-tight.png", size: "wide", href: "https://bgrobots.com/bg/" },
+	{ name: "National Military University Vasil Levski", logo: "/initiative-partners/nvu-vasil-levski.png", size: "wide", href: "https://nvu.bg/bg" },
+	{ name: "Sark Bulgaria", logo: "/initiative-partners/sark-bulgaria.jpg", size: "wide", href: "https://sarkbulgaria.com/" },
+	{ name: "Telepol", logo: "/initiative-partners/telepol.png", size: "tall", href: "https://telepol.com/" },
+	{ name: "TESY", logo: "/initiative-partners/tesy-logo.png", size: "wide", href: "https://tesy.bg/" },
+	{ name: "TV Shumen", logo: "/initiative-partners/tv-shumen.webp", size: "compact", href: "https://tvshumen.bg/" },
+	{ name: "Kinse Media", logo: "/initiative-partners/kinse-media.png", size: "tall", href: "https://kinsemedia.com/" },
 ];
 
 const year = new Date().getFullYear();
@@ -86,13 +86,13 @@ const year = new Date().getFullYear();
 				{t.footer.links.map((link) => (
 					<a class="no-underline hover:text-[var(--color-purple)]" href={link.href.startsWith("http") ? link.href : langPath(lang, link.href)}>{link.label}</a>
 				))}
-				<a class="footer-contact-link no-underline" href="mailto:social@catalizator.org">
+				<a class="footer-contact-link no-underline" href="mailto:social@shumen-it.com">
 					<svg viewBox="0 0 24 24" class="footer-contact-icon" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 						<rect x="3" y="5" width="18" height="14" rx="2"></rect>
 						<path d="m3.5 7 8.5 6 8.5-6"></path>
 					</svg>
 					<span class="footer-contact-label">{footerCopy.contactLabel}:</span>
-					<span class="footer-contact-email">social@catalizator.org</span>
+					<span class="footer-contact-email">social@shumen-it.com</span>
 				</a>
 			</nav>
 
@@ -150,13 +150,25 @@ const year = new Date().getFullYear();
 			<ul class="initiative-partner-logos mt-8" aria-label={footerCopy.initiativePartnersLabel}>
 				{initiativePartners.map((partner) => (
 					<li class="initiative-partner-logo-item">
-						<img
-							class={`initiative-partner-logo initiative-partner-logo--${partner.size}`}
-							src={partner.logo}
-							alt={partner.name}
-							loading="lazy"
-							decoding="async"
-						/>
+						{partner.href ? (
+							<a class="initiative-partner-logo-link" href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`${partner.name} ${t.footer.website}`}>
+								<img
+									class={`initiative-partner-logo initiative-partner-logo--${partner.size}`}
+									src={partner.logo}
+									alt={partner.name}
+									loading="lazy"
+									decoding="async"
+								/>
+							</a>
+						) : (
+							<img
+								class={`initiative-partner-logo initiative-partner-logo--${partner.size}`}
+								src={partner.logo}
+								alt={partner.name}
+								loading="lazy"
+								decoding="async"
+							/>
+						)}
 					</li>
 				))}
 			</ul>
