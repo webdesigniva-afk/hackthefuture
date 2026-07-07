@@ -620,10 +620,16 @@ a:hover {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.35rem;
+	min-width: 0;
 	max-width: 100%;
 	font-family: var(--font-ui);
 	color: color-mix(in srgb, var(--color-muted) 82%, transparent);
 	transition: color 170ms var(--ease-premium), opacity 170ms var(--ease-premium);
+}
+
+.footer-shell,
+.footer-shell > * {
+	min-width: 0;
 }
 
 .footer-contact-link:hover {
@@ -647,6 +653,7 @@ a:hover {
 }
 
 .footer-contact-email {
+	min-width: 0;
 	overflow-wrap: anywhere;
 	font-size: 0.78rem;
 	font-weight: 500;
@@ -668,6 +675,7 @@ a:hover {
 
 .footer-accessibility-credit {
 	display: inline-flex;
+	min-width: 0;
 	max-width: 32rem;
 	align-items: center;
 	gap: 0.55rem;
@@ -677,6 +685,11 @@ a:hover {
 	line-height: 1.5;
 	opacity: 0.76;
 	transition: color 170ms var(--ease-premium), opacity 170ms var(--ease-premium);
+}
+
+.footer-accessibility-credit span {
+	min-width: 0;
+	overflow-wrap: anywhere;
 }
 
 @media (min-width: 640px) {
@@ -701,6 +714,7 @@ a:hover {
 	font-family: var(--font-ui);
 	font-weight: 450;
 	letter-spacing: -0.018em;
+	overflow-wrap: anywhere;
 }
 
 .benefit-row {
@@ -1496,6 +1510,7 @@ button.rounded-full:hover::after {
 	flex-wrap: wrap;
 	align-items: center;
 	gap: 1.55rem 2.35rem;
+	width: 100%;
 	max-width: min(100%, 72rem);
 	padding: 0;
 	list-style: none;
@@ -1534,6 +1549,8 @@ button.rounded-full:hover::after {
 	--logo-marquee-duration: 34s;
 	display: flex;
 	gap: var(--logo-marquee-gap);
+	width: 100%;
+	min-width: 0;
 	max-width: min(100%, 72rem);
 	overflow: hidden;
 	-webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
@@ -1625,6 +1642,9 @@ button.rounded-full:hover::after {
 
 @media (max-width: 639px) {
 	.footer-partners {
+		width: 100%;
+		min-width: 0;
+		overflow: hidden;
 		text-align: center;
 	}
 
@@ -1632,6 +1652,7 @@ button.rounded-full:hover::after {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 1rem;
+		width: 100%;
 		max-width: 20rem;
 		margin-right: auto;
 		margin-left: auto;
