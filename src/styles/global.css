@@ -1529,6 +1529,10 @@ button.rounded-full:hover::after {
 	height: 1.62rem;
 }
 
+.initiative-partner-marquee {
+	max-width: min(100%, 72rem);
+}
+
 .initiative-partner-logos {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1539,6 +1543,10 @@ button.rounded-full:hover::after {
 	max-width: min(100%, 72rem);
 	padding: 0;
 	list-style: none;
+}
+
+.initiative-partner-marquee .initiative-partner-logos--duplicate {
+	display: none;
 }
 
 .initiative-partner-logo-item {
@@ -1595,6 +1603,100 @@ button.rounded-full:hover::after {
 	border-radius: 0.25rem;
 }
 
+@media (max-width: 639px) {
+	.footer-partners {
+		text-align: center;
+	}
+
+	.main-partner-logos {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+		max-width: 20rem;
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+	.main-partner-logos li {
+		justify-content: center;
+	}
+
+	.partner-logo {
+		max-width: 100%;
+		opacity: 0.9;
+	}
+
+	.partner-logo--shumen {
+		height: 2.45rem;
+	}
+
+	.partner-logo--sofia-tech {
+		height: 2.05rem;
+	}
+
+	.partner-logo--shumen-it {
+		height: 1.72rem;
+	}
+
+	.initiative-partner-logos {
+		display: flex;
+		align-items: center;
+		justify-items: center;
+		gap: 1rem;
+		max-width: 100%;
+		margin-right: auto;
+		margin-left: auto;
+		padding-bottom: 0.35rem;
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+		scroll-padding-inline: 0.25rem;
+		scroll-snap-type: x mandatory;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.initiative-partner-logo-item,
+	.initiative-partner-logo-link {
+		justify-content: center;
+		width: 100%;
+	}
+
+	.initiative-partner-logo-item {
+		flex: 0 0 8.4rem;
+		min-height: 4rem;
+		scroll-snap-align: center;
+	}
+
+	.initiative-partner-logo {
+		height: 2rem;
+		max-width: min(7.8rem, 100%);
+		opacity: 0.86;
+	}
+
+	.initiative-partner-logo--wide {
+		max-width: min(8.7rem, 100%);
+	}
+
+	.initiative-partner-logo--square {
+		height: 3rem;
+		max-width: min(4.5rem, 100%);
+	}
+
+	.initiative-partner-logo--tall {
+		height: 3.05rem;
+		max-width: min(4.8rem, 100%);
+	}
+
+	.initiative-partner-logo--compact {
+		height: 2.25rem;
+		max-width: min(6.2rem, 100%);
+	}
+
+	.initiative-partner-logo--badge {
+		height: 2.25rem;
+		max-width: min(6.5rem, 100%);
+	}
+}
+
 @media (min-width: 640px) {
 	.initiative-partner-logos {
 		grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1602,9 +1704,45 @@ button.rounded-full:hover::after {
 }
 
 @media (min-width: 1024px) {
+	.initiative-partner-marquee {
+		--logo-marquee-gap: 2.15rem;
+		display: flex;
+		gap: var(--logo-marquee-gap);
+		overflow: hidden;
+		-webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+		mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+	}
+
 	.initiative-partner-logos {
-		grid-template-columns: repeat(8, minmax(0, 1fr));
-		gap: 1.15rem 2.15rem;
+		display: flex;
+		flex: 0 0 auto;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 2.25rem;
+		width: max-content;
+		min-width: max-content;
+		max-width: none;
+		animation: partner-logo-marquee 46s linear infinite;
+		will-change: transform;
+	}
+
+	.initiative-partner-marquee:hover .initiative-partner-logos {
+		animation-play-state: paused;
+	}
+
+	.initiative-partner-marquee .initiative-partner-logos--duplicate {
+		display: flex;
+	}
+
+	.initiative-partner-logo-item {
+		flex: 0 0 11.25rem;
+		justify-content: center;
+	}
+
+	@keyframes partner-logo-marquee {
+		to {
+			transform: translateX(calc(-100% - var(--logo-marquee-gap)));
+		}
 	}
 }
 

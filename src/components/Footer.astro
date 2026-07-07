@@ -147,11 +147,21 @@ const year = new Date().getFullYear();
 				))}
 			</ul>
 
-			<ul class="initiative-partner-logos mt-8" aria-label={footerCopy.initiativePartnersLabel}>
-				{initiativePartners.map((partner) => (
-					<li class="initiative-partner-logo-item">
-						{partner.href ? (
-							<a class="initiative-partner-logo-link" href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`${partner.name} ${t.footer.website}`}>
+			<div class="initiative-partner-marquee mt-8">
+				<ul class="initiative-partner-logos" aria-label={footerCopy.initiativePartnersLabel}>
+					{initiativePartners.map((partner) => (
+						<li class="initiative-partner-logo-item">
+							{partner.href ? (
+								<a class="initiative-partner-logo-link" href={partner.href} target="_blank" rel="noopener noreferrer" aria-label={`${partner.name} ${t.footer.website}`}>
+									<img
+										class={`initiative-partner-logo initiative-partner-logo--${partner.size}`}
+										src={partner.logo}
+										alt={partner.name}
+										loading="lazy"
+										decoding="async"
+									/>
+								</a>
+							) : (
 								<img
 									class={`initiative-partner-logo initiative-partner-logo--${partner.size}`}
 									src={partner.logo}
@@ -159,19 +169,36 @@ const year = new Date().getFullYear();
 									loading="lazy"
 									decoding="async"
 								/>
-							</a>
-						) : (
-							<img
-								class={`initiative-partner-logo initiative-partner-logo--${partner.size}`}
-								src={partner.logo}
-								alt={partner.name}
-								loading="lazy"
-								decoding="async"
-							/>
-						)}
-					</li>
-				))}
-			</ul>
+							)}
+						</li>
+					))}
+				</ul>
+				<ul class="initiative-partner-logos initiative-partner-logos--duplicate" aria-hidden="true">
+					{initiativePartners.map((partner) => (
+						<li class="initiative-partner-logo-item">
+							{partner.href ? (
+								<a class="initiative-partner-logo-link" href={partner.href} target="_blank" rel="noopener noreferrer" tabindex="-1">
+									<img
+										class={`initiative-partner-logo initiative-partner-logo--${partner.size}`}
+										src={partner.logo}
+										alt=""
+										loading="lazy"
+										decoding="async"
+									/>
+								</a>
+							) : (
+								<img
+									class={`initiative-partner-logo initiative-partner-logo--${partner.size}`}
+									src={partner.logo}
+									alt=""
+									loading="lazy"
+									decoding="async"
+								/>
+							)}
+						</li>
+					))}
+				</ul>
+			</div>
 		</div>
 	</div>
 </footer>
