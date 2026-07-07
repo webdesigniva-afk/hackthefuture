@@ -1603,6 +1603,12 @@ button.rounded-full:hover::after {
 	border-radius: 0.25rem;
 }
 
+@keyframes partner-logo-marquee {
+	to {
+		transform: translateX(calc(-100% - var(--logo-marquee-gap)));
+	}
+}
+
 @media (max-width: 639px) {
 	.footer-partners {
 		text-align: center;
@@ -1638,20 +1644,33 @@ button.rounded-full:hover::after {
 		height: 1.72rem;
 	}
 
+	.initiative-partner-marquee {
+		--logo-marquee-gap: 1rem;
+		display: flex;
+		gap: var(--logo-marquee-gap);
+		max-width: 100%;
+		overflow: hidden;
+		-webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+		mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+	}
+
 	.initiative-partner-logos {
 		display: flex;
+		flex: 0 0 auto;
 		align-items: center;
 		justify-items: center;
 		gap: 1rem;
-		max-width: 100%;
+		width: max-content;
+		min-width: max-content;
+		max-width: none;
 		margin-right: auto;
 		margin-left: auto;
-		padding-bottom: 0.35rem;
-		overflow-x: auto;
-		overscroll-behavior-x: contain;
-		scroll-padding-inline: 0.25rem;
-		scroll-snap-type: x mandatory;
-		-webkit-overflow-scrolling: touch;
+		animation: partner-logo-marquee 34s linear infinite;
+		will-change: transform;
+	}
+
+	.initiative-partner-marquee .initiative-partner-logos--duplicate {
+		display: flex;
 	}
 
 	.initiative-partner-logo-item,
@@ -1663,7 +1682,6 @@ button.rounded-full:hover::after {
 	.initiative-partner-logo-item {
 		flex: 0 0 8.4rem;
 		min-height: 4rem;
-		scroll-snap-align: center;
 	}
 
 	.initiative-partner-logo {
@@ -1737,12 +1755,6 @@ button.rounded-full:hover::after {
 	.initiative-partner-logo-item {
 		flex: 0 0 11.25rem;
 		justify-content: center;
-	}
-
-	@keyframes partner-logo-marquee {
-		to {
-			transform: translateX(calc(-100% - var(--logo-marquee-gap)));
-		}
 	}
 }
 
