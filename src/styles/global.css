@@ -1690,18 +1690,18 @@ button.rounded-full:hover::after {
 	}
 
 	.initiative-partner-logo-item {
-		flex: 0 0 8.4rem;
+		flex: 0 0 12rem;
 		min-height: 4rem;
 	}
 
 	.initiative-partner-logo {
 		height: 2rem;
-		max-width: min(7.8rem, 100%);
+		max-width: min(9.6rem, 100%);
 		opacity: 0.86;
 	}
 
 	.initiative-partner-logo--wide {
-		max-width: min(8.7rem, 100%);
+		max-width: min(10.4rem, 100%);
 	}
 
 	.initiative-partner-logo--square {
