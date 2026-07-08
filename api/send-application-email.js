@@ -99,9 +99,9 @@ function buildHtmlEmail(application) {
 		["Име на отбор", application.teamName || "-"],
 	];
 	const rows = details.map(([label, value]) => (
-		'<tr><td style="padding:12px 16px;color:#6a6078;font-size:13px;border-bottom:1px solid #ece7f6;width:34%;">' +
+		'<tr><td style="padding:12px 16px;color:#6a6078;font-size:13px;border-bottom:1px solid #ece7f6;width:34%;overflow-wrap:anywhere;word-break:break-word;">' +
 		escapeHtml(label) +
-		'</td><td style="padding:12px 16px;color:#171717;font-size:15px;border-bottom:1px solid #ece7f6;font-weight:600;">' +
+		'</td><td style="padding:12px 16px;color:#171717;font-size:15px;border-bottom:1px solid #ece7f6;font-weight:600;overflow-wrap:anywhere;word-break:break-word;">' +
 		escapeHtml(value) +
 		"</td></tr>"
 	)).join("");
@@ -113,12 +113,12 @@ function buildHtmlEmail(application) {
 				'<h1 style="margin:10px 0 0;font-size:24px;line-height:1.25;">Нова кандидатура</h1>' +
 			'</div>' +
 			'<div style="padding:26px 32px;">' +
-				'<table role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse;border:1px solid #ece7f6;border-radius:10px;overflow:hidden;">' +
+				'<table role="presentation" cellspacing="0" cellpadding="0" style="width:100%;table-layout:fixed;border-collapse:collapse;border:1px solid #ece7f6;border-radius:10px;overflow:hidden;">' +
 					rows +
 				'</table>' +
 				'<div style="margin-top:24px;">' +
 					'<h2 style="margin:0 0 10px;color:#4f2f90;font-size:16px;">Мотивация</h2>' +
-					'<div style="padding:16px;background:#fbf9fe;border:1px solid #ece7f6;border-radius:10px;color:#26202f;font-size:15px;line-height:1.65;white-space:pre-wrap;">' +
+					'<div style="max-width:100%;padding:16px;background:#fbf9fe;border:1px solid #ece7f6;border-radius:10px;color:#26202f;font-size:15px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;">' +
 						escapeHtml(application.motivation || "-") +
 					'</div>' +
 				'</div>' +
